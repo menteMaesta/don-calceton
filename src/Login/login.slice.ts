@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, fetchProducts } from "./welcomeApi";
+import { login, fetchProducts } from "./loginApi";
 
-export interface WelcomeState {
+export interface LoginState {
   value: string;
   status: "idle" | "loading" | "failed";
 }
 
-const initialState: WelcomeState = {
+const initialState: LoginState = {
   value: "",
   status: "idle",
 };
 
 export const setLogin = createAsyncThunk("counter/set_login", async () => {
-  const response = await login();
-  console.log("LOGIN", response);
+  const { value } = await login();
+  localStorage.setItem("accessToken", `Bearer ${value}`);
 });
 
 export const getProducts = createAsyncThunk(
@@ -24,8 +24,8 @@ export const getProducts = createAsyncThunk(
   }
 );
 
-export const welcomeSlice = createSlice({
-  name: "welcome",
+export const loginSlice = createSlice({
+  name: "login",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -51,6 +51,4 @@ export const welcomeSlice = createSlice({
   },
 });
 
-export const selectWelcome = () => "Don calcetón";
-
-export default welcomeSlice.reducer;
+export default loginSlice.reducer;

@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import welcome from "../welcome/welcome.slice";
+import login from "../Login/login.slice";
 
 export const store = configureStore({
   reducer: {
-    welcome,
+    login,
   },
 });
 

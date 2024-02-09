@@ -9,7 +9,8 @@ export async function login() {
       password: "123456",
     }),
   });
-  return response.text();
+  const data = response.json();
+  return data;
 }
 
 export async function fetchProducts() {
@@ -18,6 +19,7 @@ export async function fetchProducts() {
     credentials: "include",
     headers: {
       "content-type": "application/json",
+      Authorization: localStorage.getItem("accessToken") || "",
     },
   });
   console.log("PRODUCTS", response);
