@@ -1,38 +1,31 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
-import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { store } from "./app/store";
-import ErrorPage from "./error/Error";
-import Login from "./Login/Login";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ROUTES } from "helpers/constants";
+import { handleLogin } from "routes/Login/actions";
+import { hasToken } from "routes/Dashboard/loader";
+import ErrorPage from "./Error/Error";
+import Login from "routes/Login/Login";
+import Dashboard from "routes/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: (
-      <div>
-        Main <Outlet />
-      </div>
-    ),
+    path: ROUTES.DASHBOARD,
+    element: <Dashboard />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "dashboard",
-        element: <div>Dashboard</div>,
-      },
-    ],
+    loader: hasToken,
   },
   {
-    path: "/login",
+    path: ROUTES.LOGIN,
     element: <Login />,
+    errorElement: <ErrorPage />,
+    action: handleLogin,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
