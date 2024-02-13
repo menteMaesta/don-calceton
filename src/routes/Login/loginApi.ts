@@ -11,6 +11,6 @@ export async function login({ email, password }: loginData) {
       password,
     }),
   });
-  const data = response.json();
-  return data;
+  const data = await response.json();
+  return { data, status: response.status };
 }
