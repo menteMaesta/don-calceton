@@ -3,11 +3,16 @@ import "tailwindcss/tailwind.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
+
 import { handleLogin } from "routes/Login/actions";
-import { hasToken } from "routes/Dashboard/loader";
-import ErrorPage from "./Error/Error";
 import Login from "routes/Login/Login";
+
+import { hasToken } from "routes/Dashboard/loader";
 import Dashboard from "routes/Dashboard/Dashboard";
+
+import ErrorPage from "./Error/Error";
+import Products from "routes/Products/Products";
+import { getProducts } from "routes/Products/loader";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +20,9 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     errorElement: <ErrorPage />,
     loader: hasToken,
+    children: [
+      { path: ROUTES.PRODUCTS, element: <Products />, loader: getProducts },
+    ],
   },
   {
     path: ROUTES.LOGIN,
