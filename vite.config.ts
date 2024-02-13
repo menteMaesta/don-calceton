@@ -11,6 +11,7 @@ export default defineConfig({
       routes: "/src/routes",
       assets: "/src/assets",
       helpers: "/src/helpers",
+      components: "/src/components",
     },
   },
 });

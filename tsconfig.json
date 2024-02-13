@@ -25,7 +25,8 @@
       "src/*": ["./src/*"],
       "routes/*": ["./src/routes/*"],
       "assets/*": ["./src/assets/*"],
-      "helpers/*": ["./src/helpers/*"]
+      "helpers/*": ["./src/helpers/*"],
+      "components/*": ["./src/components/*"]
     }
   },
   "include": ["src"],
