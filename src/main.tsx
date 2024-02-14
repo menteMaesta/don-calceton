@@ -11,8 +11,11 @@ import { hasToken } from "routes/Dashboard/loader";
 import Dashboard from "routes/Dashboard/Dashboard";
 
 import ErrorPage from "./Error/Error";
+
 import Products from "routes/Products/Products";
 import { getProducts } from "routes/Products/loader";
+
+import NewProduct from "./routes/Products/NewProduct";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +24,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: hasToken,
     children: [
-      { path: ROUTES.PRODUCTS, element: <Products />, loader: getProducts },
+      {
+        path: ROUTES.PRODUCTS,
+        element: <Products />,
+        loader: getProducts,
+      },
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: <NewProduct />,
+      },
     ],
   },
   {

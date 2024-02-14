@@ -1,13 +1,15 @@
 export type loginData = { email: string; password };
-export type Product = {
-  description: string;
-  id: number;
+export interface ProductBase {
   name: string;
   price: number;
+  description: string;
+}
+export interface Product extends ProductBase {
+  id: number;
   updatedAt: string;
   createdAt: string;
   variants: Variant[];
-};
+}
 export type Variant = {
   id: number;
   images: Image[];
