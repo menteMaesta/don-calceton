@@ -1,4 +1,4 @@
-export type loginData = { email: string; password };
+export type loginData = { email: string; password: string };
 export interface ProductBase {
   name: string;
   price: number;

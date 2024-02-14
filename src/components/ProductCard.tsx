@@ -1,16 +1,18 @@
 import classnames from "classnames";
 import { Product } from "helpers/customTypes";
+import DefaultPic from "assets/default-pic.png";
 
 type Props = {
   product: Product;
 };
 export default function ProductCard({ product }: Props) {
+  const imageName = product.variants[0]?.images[0]?.name;
   return (
     <div
       className={classnames("flex flex-col", "rounded p-2", "bg-white shadow")}
     >
       <p className="w-full font-semibold text-center">{product.name}</p>
-      <div className="relative h-64 flex items-center">
+      <div className="relative h-64 flex items-center justify-center">
         <p
           className={classnames(
             "bg-black text-white",
@@ -24,12 +26,14 @@ export default function ProductCard({ product }: Props) {
         </p>
         <img
           className="max-h-64"
-          src={`${import.meta.env.VITE_BASE_URL}/${
-            product.variants[0].images[0].name
-          }`}
+          src={
+            imageName
+              ? `${import.meta.env.VITE_BASE_URL}/${imageName}`
+              : DefaultPic
+          }
         />
       </div>
-      <p className="line-clamp-2 pt-2" title={product.description}>
+      <p className="line-clamp-2 pt-2 px-2 mb-2" title={product.description}>
         {product.description}
       </p>
     </div>

@@ -27,7 +27,7 @@ export default function NewProduct() {
           <input
             name="name"
             placeholder="Playera"
-            value={data?.name}
+            value={data?.name || ""}
             onChange={onChange}
             className={classnames(
               "rounded-lg",
@@ -44,7 +44,7 @@ export default function NewProduct() {
             name="price"
             step="0.01"
             placeholder="150.30"
-            value={data?.price}
+            value={data?.price || ""}
             onChange={onChange}
             className={classnames(
               "rounded-lg",
@@ -59,7 +59,7 @@ export default function NewProduct() {
           <textarea
             name="description"
             placeholder="de algodón cuello redondo holgada"
-            value={data?.description}
+            value={data?.description || ""}
             onChange={onChange}
             className={classnames(
               "rounded-lg",

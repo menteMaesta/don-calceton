@@ -15,7 +15,8 @@ import ErrorPage from "./Error/Error";
 import Products from "routes/Products/Products";
 import { getProducts } from "routes/Products/loader";
 
-import NewProduct from "./routes/Products/NewProduct";
+import NewProduct from "routes/Products/NewProduct";
+import { handleNewProduct } from "routes/Products/actions";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       {
         path: ROUTES.NEW_PRODUCT,
         element: <NewProduct />,
+        action: handleNewProduct,
       },
     ],
   },
