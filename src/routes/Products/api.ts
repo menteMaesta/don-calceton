@@ -26,3 +26,19 @@ export async function postProduct(newProductData: ProductBase) {
   const data = await response.json();
   return { data, status: response.status };
 }
+
+export async function fetchProduct(productId: string) {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/products/${productId}`,
+    {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return { data, status: response.status };
+}

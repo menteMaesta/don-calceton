@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { Product } from "helpers/customTypes";
+import { ROUTES } from "helpers/constants";
 import DefaultPic from "assets/default-pic.png";
 
 type Props = {
@@ -8,7 +10,8 @@ type Props = {
 export default function ProductCard({ product }: Props) {
   const imageName = product.variants[0]?.images[0]?.name;
   return (
-    <div
+    <Link
+      to={ROUTES.PRODUCT.replace(":productId", `${product.id}`)}
       className={classnames("flex flex-col", "rounded p-2", "bg-white shadow")}
     >
       <p className="w-full font-semibold text-center">{product.name}</p>
@@ -36,6 +39,6 @@ export default function ProductCard({ product }: Props) {
       <p className="line-clamp-2 pt-2 px-2 mb-2" title={product.description}>
         {product.description}
       </p>
-    </div>
+    </Link>
   );
 }

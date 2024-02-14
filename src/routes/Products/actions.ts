@@ -14,6 +14,6 @@ export const handleNewProduct = async ({ request }: ActionFunctionArgs) => {
     //TODO: Implement snackbar instead
     throw response.errors[0];
   } else {
-    return redirect(ROUTES.PRODUCTS);
+    return redirect(ROUTES.DASHBOARD);
   }
 };

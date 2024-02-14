@@ -81,7 +81,7 @@ export default function NewProduct() {
             className={classnames(
               "bg-slate-700 text-white font-medium",
               "rounded py-1 px-4 mt-2",
-              "active:bg-slate-800",
+              "active:bg-slate-800 cursor-pointer",
               "disabled:bg-slate-300 disabled:cursor-not-allowed"
             )}
           />
@@ -93,7 +93,7 @@ export default function NewProduct() {
               "bg-white text-black font-medium",
               "rounded py-1 px-4 mt-2 shadow",
               "disabled:bg-slate-100 disabled:cursor-not-allowed",
-              "disabled:text-slate-300"
+              "disabled:text-slate-300 cursor-pointer"
             )}
           />
         </div>

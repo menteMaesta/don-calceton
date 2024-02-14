@@ -7,7 +7,7 @@ export const hasToken = async () => {
   const expiration = localStorage.getItem("accessTokenExp");
   const isAfter = moment().isAfter(expiration);
   if (isAfter || !token) {
-    return redirect(ROUTES.PRODUCTS);
+    return redirect(ROUTES.DASHBOARD);
   }
   return null;
 };

@@ -1,6 +1,7 @@
 import Socks from "assets/socks-solid.svg?react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import classnames from "classnames";
+import { ROUTES } from "helpers/constants";
 
 export default function Dashboard() {
   return (
@@ -12,7 +13,8 @@ export default function Dashboard() {
         "items-center pb-4"
       )}
     >
-      <div
+      <Link
+        to={ROUTES.DASHBOARD}
         className={classnames(
           "w-screen h-11",
           "shadow shadow-slate-100 bg-white",
@@ -22,7 +24,7 @@ export default function Dashboard() {
       >
         <Socks className="w-5 h-5 ml-2 fill-slate-700" title="calcetas" />
         <p className="font-medium text-slate-700">Don Calcetón</p>
-      </div>
+      </Link>
 
       <Outlet />
     </div>

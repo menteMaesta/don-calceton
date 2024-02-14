@@ -17,6 +17,6 @@ export const handleLogin = async ({ request }: ActionFunctionArgs) => {
   } else {
     localStorage.setItem("accessToken", response.token);
     localStorage.setItem("accessTokenExp", response.expiresAt);
-    return redirect(ROUTES.PRODUCTS);
+    return redirect(ROUTES.DASHBOARD);
   }
 };
