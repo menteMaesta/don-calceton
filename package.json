@@ -9,6 +9,13 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "imports": {
+    "src/*": "./src/*",
+    "routes/*": "./src/routes/*",
+    "assets/*": "./src/assets/*",
+    "helpers/*": "./src/helpers/*",
+    "components/*": "./src/components/*"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "classnames": "^2.5.1",
