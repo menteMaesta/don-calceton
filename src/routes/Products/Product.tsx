@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classnames from "classnames";
 import { useLoaderData } from "react-router-dom";
 import { Product } from "helpers/customTypes";
@@ -9,7 +10,10 @@ import SticyLink from "components/StickyLink";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
-
+  const [showHide, setShowHide] = useState<string>("line-clamp-4");
+  const onShowHide = () => {
+    setShowHide((prev) => (prev ? "" : "line-clamp-4"));
+  };
   return (
     <div className={classnames("w-full mt-14 px-4")}>
       <main className="flex flex-wrap items-center justify-between bg-white px-4 py-2 rounded-md shadow">
@@ -23,13 +27,29 @@ export default function ProductDetails() {
         >
           Precio base: ${product.price}
         </p>
-        <p className="w-full pt-2">{product.description}</p>
+        <p className={classnames(showHide, "w-full pt-2 overflow-hidden")}>
+          {product.description}
+        </p>
+        <button
+          className={classnames(
+            "text-gray-300",
+            "hover:text-gray-500",
+            "active:text-gray-500",
+            "cursor-pointer leading-4"
+          )}
+          onClick={onShowHide}
+        >
+          mas...
+        </button>
       </main>
 
       <section className="relative flex flex-col items-center w-full">
         <SectionDivider section="Variantes" />
         <SearchBar onSearch={() => {}} placeholder="Buscar variantes" />
-        <SticyLink to={ROUTES.NEW_PRODUCT} title="Nueva variante" />
+        <SticyLink
+          to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
+          title="Nueva variante"
+        />
         <div
           className={classnames(
             "grid grid-cols-1 gap-4",

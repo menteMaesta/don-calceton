@@ -10,15 +10,17 @@ export interface Product extends ProductBase {
   createdAt: string;
   variants: Variant[];
 }
-export type Variant = {
-  id: number;
-  images: Image[];
+export interface VariantBase {
   name: string;
   productId: number;
-  quantity: number;
+  quantity: string;
+}
+export interface Variant extends VariantBase {
+  id: number;
+  images: Image[];
   updatedAt: string;
   createdAt: string;
-};
+}
 export type Image = {
   id: number;
   name: string;

@@ -19,6 +19,8 @@ import NewProduct from "routes/Products/NewProduct";
 import { productsActions } from "routes/Products/actions";
 import ProductDetails from "routes/Products/Product";
 
+import NewVariant from "routes/Variants/NewVariant";
+
 const router = createBrowserRouter([
   {
     path: ROUTES.DASHBOARD,
@@ -41,6 +43,7 @@ const router = createBrowserRouter([
         loader: getProduct,
         element: <ProductDetails />,
       },
+      { path: ROUTES.NEW_VARIANT, element: <NewVariant /> },
     ],
   },
   {
