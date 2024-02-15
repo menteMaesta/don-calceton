@@ -70,21 +70,24 @@ export default function NewProduct() {
           />
         </label>
         <div className="flex flex-row space-x-5">
-          <input
+          <button
             disabled={
               data?.name === "" ||
               data?.description === "" ||
               data?.price === undefined
             }
             type="submit"
-            value="Guardar"
+            name="products"
+            value="create"
             className={classnames(
               "bg-slate-700 text-white font-medium",
               "rounded py-1 px-4 mt-2",
-              "active:bg-slate-800 cursor-pointer",
+              "active:bg-slate-800",
               "disabled:bg-slate-300 disabled:cursor-not-allowed"
             )}
-          />
+          >
+            Guardar
+          </button>
           <input
             type="button"
             value="Cancelar"

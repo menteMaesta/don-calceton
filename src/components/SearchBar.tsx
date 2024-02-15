@@ -1,27 +1,35 @@
+import { ChangeEvent } from "react";
 import classnames from "classnames";
 
-export default function SearchBar() {
+type Props = {
+  onSearch: (search: string) => void;
+  placeholder?: string;
+};
+export default function SearchBar({ onSearch, placeholder = "Buscar" }: Props) {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onSearch(event.target.value);
+  };
+
   return (
     <div className="mt-4 w-full flex justify-center items-center">
       <input
+        type="search"
         name="search"
-        placeholder="Buscar producto"
+        onChange={onChange}
+        placeholder={placeholder}
         className={classnames(
           "w-4/5 sm:w-2/4 py-2 px-2",
           "rounded-lg border-slate-400",
-          "border focus-visible:outline-1 focus-visible:outline-slate-500"
+          "focus-visible:border-slate-700",
+          "border focus-visible:outline-0 focus-visible:outline-slate-500"
         )}
       />
-      <button
+      <i
         className={classnames(
-          "bg-slate-600",
-          "px-3 py-2 ml-2",
-          "rounded-full",
-          "hover:bg-slate-700 active:bg-slate-800"
+          "fa-solid fa-magnifying-glass",
+          "text-slate-700 ml-2"
         )}
-      >
-        <i className="fa-solid fa-magnifying-glass text-white" />
-      </button>
+      />
     </div>
   );
 }

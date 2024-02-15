@@ -16,7 +16,7 @@ import Products from "routes/Products/Products";
 import { getProducts, getProduct } from "routes/Products/loader";
 
 import NewProduct from "routes/Products/NewProduct";
-import { handleNewProduct } from "routes/Products/actions";
+import { productsActions } from "routes/Products/actions";
 import ProductDetails from "routes/Products/Product";
 
 const router = createBrowserRouter([
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       {
         path: ROUTES.NEW_PRODUCT,
         element: <NewProduct />,
-        action: handleNewProduct,
+        action: productsActions,
       },
       {
         path: ROUTES.PRODUCT,

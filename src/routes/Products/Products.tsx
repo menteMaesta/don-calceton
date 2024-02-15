@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import classnames from "classnames";
 import SearchBar from "components/SearchBar";
@@ -6,11 +7,22 @@ import { Product } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
 export default function Products() {
-  const products = useLoaderData() as Product[];
+  const data = useLoaderData() as Product[];
+  const [products, setProducts] = useState<Product[]>(data);
 
+  const onSearch = (search: string) => {
+    if (search) {
+      const filtered = products.filter((product) =>
+        product.name.toLocaleLowerCase().includes(search)
+      );
+      setProducts(filtered);
+    } else {
+      setProducts(data);
+    }
+  };
   return (
-    <div className="mt-11 flex flex-col items-center">
-      <SearchBar />
+    <div className="mt-11 flex flex-col items-center w-full">
+      <SearchBar onSearch={onSearch} placeholder="Buscar productos" />
       <Link
         to={`${ROUTES.NEW_PRODUCT}`}
         className={classnames(
