@@ -58,7 +58,7 @@ export default function ProductDetails() {
           )}
         >
           {product.variants.map((variant) => (
-            <VariantCard variant={variant} />
+            <VariantCard key={variant.id} variant={variant} />
           ))}
         </div>
       </section>

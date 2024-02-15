@@ -1,11 +1,14 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, MouseEvent } from "react";
 import { useNavigate, Form } from "react-router-dom";
 import classnames from "classnames";
 import { VariantBase } from "helpers/customTypes";
+import ImageCard from "components/ImageCard";
 
 export default function NewVariant() {
   const navigate = useNavigate();
   const [data, setData] = useState<VariantBase>();
+  const [blobs, setBlobs] = useState<{ src: string; name: string }[]>([]);
+  const [valid, setValid] = useState(true);
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -14,7 +17,33 @@ export default function NewVariant() {
       (prev) =>
         ({ ...prev, [event.target.name]: event.target.value } as VariantBase)
     );
+    if (event.target.name === "quantity") {
+      if (event.target.value.includes(".")) {
+        setValid(false);
+      } else {
+        setValid(true);
+      }
+    }
   };
+
+  const onFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    const previews = [];
+    if (files) {
+      for (const file of files) {
+        previews.push({ src: URL.createObjectURL(file), name: file.name });
+      }
+      setBlobs(previews);
+    }
+  };
+
+  const onRemoveFile = (event: MouseEvent<HTMLElement>, index: number) => {
+    event.preventDefault();
+    if (blobs?.length > 0) {
+      setBlobs((prev) => prev.filter((_, key) => key !== index));
+    }
+  };
+
   return (
     <div className="mt-11 w-full px-4">
       <p className="mt-9 font-semibold text-center text-lg">Nueva variante</p>
@@ -53,10 +82,45 @@ export default function NewVariant() {
               "w-full"
             )}
           />
+          {!valid && (
+            <p className="text-red-900 text-sm pl-2">
+              Solo se pueden guardar valores enteros
+            </p>
+          )}
         </label>
+
+        <label className="w-fit">
+          <p className="bg-slate-700 w-fit p-2 text-white rounded cursor-pointer">
+            Imagenes (PNG, JPG)
+          </p>
+          <input
+            className="opacity-0 w-0 h-0 absolute -top-1"
+            type="file"
+            name="images"
+            accept=".jpg, .jpeg, .png"
+            multiple
+            onChange={onFileSelect}
+          />
+        </label>
+
+        <div className="grid grid-cols-2 gap-2 sm:w-3/6 sm:grid-cols-3">
+          {blobs?.map((blob, key) => (
+            <ImageCard
+              key={key}
+              onRemove={(event) => onRemoveFile(event, key)}
+              image={blob}
+            />
+          ))}
+        </div>
+
         <div className="flex flex-row space-x-5">
           <button
-            disabled={data?.name === "" || data?.quantity === ""}
+            disabled={
+              data?.name === "" ||
+              data?.quantity === undefined ||
+              blobs.length <= 0 ||
+              !valid
+            }
             type="submit"
             name="products"
             value="create"
