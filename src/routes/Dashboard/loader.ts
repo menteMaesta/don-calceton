@@ -4,10 +4,14 @@ import { ROUTES } from "helpers/constants";
 
 export const hasToken = async () => {
   const token = localStorage.getItem("accessToken");
-  const expiration = localStorage.getItem("accessTokenExp");
-  const isAfter = moment().isAfter(expiration);
-  if (isAfter || !token) {
-    return redirect(ROUTES.DASHBOARD);
+  const expiration = moment(localStorage.getItem("accessTokenExp")).format(
+    "YYYY-MM-DD"
+  );
+  const today = moment().format("YYYY-MM-DD");
+  const hasExpired = moment(expiration).isBefore(today, "day");
+
+  if (hasExpired || !token) {
+    return redirect(ROUTES.LOGIN);
   }
   return null;
 };

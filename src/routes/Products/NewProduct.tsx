@@ -1,10 +1,10 @@
 import { useState, ChangeEvent } from "react";
-import { useNavigate, Form } from "react-router-dom";
+import { Link, Form } from "react-router-dom";
 import classnames from "classnames";
 import { ProductBase } from "helpers/customTypes";
+import { ROUTES } from "helpers/constants";
 
 export default function NewProduct() {
-  const navigate = useNavigate();
   const [data, setData] = useState<ProductBase>();
 
   const onChange = (
@@ -88,17 +88,18 @@ export default function NewProduct() {
           >
             Guardar
           </button>
-          <input
+          <Link
+            to={`${ROUTES.DASHBOARD}`}
             type="button"
-            value="Cancelar"
-            onClick={() => navigate(-1)}
             className={classnames(
               "bg-white text-black font-medium",
               "rounded py-1 px-4 mt-2 shadow",
               "disabled:bg-slate-100 disabled:cursor-not-allowed",
               "disabled:text-slate-300 cursor-pointer"
             )}
-          />
+          >
+            Cancelar
+          </Link>
         </div>
       </Form>
     </div>

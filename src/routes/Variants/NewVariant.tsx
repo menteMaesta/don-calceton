@@ -1,13 +1,15 @@
 import { useState, ChangeEvent, MouseEvent } from "react";
-import { useNavigate, Form } from "react-router-dom";
+import { useSubmit, useParams, Link } from "react-router-dom";
 import classnames from "classnames";
-import { VariantBase } from "helpers/customTypes";
+import { VariantBase, Blob } from "helpers/customTypes";
+import { ROUTES } from "helpers/constants";
 import ImageCard from "components/ImageCard";
 
 export default function NewVariant() {
-  const navigate = useNavigate();
+  const { productId = "" } = useParams();
+  const submit = useSubmit();
   const [data, setData] = useState<VariantBase>();
-  const [blobs, setBlobs] = useState<{ src: string; name: string }[]>([]);
+  const [blobs, setBlobs] = useState<Blob[]>([]);
   const [valid, setValid] = useState(true);
 
   const onChange = (
@@ -43,14 +45,21 @@ export default function NewVariant() {
       setBlobs((prev) => prev.filter((_, key) => key !== index));
     }
   };
+  const onSave = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    const formData = {
+      ...data,
+      images: JSON.stringify([...blobs]),
+      variant: "create",
+      productId,
+    };
+    submit(formData, { method: "post", encType: "multipart/form-data" });
+  };
 
   return (
     <div className="mt-11 w-full px-4">
       <p className="mt-9 font-semibold text-center text-lg">Nueva variante</p>
-      <Form
-        className="flex flex-col mt-14 space-y-6 items-center"
-        method="post"
-      >
+      <div className="flex flex-col mt-14 space-y-6 items-center">
         <label className="w-full sm:w-3/6">
           <p>Nombre</p>
           <input
@@ -122,7 +131,7 @@ export default function NewVariant() {
               !valid
             }
             type="submit"
-            name="products"
+            name="variant"
             value="create"
             className={classnames(
               "bg-slate-700 text-white font-medium",
@@ -130,22 +139,24 @@ export default function NewVariant() {
               "active:bg-slate-800",
               "disabled:bg-slate-300 disabled:cursor-not-allowed"
             )}
+            onClick={onSave}
           >
             Guardar
           </button>
-          <input
+          <Link
+            to={`${ROUTES.PRODUCT.replace(":productId", productId)}`}
             type="button"
-            value="Cancelar"
-            onClick={() => navigate(-1)}
             className={classnames(
               "bg-white text-black font-medium",
               "rounded py-1 px-4 mt-2 shadow",
               "disabled:bg-slate-100 disabled:cursor-not-allowed",
               "disabled:text-slate-300 cursor-pointer"
             )}
-          />
+          >
+            Cancelar
+          </Link>
         </div>
-      </Form>
+      </div>
     </div>
   );
 }

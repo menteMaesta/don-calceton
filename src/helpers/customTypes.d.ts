@@ -13,7 +13,7 @@ export interface Product extends ProductBase {
 export interface VariantBase {
   name: string;
   productId: number;
-  quantity: string;
+  quantity: number;
 }
 export interface Variant extends VariantBase {
   id: number;
@@ -28,3 +28,4 @@ export type Image = {
   updatedAt: string;
   createdAt: string;
 };
+export type Blob = { src: string; name: string };
