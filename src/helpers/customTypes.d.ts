@@ -28,4 +28,4 @@ export type Image = {
   updatedAt: string;
   createdAt: string;
 };
-export type Blob = { src: string; name: string };
+export type Blob = { src: string; name: string; file: File };

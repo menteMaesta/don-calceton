@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { postVariant, postVariantImages } from "routes/Variants/api";
 import { ROUTES } from "helpers/constants";
-import { VariantBase, Blob } from "helpers/customTypes";
+import { VariantBase } from "helpers/customTypes";
 
 export const variantActions = async ({ request }: ActionFunctionArgs) => {
   let formData = await request.formData();
@@ -16,34 +16,35 @@ export const variantActions = async ({ request }: ActionFunctionArgs) => {
 
 const handleNewVariant = async (form: FormData) => {
   const formData = Object.fromEntries(form);
-  const newVariantData: VariantBase = {
-    name: formData.name as string,
-    productId: Number(formData.productId),
-    quantity: Number(formData.quantity),
-  };
-  const images = JSON.parse(formData.images as string) as Blob[];
-  const files: File[] = [];
-  images.map((image) => files.push(new File([image.src], image.name)));
+  const variantData = JSON.parse(formData.data as string) as VariantBase;
 
-  const { data: bulkImageResponse, status } = await postVariantImages({
-    variantId: "1",
-    images: files,
+  const newVariantData: VariantBase = {
+    name: variantData.name,
+    productId: Number(formData.productId),
+    quantity: Number(variantData.quantity),
+  };
+
+  const { data: response, status } = await postVariant({
+    newVariantData,
+    productId: formData.productId as string,
   });
-  console.log("RESPONSE", bulkImageResponse);
+
   if (status !== 200) {
     //TODO: Implement snackbar instead
-    throw bulkImageResponse.errors[0];
+    throw response.errors[0];
   } else {
-    return redirect(ROUTES.DASHBOARD);
+    const { data: bulkImageResponse, status: imageStatus } =
+      await postVariantImages({
+        variantId: response.id,
+        formData: form,
+      });
+    if (imageStatus !== 200) {
+      //TODO: Implement snackbar instead
+      throw bulkImageResponse.errors[0];
+    } else {
+      return redirect(
+        `${ROUTES.PRODUCT.replace(":productId", `${formData.productId}`)}`
+      );
+    }
   }
-  // const { data: response, status } = await postVariant({
-  //   newVariantData,
-  //   productId: formData.productId as string,
-  // });
-  // if (status !== 200) {
-  //   //TODO: Implement snackbar instead
-  //   throw response.errors[0];
-  // } else {
-  //   return redirect(ROUTES.DASHBOARD);
-  // }
 };

@@ -33,7 +33,11 @@ export default function NewVariant() {
     const previews = [];
     if (files) {
       for (const file of files) {
-        previews.push({ src: URL.createObjectURL(file), name: file.name });
+        previews.push({
+          src: URL.createObjectURL(file),
+          name: file.name,
+          file,
+        });
       }
       setBlobs(previews);
     }
@@ -47,12 +51,13 @@ export default function NewVariant() {
   };
   const onSave = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const formData = {
-      ...data,
-      images: JSON.stringify([...blobs]),
-      variant: "create",
-      productId,
-    };
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    formData.append("variant", "create");
+    formData.append("productId", productId);
+    for (const blob of blobs) {
+      formData.append("images[]", blob.file, blob.name);
+    }
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 

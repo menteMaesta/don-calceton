@@ -1,5 +1,6 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { postProduct } from "routes/Products/api";
+import { handleUnauthorized } from "helpers/unauthorized";
 import { ROUTES } from "helpers/constants";
 
 export const productsActions = async ({ request }: ActionFunctionArgs) => {
@@ -23,7 +24,11 @@ export const handleNewProduct = async (form: FormData) => {
   });
   if (status !== 200) {
     //TODO: Implement snackbar instead
-    throw response.errors[0];
+    if (response.errors[0].message === "Unauthorized access") {
+      handleUnauthorized();
+    } else {
+      throw response.errors[0];
+    }
   } else {
     return redirect(ROUTES.DASHBOARD);
   }

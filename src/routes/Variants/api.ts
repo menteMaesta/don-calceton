@@ -25,25 +25,18 @@ export async function postVariant({
 
 export async function postVariantImages({
   variantId,
-  images,
+  formData,
 }: {
   variantId: string;
-  images: any[];
+  formData: FormData;
 }) {
   const token = localStorage.getItem("accessToken");
-  //   var formData = new FormData();
-  //   formData.append("images", images);
-
-  const formData = new FormData();
-
-  formData.append("image", images[0]);
 
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/variants/${variantId}/images`,
+    `${import.meta.env.VITE_BACKEND_URL}/variants/${variantId}/bulk/images`,
     {
       method: "POST",
       headers: {
-        // "content-type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
       body: formData,
