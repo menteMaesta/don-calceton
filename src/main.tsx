@@ -4,8 +4,9 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 
-import { handleLogin } from "routes/Login/actions";
+import { loginActions } from "routes/Login/actions";
 import Login from "routes/Login/Login";
+import Register from "routes/Login/Register";
 
 import { hasToken } from "routes/Dashboard/loader";
 import Dashboard from "routes/Dashboard/Dashboard";
@@ -55,7 +56,13 @@ const router = createBrowserRouter([
     path: ROUTES.LOGIN,
     element: <Login />,
     errorElement: <ErrorPage />,
-    action: handleLogin,
+    action: loginActions,
+  },
+  {
+    path: ROUTES.REGISTER,
+    element: <Register />,
+    errorElement: <ErrorPage />,
+    action: loginActions,
   },
 ]);
 

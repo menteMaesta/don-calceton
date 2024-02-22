@@ -1,14 +1,26 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { login } from "routes/Login/loginApi";
-import { loginData } from "helpers/customTypes";
+import { login, register } from "routes/Login/loginApi";
+import { LoginData, RegisterData } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
-export const handleLogin = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
+export const loginActions = async ({ request }: ActionFunctionArgs) => {
+  let formData = await request.formData();
+  let user = formData.get("user");
+  switch (user) {
+    case "login":
+      return handleLogin(formData);
+    case "register":
+      return handleRegister(formData);
+    default:
+      break;
+  }
+};
+
+const handleLogin = async (formData: FormData) => {
   const data = {
     email: formData.get("email"),
     password: formData.get("password"),
-  } as loginData;
+  } as LoginData;
 
   const { data: response, status } = await login(data);
   if (status !== 200) {
@@ -18,5 +30,22 @@ export const handleLogin = async ({ request }: ActionFunctionArgs) => {
     localStorage.setItem("accessToken", response.token);
     localStorage.setItem("accessTokenExp", response.expiresAt);
     return redirect(ROUTES.DASHBOARD);
+  }
+};
+
+const handleRegister = async (formData: FormData) => {
+  const data = {
+    fullName: formData.get("fullName"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+    admin: new Boolean(formData.get("admin")),
+  } as RegisterData;
+
+  const { data: response, status } = await register(data);
+  if (status !== 200) {
+    //TODO: Probably better to instead show a snackbar and not throw anything
+    throw response.errors[0];
+  } else {
+    return redirect(ROUTES.LOGIN);
   }
 };

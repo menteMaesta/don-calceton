@@ -1,4 +1,10 @@
-export type loginData = { email: string; password: string };
+export type LoginData = { email: string; password: string };
+export type RegisterData = {
+  fullName: string;
+  email: string;
+  password: string;
+  admin: boolean;
+};
 export interface ProductBase {
   name: string;
   price: number;
