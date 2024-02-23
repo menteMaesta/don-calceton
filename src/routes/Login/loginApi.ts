@@ -1,4 +1,4 @@
-import { LoginData, RegisterData } from "helpers/customTypes";
+import { LoginData, RegisterData, ResetPassword } from "helpers/customTypes";
 
 export async function login({ email, password }: LoginData) {
   const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
@@ -33,6 +33,27 @@ export async function register({
       admin,
     }),
   });
+  const data = await response.json();
+  return { data, status: response.status };
+}
+
+export async function updatePassword({
+  new_password,
+  forgot_token,
+}: ResetPassword) {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/update_password`,
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        new_password,
+        forgot_token,
+      }),
+    }
+  );
   const data = await response.json();
   return { data, status: response.status };
 }

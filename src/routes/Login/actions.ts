@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { login, register } from "routes/Login/loginApi";
-import { LoginData, RegisterData } from "helpers/customTypes";
+import { login, register, updatePassword } from "routes/Login/loginApi";
+import { LoginData, RegisterData, ResetPassword } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
 export const loginActions = async ({ request }: ActionFunctionArgs) => {
@@ -11,6 +11,8 @@ export const loginActions = async ({ request }: ActionFunctionArgs) => {
       return handleLogin(formData);
     case "register":
       return handleRegister(formData);
+    case "change_password":
+      return handleChangePassword(formData);
     default:
       break;
   }
@@ -42,6 +44,21 @@ const handleRegister = async (formData: FormData) => {
   } as RegisterData;
 
   const { data: response, status } = await register(data);
+  if (status !== 200) {
+    //TODO: Probably better to instead show a snackbar and not throw anything
+    throw response.errors[0];
+  } else {
+    return redirect(ROUTES.LOGIN);
+  }
+};
+
+const handleChangePassword = async (formData: FormData) => {
+  const data = {
+    forgot_token: formData.get("forgot_token"),
+    new_password: formData.get("new_password"),
+  } as ResetPassword;
+
+  const { data: response, status } = await updatePassword(data);
   if (status !== 200) {
     //TODO: Probably better to instead show a snackbar and not throw anything
     throw response.errors[0];

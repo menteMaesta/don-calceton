@@ -5,6 +5,10 @@ export type RegisterData = {
   password: string;
   admin: boolean;
 };
+export type ResetPassword = {
+  forgot_token: string;
+  new_password: string;
+};
 export interface ProductBase {
   name: string;
   price: number;

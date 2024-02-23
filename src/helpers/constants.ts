@@ -6,4 +6,5 @@ export const ROUTES = {
   PRODUCT: "/products/:productId",
   NEW_VARIANT: "/products/:productId/variant/new",
   VARIANT: "/variant/:variantId",
+  CHANGE_PASSWORD: "/:forgot_token/change_password",
 };

@@ -7,6 +7,7 @@ import { ROUTES } from "helpers/constants";
 import { loginActions } from "routes/Login/actions";
 import Login from "routes/Login/Login";
 import Register from "routes/Login/Register";
+import ChangePassword from "routes/Login/ChangePassword";
 
 import { hasToken } from "routes/Dashboard/loader";
 import Dashboard from "routes/Dashboard/Dashboard";
@@ -61,6 +62,12 @@ const router = createBrowserRouter([
   {
     path: ROUTES.REGISTER,
     element: <Register />,
+    errorElement: <ErrorPage />,
+    action: loginActions,
+  },
+  {
+    path: ROUTES.CHANGE_PASSWORD,
+    element: <ChangePassword />,
     errorElement: <ErrorPage />,
     action: loginActions,
   },
