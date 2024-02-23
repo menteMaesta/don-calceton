@@ -1,4 +1,3 @@
-import Socks from "assets/socks-solid.svg?react";
 import { Outlet, Link } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
@@ -22,7 +21,13 @@ export default function Dashboard() {
           "absolute top-0 z-10"
         )}
       >
-        <Socks className="w-5 h-5 ml-2 fill-slate-700" title="calcetas" />
+        <i
+          className={classnames(
+            "fa-solid fa-socks",
+            "text-xl text-slate-700",
+            "mb-4 mt-24"
+          )}
+        />
         <p className="font-medium text-slate-700">Don Calcetón</p>
       </Link>
 

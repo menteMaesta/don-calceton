@@ -32,9 +32,10 @@ export default function Products() {
           "pt-7 px-4"
         )}
       >
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products &&
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
       </div>
     </div>
   );

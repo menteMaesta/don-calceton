@@ -1,10 +1,11 @@
+import { Fragment } from "react";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 
 export default function GotoMail() {
   return (
-    <div className="w-screen h-screen bg-slate-50 flex flex-col items-center overflow-hidden">
+    <Fragment>
       <i
         className={classnames(
           "fa-solid fa-envelope-circle-check",
@@ -33,6 +34,6 @@ export default function GotoMail() {
       >
         Ir al inicio
       </Link>
-    </div>
+    </Fragment>
   );
 }

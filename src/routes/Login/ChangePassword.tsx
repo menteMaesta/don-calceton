@@ -1,7 +1,6 @@
-import { useState, ChangeEvent, MouseEvent } from "react";
+import { useState, ChangeEvent, MouseEvent, Fragment } from "react";
 import { useSubmit, useParams } from "react-router-dom";
 import classnames from "classnames";
-import Socks from "assets/socks-solid.svg?react";
 
 export default function ChangePassword() {
   const { forgot_token = "" } = useParams();
@@ -25,8 +24,14 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="w-screen h-screen bg-slate-50 flex flex-col items-center overflow-hidden">
-      <Socks className="w-44 h-44 fill-slate-700 mb-4 mt-24" title="calcetas" />
+    <Fragment>
+      <i
+        className={classnames(
+          "fa-solid fa-socks",
+          "text-9xl text-slate-700",
+          "mb-4 mt-24"
+        )}
+      />
       <p className="text-3xl font-bold text-slate-600">Cambio de contraseña</p>
 
       <div className="flex flex-col mt-16 space-y-6">
@@ -71,6 +76,6 @@ export default function ChangePassword() {
           Guardar
         </button>
       </div>
-    </div>
+    </Fragment>
   );
 }

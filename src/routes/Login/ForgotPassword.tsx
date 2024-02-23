@@ -1,7 +1,6 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, Fragment } from "react";
 import { Form } from "react-router-dom";
 import classnames from "classnames";
-import Socks from "assets/socks-solid.svg?react";
 
 export default function ForgotPassword() {
   const [data, setData] = useState({ email: "" });
@@ -11,8 +10,14 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="w-screen h-screen bg-slate-50 flex flex-col items-center overflow-hidden">
-      <Socks className="w-44 h-44 fill-slate-700 mb-4 mt-24" title="calcetas" />
+    <Fragment>
+      <i
+        className={classnames(
+          "fa-solid fa-socks",
+          "text-9xl text-slate-700",
+          "mb-4 mt-24"
+        )}
+      />
       <p className="text-2xl font-bold text-slate-600">
         Olvidaste tu contraseña?
       </p>
@@ -53,6 +58,6 @@ export default function ForgotPassword() {
           Enviar
         </button>
       </Form>
-    </div>
+    </Fragment>
   );
 }

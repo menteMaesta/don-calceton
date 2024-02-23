@@ -10,6 +10,7 @@ import Register from "routes/Login/Register";
 import ChangePassword from "routes/Login/ChangePassword";
 import ForgotPassword from "routes/Login/ForgotPassword";
 import GotoMail from "routes/Login/GoToMail";
+import MainGuest from "routes/Login/MainGuest";
 
 import { hasToken } from "routes/Dashboard/loader";
 import Dashboard from "routes/Dashboard/Dashboard";
@@ -56,33 +57,40 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTES.LOGIN,
-    element: <Login />,
+    element: <MainGuest />,
     errorElement: <ErrorPage />,
-    action: loginActions,
-  },
-  {
-    path: ROUTES.REGISTER,
-    element: <Register />,
-    errorElement: <ErrorPage />,
-    action: loginActions,
-  },
-  {
-    path: ROUTES.FORGOT_PASSWORD,
-    element: <ForgotPassword />,
-    errorElement: <ErrorPage />,
-    action: loginActions,
-  },
-  {
-    path: ROUTES.CHANGE_PASSWORD,
-    element: <ChangePassword />,
-    errorElement: <ErrorPage />,
-    action: loginActions,
-  },
-  {
-    path: ROUTES.GO_TO_MAIL,
-    element: <GotoMail />,
-    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: ROUTES.LOGIN,
+        element: <Login />,
+        errorElement: <ErrorPage />,
+        action: loginActions,
+        index: true,
+      },
+      {
+        path: ROUTES.REGISTER,
+        element: <Register />,
+        errorElement: <ErrorPage />,
+        action: loginActions,
+      },
+      {
+        path: ROUTES.FORGOT_PASSWORD,
+        element: <ForgotPassword />,
+        errorElement: <ErrorPage />,
+        action: loginActions,
+      },
+      {
+        path: ROUTES.CHANGE_PASSWORD,
+        element: <ChangePassword />,
+        errorElement: <ErrorPage />,
+        action: loginActions,
+      },
+      {
+        path: ROUTES.GO_TO_MAIL,
+        element: <GotoMail />,
+        errorElement: <ErrorPage />,
+      },
+    ],
   },
 ]);
 
