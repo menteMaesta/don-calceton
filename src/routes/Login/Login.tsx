@@ -17,7 +17,7 @@ export default function Login() {
 
   return (
     <div className="w-screen h-screen bg-slate-50 flex flex-col items-center overflow-hidden">
-      <Socks className="w-44 h-44 fill-slate-700 mb-4 mt-40" title="calcetas" />
+      <Socks className="w-44 h-44 fill-slate-700 mb-4 mt-24" title="calcetas" />
       <p className="text-3xl font-bold text-slate-600">Don Calcetón</p>
 
       <Form className="flex flex-col mt-16 space-y-6" method="post">
@@ -44,7 +44,16 @@ export default function Login() {
             className="rounded-lg border-slate-400 border py-2 px-3"
           />
         </label>
-        <Link to={ROUTES.REGISTER}>no tienes cuenta? registrate</Link>
+        <Link
+          to={ROUTES.FORGOT_PASSWORD}
+          className={classnames(
+            "text-right font-semibold",
+            "text-slate-600",
+            "hover:text-slate-800 active:text-slate-800"
+          )}
+        >
+          olvidaste tu contraseña?
+        </Link>
         <button
           disabled={!data.email || !data.password}
           type="submit"

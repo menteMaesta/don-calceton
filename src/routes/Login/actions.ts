@@ -1,5 +1,10 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { login, register, updatePassword } from "routes/Login/loginApi";
+import {
+  login,
+  register,
+  generateForgotPassword,
+  updatePassword,
+} from "routes/Login/loginApi";
 import { LoginData, RegisterData, ResetPassword } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
@@ -11,6 +16,8 @@ export const loginActions = async ({ request }: ActionFunctionArgs) => {
       return handleLogin(formData);
     case "register":
       return handleRegister(formData);
+    case "forgot_password":
+      return handleForgotPassword(formData);
     case "change_password":
       return handleChangePassword(formData);
     default:
@@ -49,6 +56,20 @@ const handleRegister = async (formData: FormData) => {
     throw response.errors[0];
   } else {
     return redirect(ROUTES.LOGIN);
+  }
+};
+
+const handleForgotPassword = async (formData: FormData) => {
+  const data = {
+    email: formData.get("email"),
+  } as { email: string };
+
+  const { data: response, status } = await generateForgotPassword(data);
+  if (status !== 200) {
+    //TODO: Probably better to instead show a snackbar and not throw anything
+    throw response.errors[0];
+  } else {
+    return redirect(ROUTES.GO_TO_MAIL);
   }
 };
 
