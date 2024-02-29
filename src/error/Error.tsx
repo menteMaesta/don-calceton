@@ -1,8 +1,9 @@
 import { useRouteError } from "react-router-dom";
 import Ghost from "../assets/ghost-solid.svg?react";
+import { ErrorType } from "helpers/customTypes";
 
 export default function ErrorPage() {
-  const error = useRouteError() as { statusText: string; message: string };
+  const error = useRouteError() as ErrorType;
   console.error(error);
 
   return (

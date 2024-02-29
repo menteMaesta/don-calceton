@@ -33,8 +33,7 @@ const handleLogin = async (formData: FormData) => {
 
   const { data: response, status } = await login(data);
   if (status !== 200) {
-    //TODO: Probably better to instead show a snackbar and not throw anything
-    throw response.errors[0];
+    return response.errors[0];
   } else {
     localStorage.setItem("accessToken", response.token);
     localStorage.setItem("accessTokenExp", response.expiresAt);

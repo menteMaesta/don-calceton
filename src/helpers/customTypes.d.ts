@@ -39,3 +39,4 @@ export type Image = {
   createdAt: string;
 };
 export type Blob = { src: string; name: string; file: File };
+export type ErrorType = { statusText: string; message: string };

@@ -25,7 +25,7 @@ export default function Dashboard() {
           className={classnames(
             "fa-solid fa-socks",
             "text-xl text-slate-700",
-            "mb-4 mt-24"
+            "ml-2"
           )}
         />
         <p className="font-medium text-slate-700">Don Calcetón</p>

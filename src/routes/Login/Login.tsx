@@ -1,9 +1,13 @@
-import { useState, ChangeEvent, Fragment } from "react";
-import { Form, Link } from "react-router-dom";
+import { useState, ChangeEvent, Fragment, useEffect } from "react";
+import { Form, Link, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
+import { ErrorType } from "helpers/customTypes";
 
 export default function Login() {
+  const actionData = useActionData() as ErrorType;
+  const [openSnackbar] = useSnackbar();
   const [data, setData] = useState({ email: "", password: "" });
 
   const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +17,12 @@ export default function Login() {
   const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, email: event.target.value }));
   };
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+  }, [actionData]);
 
   return (
     <Fragment>
