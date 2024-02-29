@@ -1,9 +1,12 @@
-import { useState, ChangeEvent, Fragment } from "react";
-import { Form } from "react-router-dom";
+import { useState, ChangeEvent, Fragment, useEffect } from "react";
+import { Form, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
-import { RegisterData } from "helpers/customTypes";
+import { RegisterData, ErrorType } from "helpers/customTypes";
 
 export default function Register() {
+  const [openSnackbar] = useSnackbar();
+  const actionData = useActionData() as ErrorType;
   const [data, setData] = useState({
     fullName: "",
     email: "",
@@ -17,6 +20,12 @@ export default function Register() {
         ({ ...prev, [event.target.name]: event.target.value } as RegisterData)
     );
   };
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+  }, [actionData]);
 
   return (
     <Fragment>

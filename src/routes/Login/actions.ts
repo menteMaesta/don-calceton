@@ -33,7 +33,7 @@ const handleLogin = async (formData: FormData) => {
 
   const { data: response, status } = await login(data);
   if (status !== 200) {
-    return response.errors[0];
+    return response.errors ? response.errors[0] : response;
   } else {
     localStorage.setItem("accessToken", response.token);
     localStorage.setItem("accessTokenExp", response.expiresAt);
@@ -51,8 +51,7 @@ const handleRegister = async (formData: FormData) => {
 
   const { data: response, status } = await register(data);
   if (status !== 200) {
-    //TODO: Probably better to instead show a snackbar and not throw anything
-    throw response.errors[0];
+    return response.errors ? response.errors[0] : response;
   } else {
     return redirect(ROUTES.LOGIN);
   }
@@ -65,8 +64,7 @@ const handleForgotPassword = async (formData: FormData) => {
 
   const { data: response, status } = await generateForgotPassword(data);
   if (status !== 200) {
-    //TODO: Probably better to instead show a snackbar and not throw anything
-    throw response.errors[0];
+    return response.errors ? response.errors[0] : response;
   } else {
     return redirect(ROUTES.GO_TO_MAIL);
   }
@@ -80,8 +78,7 @@ const handleChangePassword = async (formData: FormData) => {
 
   const { data: response, status } = await updatePassword(data);
   if (status !== 200) {
-    //TODO: Probably better to instead show a snackbar and not throw anything
-    throw response.errors[0];
+    return response.errors ? response.errors[0] : response;
   } else {
     return redirect(ROUTES.LOGIN);
   }

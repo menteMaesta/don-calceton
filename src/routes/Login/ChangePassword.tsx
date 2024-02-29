@@ -1,10 +1,14 @@
-import { useState, ChangeEvent, MouseEvent, Fragment } from "react";
-import { useSubmit, useParams } from "react-router-dom";
+import { useState, ChangeEvent, MouseEvent, Fragment, useEffect } from "react";
+import { useSubmit, useParams, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
+import { ErrorType } from "helpers/customTypes";
 
 export default function ChangePassword() {
   const { forgot_token = "" } = useParams();
   const submit = useSubmit();
+  const actionData = useActionData() as ErrorType;
+  const [openSnackbar] = useSnackbar();
   const [data, setData] = useState({
     password: "",
     confirm_password: "",
@@ -22,6 +26,12 @@ export default function ChangePassword() {
     formData.append("user", "change_password");
     submit(formData, { method: "post" });
   };
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+  }, [actionData]);
 
   return (
     <Fragment>

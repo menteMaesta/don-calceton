@@ -1,13 +1,22 @@
-import { useState, ChangeEvent, Fragment } from "react";
-import { Form } from "react-router-dom";
+import { useState, ChangeEvent, Fragment, useEffect } from "react";
+import { Form, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
+import { ErrorType } from "helpers/customTypes";
 
 export default function ForgotPassword() {
   const [data, setData] = useState({ email: "" });
+  const [openSnackbar] = useSnackbar();
+  const actionData = useActionData() as ErrorType;
 
   const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, email: event.target.value }));
   };
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+  }, [actionData]);
 
   return (
     <Fragment>
