@@ -1,10 +1,13 @@
-import { useState, ChangeEvent } from "react";
-import { Link, Form } from "react-router-dom";
+import { useState, ChangeEvent, useEffect } from "react";
+import { Link, Form, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
-import { ProductBase } from "helpers/customTypes";
+import { ProductBase, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
 export default function NewProduct() {
+  const actionData = useActionData() as ErrorType;
+  const [openSnackbar] = useSnackbar();
   const [data, setData] = useState<ProductBase>();
 
   const onChange = (
@@ -15,6 +18,15 @@ export default function NewProduct() {
         ({ ...prev, [event.target.name]: event.target.value } as ProductBase)
     );
   };
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    } else if (actionData) {
+      openSnackbar(actionData);
+    }
+  }, [actionData]);
+
   return (
     <div className="mt-11 w-full px-4">
       <p className="mt-9 font-semibold text-center text-lg">Nuevo producto</p>

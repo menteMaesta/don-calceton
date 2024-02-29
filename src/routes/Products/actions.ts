@@ -23,11 +23,11 @@ export const handleNewProduct = async (form: FormData) => {
     description: formData.description as string,
   });
   if (status !== 200) {
-    //TODO: Implement snackbar instead
-    if (response.errors[0].message === "Unauthorized access") {
+    const error = response.errors ? response.errors[0] : response;
+    if (error.message === "Unauthorized access") {
       handleUnauthorized();
     } else {
-      throw response.errors[0];
+      return error;
     }
   } else {
     return redirect(ROUTES.DASHBOARD);
