@@ -2,6 +2,7 @@ export const ROUTES = {
   DASHBOARD: "/",
   LOGIN: "/login",
   REGISTER: "/register",
+  REGISTER_ADMIN: "/register_admin",
   NEW_PRODUCT: "/products/new",
   PRODUCT: "/products/:productId",
   NEW_VARIANT: "/products/:productId/variant/new",

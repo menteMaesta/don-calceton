@@ -8,6 +8,7 @@ import { ROUTES } from "helpers/constants";
 import { loginActions } from "routes/Login/actions";
 import Login from "routes/Login/Login";
 import Register from "routes/Login/Register";
+import RegisterAdmin from "routes/Login/RegisterAdmin";
 import ChangePassword from "routes/Login/ChangePassword";
 import ForgotPassword from "routes/Login/ForgotPassword";
 import GotoMail from "routes/Login/GoToMail";
@@ -73,6 +74,12 @@ const router = createBrowserRouter([
       {
         path: ROUTES.REGISTER,
         element: <Register />,
+        errorElement: <ErrorPage />,
+        action: loginActions,
+      },
+      {
+        path: ROUTES.REGISTER_ADMIN,
+        element: <RegisterAdmin />,
         errorElement: <ErrorPage />,
         action: loginActions,
       },

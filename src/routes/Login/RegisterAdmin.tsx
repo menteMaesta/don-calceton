@@ -25,6 +25,7 @@ export default function RegisterAdmin() {
   const onSubmit = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const formData = new FormData();
+    formData.append("fullName", data.fullName);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("admin", `${data.admin}`);
