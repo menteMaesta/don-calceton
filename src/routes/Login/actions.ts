@@ -29,6 +29,7 @@ const handleLogin = async (formData: FormData) => {
   const data = {
     email: formData.get("email"),
     password: formData.get("password"),
+    admin: JSON.parse(formData.get("admin") as string),
   } as LoginData;
 
   const { data: response, status } = await login(data);

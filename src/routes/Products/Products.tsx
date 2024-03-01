@@ -33,7 +33,7 @@ export default function Products() {
         )}
       >
         {products &&
-          products.map((product) => (
+          (products || []).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
       </div>

@@ -1,8 +1,21 @@
-import { Outlet, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, Link, useSubmit } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
 
 export default function Dashboard() {
+  const submit = useSubmit();
+
+  const onCheck = () => {
+    const formData = new FormData();
+    formData.append("dashboard", "verify");
+    submit(formData, { method: "post" });
+  };
+
+  useEffect(() => {
+    onCheck();
+  }, []);
+
   return (
     <div
       className={classnames(

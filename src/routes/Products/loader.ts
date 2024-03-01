@@ -6,7 +6,7 @@ export const getProducts = async () => {
   const { status, data } = await fetchProducts();
   if (status !== 200) {
     if (data.errors[0].message === "Unauthorized access") {
-      handleUnauthorized();
+      return handleUnauthorized();
     } else {
       throw data.errors[0];
     }
@@ -18,7 +18,7 @@ export const getProduct = async ({ params }: LoaderFunctionArgs) => {
   const { status, data } = await fetchProduct(params.productId || "");
   if (status !== 200) {
     if (data.errors[0].message === "Unauthorized access") {
-      handleUnauthorized();
+      return handleUnauthorized();
     } else {
       throw data.errors[0];
     }

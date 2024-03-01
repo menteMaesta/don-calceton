@@ -25,7 +25,7 @@ export const handleNewProduct = async (form: FormData) => {
   if (status !== 200) {
     const error = response.errors ? response.errors[0] : response;
     if (error.message === "Unauthorized access") {
-      handleUnauthorized();
+      return handleUnauthorized();
     } else {
       return error;
     }
