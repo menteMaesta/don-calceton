@@ -1,13 +1,16 @@
-import { useState, ChangeEvent, MouseEvent } from "react";
-import { useSubmit, useParams, Link } from "react-router-dom";
+import { useState, ChangeEvent, MouseEvent, useEffect } from "react";
+import { useSubmit, useParams, Link, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
-import { VariantBase, Blob } from "helpers/customTypes";
+import { VariantBase, Blob, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import ImageCard from "components/ImageCard";
 
 export default function NewVariant() {
   const { productId = "" } = useParams();
   const submit = useSubmit();
+  const actionData = useActionData() as ErrorType;
+  const [openSnackbar] = useSnackbar();
   const [data, setData] = useState<VariantBase>();
   const [blobs, setBlobs] = useState<Blob[]>([]);
   const [valid, setValid] = useState(true);
@@ -60,6 +63,12 @@ export default function NewVariant() {
     }
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+  }, [actionData]);
 
   return (
     <div className="mt-11 w-full px-4">

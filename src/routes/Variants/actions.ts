@@ -30,8 +30,7 @@ const handleNewVariant = async (form: FormData) => {
   });
 
   if (status !== 200) {
-    //TODO: Implement snackbar instead
-    throw response.errors[0];
+    return response.errors ? response.errors[0] : response;
   } else {
     const { data: bulkImageResponse, status: imageStatus } =
       await postVariantImages({
@@ -39,8 +38,9 @@ const handleNewVariant = async (form: FormData) => {
         formData: form,
       });
     if (imageStatus !== 200) {
-      //TODO: Implement snackbar instead
-      throw bulkImageResponse.errors[0];
+      return bulkImageResponse.errors
+        ? bulkImageResponse.errors[0]
+        : bulkImageResponse;
     } else {
       return redirect(
         `${ROUTES.PRODUCT.replace(":productId", `${formData.productId}`)}`
