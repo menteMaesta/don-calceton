@@ -9,7 +9,6 @@ export const hasToken = async () => {
   );
   const today = moment().format("YYYY-MM-DD");
   const hasExpired = moment(expiration).isBefore(today, "day");
-  console.log("PASA", token, hasExpired);
 
   if (hasExpired || !token) {
     return redirect(ROUTES.LOGIN);

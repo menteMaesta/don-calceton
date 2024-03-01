@@ -10,10 +10,24 @@ import SticyLink from "components/StickyLink";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
+  const [variants, setVariants] = useState(product?.variants);
   const [showHide, setShowHide] = useState<string>("line-clamp-4");
+
   const onShowHide = () => {
     setShowHide((prev) => (prev ? "" : "line-clamp-4"));
   };
+
+  const onSearch = (search: string) => {
+    if (search) {
+      const filtered = variants.filter((variant) =>
+        variant.name.toLocaleLowerCase().includes(search)
+      );
+      setVariants(filtered);
+    } else {
+      setVariants(product?.variants);
+    }
+  };
+
   return (
     <div className={classnames("w-full mt-14 px-4")}>
       <main className="flex flex-wrap items-center justify-between bg-white px-4 py-2 rounded-md shadow">
@@ -45,7 +59,7 @@ export default function ProductDetails() {
 
       <section className="relative flex flex-col items-center w-full">
         <SectionDivider section="Variantes" />
-        <SearchBar onSearch={() => {}} placeholder="Buscar variantes" />
+        <SearchBar onSearch={onSearch} placeholder="Buscar variantes" />
         <SticyLink
           to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
           title="Nueva variante"
@@ -57,9 +71,10 @@ export default function ProductDetails() {
             "pt-7 px-4"
           )}
         >
-          {product.variants.map((variant) => (
-            <VariantCard key={variant.id} variant={variant} />
-          ))}
+          {variants &&
+            variants.map((variant) => (
+              <VariantCard key={variant.id} variant={variant} />
+            ))}
         </div>
       </section>
     </div>
