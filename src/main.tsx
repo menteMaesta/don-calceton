@@ -15,7 +15,6 @@ import GotoMail from "routes/Login/GoToMail";
 import MainGuest from "routes/Login/MainGuest";
 
 import { hasToken } from "routes/Dashboard/loader";
-import { dashboardActions } from "routes/Dashboard/actions";
 import Dashboard from "routes/Dashboard/Dashboard";
 
 import ErrorPage from "./Error/Error";
@@ -36,7 +35,6 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     errorElement: <ErrorPage />,
     loader: hasToken,
-    action: dashboardActions,
     children: [
       {
         index: true,
