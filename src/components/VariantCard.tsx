@@ -43,16 +43,18 @@ export default function VariantCard({ variant }: Props) {
           <i className="fa-solid fa-angle-left" />
         </button>
       )}
-      <img
-        className="max-h-64"
-        src={
-          variant.images[imageIndex]?.name
-            ? `${import.meta.env.VITE_BASE_URL}/${
-                variant.images[imageIndex]?.name
-              }`
-            : DefaultPic
-        }
-      />
+      <div className="w-full flex items-center justify-center">
+        <img
+          className="max-h-64"
+          src={
+            variant.images[imageIndex]?.name
+              ? `${import.meta.env.VITE_BASE_URL}/${
+                  variant.images[imageIndex]?.name
+                }`
+              : DefaultPic
+          }
+        />
+      </div>
       {variant.images.length > 1 && (
         <button
           onClick={handleNextImage}
