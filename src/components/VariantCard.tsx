@@ -1,5 +1,5 @@
 import { MouseEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import classnames from "classnames";
 import { Variant } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
@@ -9,6 +9,7 @@ type Props = {
   variant: Variant;
 };
 export default function VariantCard({ variant }: Props) {
+  const { productId = "" } = useParams();
   const [imageIndex, setImageIndex] = useState(0);
 
   const handleNextImage = (event: MouseEvent<HTMLButtonElement>) => {
@@ -27,7 +28,10 @@ export default function VariantCard({ variant }: Props) {
 
   return (
     <Link
-      to={ROUTES.VARIANT.replace(":variantId", `${variant.id}`)}
+      to={`${ROUTES.PRODUCT.replace(
+        ":productId",
+        productId
+      )}${ROUTES.VARIANT.replace(":variantId", `${variant.id}`)}`}
       className={classnames(
         "flex flex-wrap",
         "rounded py-2 px-4",
