@@ -99,6 +99,6 @@ export async function removeVariantImage({
       },
     }
   );
-  const data = await response.text();
+  const data = await response.json();
   return { data, status: response.status };
 }

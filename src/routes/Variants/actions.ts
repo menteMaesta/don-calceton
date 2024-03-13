@@ -65,8 +65,8 @@ const handleRemoveImage = async (form: FormData) => {
   const { data: response, status } = await removeVariantImage(removeImageData);
 
   if (status !== 200) {
-    return { message: response };
+    return response.errors ? response.errors[0] : response;
   } else {
-    return { message: "Success" };
+    return response.message;
   }
 };

@@ -42,6 +42,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Products />,
         loader: getProducts,
+        action: productsActions,
       },
       {
         path: ROUTES.NEW_PRODUCT,
