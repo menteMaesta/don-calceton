@@ -62,6 +62,7 @@ const router = createBrowserRouter([
         path: `${ROUTES.PRODUCT}${ROUTES.VARIANT}`,
         element: <Varaint />,
         loader: fetchVariant,
+        action: variantActions,
       },
     ],
   },

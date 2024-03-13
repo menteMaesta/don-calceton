@@ -1,5 +1,9 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { postVariant, postVariantImages } from "routes/Variants/api";
+import {
+  postVariant,
+  postVariantImages,
+  removeVariantImage,
+} from "routes/Variants/api";
 import { ROUTES } from "helpers/constants";
 import { VariantBase } from "helpers/customTypes";
 
@@ -9,6 +13,8 @@ export const variantActions = async ({ request }: ActionFunctionArgs) => {
   switch (variant) {
     case "create":
       return handleNewVariant(formData);
+    case "delete":
+      return handleRemoveImage(formData);
     default:
       break;
   }
@@ -46,5 +52,21 @@ const handleNewVariant = async (form: FormData) => {
         `${ROUTES.PRODUCT.replace(":productId", `${formData.productId}`)}`
       );
     }
+  }
+};
+
+const handleRemoveImage = async (form: FormData) => {
+  const formData = Object.fromEntries(form);
+  const removeImageData = formData as {
+    variantId: string;
+    imageId: string;
+  };
+
+  const { data: response, status } = await removeVariantImage(removeImageData);
+
+  if (status !== 200) {
+    return { message: response };
+  } else {
+    return { message: "Success" };
   }
 };

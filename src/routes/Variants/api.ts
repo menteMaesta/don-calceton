@@ -79,3 +79,26 @@ export async function getVariant(productId: string, variantId: string) {
   const data = await response.json();
   return { data, status: response.status };
 }
+
+export async function removeVariantImage({
+  variantId,
+  imageId,
+}: {
+  variantId: string;
+  imageId: string;
+}) {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(
+    `${
+      import.meta.env.VITE_BACKEND_URL
+    }/variants/${variantId}/images/${imageId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await response.text();
+  return { data, status: response.status };
+}
