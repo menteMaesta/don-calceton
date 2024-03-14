@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState, MouseEvent } from "react";
 import classnames from "classnames";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useSubmit, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
 import { Product } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import VariantCard from "components/VariantCard";
@@ -10,6 +11,9 @@ import SticyLink from "components/StickyLink";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
+  const actionData = useActionData() as any;
+  const submit = useSubmit();
+  const [openSnackbar] = useSnackbar();
   const [variants, setVariants] = useState(product?.variants);
   const [showHide, setShowHide] = useState<string>("line-clamp-4");
 
@@ -27,6 +31,29 @@ export default function ProductDetails() {
       setVariants(product?.variants);
     }
   };
+
+  const handleRemove = (event: MouseEvent<HTMLElement>, variantId: string) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("products", "deleteVariant");
+    formData.append("variantId", variantId);
+    formData.append("productId", `${product.id}`);
+    submit(formData, { method: "post" });
+  };
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+  }, [actionData]);
+
+  useEffect(() => {
+    if (actionData?.statusText === "200") {
+      setVariants((prev) =>
+        prev.filter((variant) => `${variant.id}` !== actionData.id || "")
+      );
+    }
+  }, [actionData]);
 
   return (
     <div className={classnames("w-full mt-14 px-4")}>
@@ -73,7 +100,11 @@ export default function ProductDetails() {
         >
           {variants &&
             variants.map((variant) => (
-              <VariantCard key={variant.id} variant={variant} />
+              <VariantCard
+                key={variant.id}
+                variant={variant}
+                onRemove={handleRemove}
+              />
             ))}
         </div>
       </section>

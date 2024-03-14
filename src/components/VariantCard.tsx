@@ -7,8 +7,9 @@ import DefaultPic from "assets/default-pic.png";
 
 type Props = {
   variant: Variant;
+  onRemove: (event: MouseEvent<HTMLElement>, variantId: string) => void;
 };
-export default function VariantCard({ variant }: Props) {
+export default function VariantCard({ variant, onRemove }: Props) {
   const { productId = "" } = useParams();
   const [imageIndex, setImageIndex] = useState(0);
 
@@ -39,6 +40,16 @@ export default function VariantCard({ variant }: Props) {
         "items-center justify-center"
       )}
     >
+      <i
+        role="button"
+        onClick={(event) => onRemove(event, `${variant.id}`)}
+        className={classnames(
+          "absolute right-2 top-2",
+          "fa-solid fa-circle-xmark",
+          "text-gray-300",
+          "hover:text-gray-500 active:text-gray-500"
+        )}
+      />
       {variant.images.length > 1 && (
         <button
           onClick={handlePrevImage}

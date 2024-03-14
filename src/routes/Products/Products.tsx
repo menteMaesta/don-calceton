@@ -28,7 +28,7 @@ export default function Products() {
   const handleRemove = (event: MouseEvent<HTMLElement>, productId: string) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("products", "delete");
+    formData.append("products", "deleteProduct");
     formData.append("productId", productId);
     submit(formData, { method: "post" });
   };
