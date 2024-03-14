@@ -2,9 +2,10 @@ import { MouseEvent, useEffect, ChangeEvent } from "react";
 import classnames from "classnames";
 import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
-import { Variant, ErrorType } from "helpers/customTypes";
+import { Variant, ErrorType, VariantBase } from "helpers/customTypes";
 import DefaultPic from "assets/default-pic.png";
 import SectionDivider from "components/SectionDivider";
+import VariantData from "components/VariantData";
 
 export default function VariantDetails() {
   const variant = useLoaderData() as Variant;
@@ -18,6 +19,15 @@ export default function VariantDetails() {
     formData.append("variant", "delete");
     formData.append("variantId", `${variant.id}`);
     formData.append("imageId", imageId);
+    submit(formData, { method: "post" });
+  };
+
+  const onEdit = (data: VariantBase) => {
+    const formData = new FormData();
+    formData.append("variant", "editVariant");
+    formData.append("productId", `${variant.productId}`);
+    formData.append("variantId", `${variant.id}`);
+    formData.append("data", JSON.stringify(data));
     submit(formData, { method: "post" });
   };
 
@@ -44,10 +54,7 @@ export default function VariantDetails() {
 
   return (
     <div className={classnames("w-full mt-14 px-4")}>
-      <main className="flex flex-wrap items-center justify-between bg-white px-4 py-2 rounded-md shadow">
-        <p className="text-2xl w-full font-bold">{variant.name}</p>
-        <p>stock: {variant.quantity}</p>
-      </main>
+      <VariantData variant={variant} onEditData={onEdit} />
 
       <section className="relative flex flex-col items-center w-full">
         <SectionDivider section="Imagenes" />
@@ -84,6 +91,7 @@ export default function VariantDetails() {
               >
                 <i
                   role="button"
+                  title="eliminar"
                   onClick={(event) => onRemove(event, `${image.id}`)}
                   className={classnames(
                     "absolute right-2 top-2",

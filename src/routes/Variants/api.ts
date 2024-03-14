@@ -80,6 +80,29 @@ export async function getVariant(productId: string, variantId: string) {
   return { data, status: response.status };
 }
 
+export async function putVariant(
+  productId: string,
+  variantId: string,
+  editData: VariantBase
+) {
+  const token = localStorage.getItem("accessToken");
+  const response = await fetch(
+    `${
+      import.meta.env.VITE_BACKEND_URL
+    }/products/${productId}/variants/${variantId}`,
+    {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(editData),
+    }
+  );
+  const data = await response.json();
+  return { data, status: response.status };
+}
+
 export async function removeVariant({
   variantId,
   productId,
