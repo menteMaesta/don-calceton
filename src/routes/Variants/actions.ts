@@ -15,6 +15,8 @@ export const variantActions = async ({ request }: ActionFunctionArgs) => {
       return handleNewVariant(formData);
     case "delete":
       return handleRemoveImage(formData);
+    case "createImages":
+      return handleAddImages(formData);
     default:
       break;
   }
@@ -52,6 +54,21 @@ const handleNewVariant = async (form: FormData) => {
         `${ROUTES.PRODUCT.replace(":productId", `${formData.productId}`)}`
       );
     }
+  }
+};
+
+const handleAddImages = async (form: FormData) => {
+  const formData = Object.fromEntries(form);
+
+  const { data: response, status } = await postVariantImages({
+    variantId: formData.variantId as string,
+    formData: form,
+  });
+
+  if (status !== 200) {
+    return response.errors ? response.errors[0] : response;
+  } else {
+    return response.message;
   }
 };
 

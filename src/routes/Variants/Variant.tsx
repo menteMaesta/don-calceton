@@ -1,12 +1,10 @@
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useEffect, ChangeEvent } from "react";
 import classnames from "classnames";
 import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import { Variant, ErrorType } from "helpers/customTypes";
-import { ROUTES } from "helpers/constants";
 import DefaultPic from "assets/default-pic.png";
 import SectionDivider from "components/SectionDivider";
-import SticyLink from "components/StickyLink";
 
 export default function VariantDetails() {
   const variant = useLoaderData() as Variant;
@@ -21,6 +19,21 @@ export default function VariantDetails() {
     formData.append("variantId", `${variant.id}`);
     formData.append("imageId", imageId);
     submit(formData, { method: "post" });
+  };
+
+  const onFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const files = event.target.files;
+
+    const formData = new FormData();
+    formData.append("variant", "createImages");
+    formData.append("variantId", `${variant.id}`);
+    if (files) {
+      for (const file of files) {
+        formData.append("images[]", file, file.name);
+      }
+    }
+    submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
   useEffect(() => {
@@ -38,10 +51,19 @@ export default function VariantDetails() {
 
       <section className="relative flex flex-col items-center w-full">
         <SectionDivider section="Imagenes" />
-        <SticyLink
-          to={ROUTES.NEW_VARIANT.replace(":productId", `${variant.id}`)}
-          title="Subir imagenes"
-        />
+        <label className={classnames("w-fit sticky top-12 z-10 mt-4")}>
+          <p className="bg-slate-700 w-fit p-2 text-white rounded cursor-pointer sticky top-12 z-10">
+            Imagenes (PNG, JPG)
+          </p>
+          <input
+            className="opacity-0 w-0 h-0 absolute -top-1"
+            type="file"
+            name="images"
+            accept=".jpg, .jpeg, .png"
+            multiple
+            onChange={onFileSelect}
+          />
+        </label>
         <div
           className={classnames(
             "grid grid-cols-1 gap-4",
