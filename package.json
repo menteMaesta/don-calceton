@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "imports": {
     "src/*": "./src/*",
@@ -26,6 +30,8 @@
     "react-simple-snackbar": "^1.1.11"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -35,10 +41,12 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
-    "vite-plugin-svgr": "^4.2.0"
+    "vite-plugin-svgr": "^4.2.0",
+    "vitest": "^1.4.0"
   }
 }

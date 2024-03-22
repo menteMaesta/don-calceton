@@ -27,7 +27,8 @@
       "assets/*": ["./src/assets/*"],
       "helpers/*": ["./src/helpers/*"],
       "components/*": ["./src/components/*"]
-    }
+    },
+    "types": ["@testing-library/jest-dom", "vitest/globals"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
