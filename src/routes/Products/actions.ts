@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { postProduct, deleteProduct } from "routes/Products/api";
+import { postProduct, deleteProduct, putProduct } from "routes/Products/api";
 import { removeVariant } from "routes/Variants/api";
 import { ROUTES } from "helpers/constants";
 
@@ -9,6 +9,8 @@ export const productsActions = async ({ request }: ActionFunctionArgs) => {
   switch (products) {
     case "create":
       return handleNewProduct(formData);
+    case "editProduct":
+      return handleEditProduct(formData);
     case "deleteProduct":
       return handleDeleteProduct(formData);
     case "deleteVariant":
@@ -26,6 +28,25 @@ export const handleNewProduct = async (form: FormData) => {
     price: Number(formData.price),
     description: formData.description as string,
   });
+
+  if (status !== 200) {
+    return response.errors ? response.errors[0] : response;
+  } else {
+    return redirect(ROUTES.DASHBOARD);
+  }
+};
+
+export const handleEditProduct = async (form: FormData) => {
+  const formData = Object.fromEntries(form);
+
+  const { data: response, status } = await putProduct(
+    {
+      name: formData.name as string,
+      price: Number(formData.price),
+      description: formData.description as string,
+    },
+    formData.productId as string
+  );
 
   if (status !== 200) {
     return response.errors ? response.errors[0] : response;
