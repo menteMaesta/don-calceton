@@ -28,10 +28,10 @@ export default function VariantData({ variant, onEditData }: Props) {
 
   const onEdit = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    setEdit((prev) => !prev);
-    if (!edit) {
-      setData(variant);
+    if (edit) {
+      setData((prev) => ({ ...prev, ...variant }));
     }
+    setEdit((prev) => !prev);
   };
 
   const onSave = (event: MouseEvent<HTMLElement>) => {

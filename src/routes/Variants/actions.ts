@@ -61,7 +61,6 @@ const handleNewVariant = async (form: FormData) => {
 };
 
 const handleEditVariant = async (form: FormData) => {
-  console.log("PASA");
   const formData = Object.fromEntries(form);
   const variantData = JSON.parse(formData.data as string);
 
