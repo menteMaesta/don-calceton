@@ -9,6 +9,7 @@ import SectionDivider from "components/SectionDivider";
 import SearchBar from "components/SearchBar";
 import SticyLink from "components/StickyLink";
 import ProductData from "components/ProductData";
+import EmptyState from "components/EmptyState";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
@@ -19,7 +20,7 @@ export default function ProductDetails() {
 
   const onSearch = (search: string) => {
     if (search) {
-      const filtered = variants.filter((variant) =>
+      const filtered = product?.variants.filter((variant) =>
         variant.name.toLocaleLowerCase().includes(search)
       );
       setVariants(filtered);
@@ -76,7 +77,7 @@ export default function ProductDetails() {
           className={classnames(
             "grid grid-cols-1 gap-4",
             "sm:grid-cols-3 w-full",
-            "pt-7 px-4"
+            "mt-7 px-4"
           )}
         >
           {variants &&
@@ -88,6 +89,7 @@ export default function ProductDetails() {
               />
             ))}
         </div>
+        {variants.length === 0 && <EmptyState name="variantes" />}
       </section>
     </div>
   );

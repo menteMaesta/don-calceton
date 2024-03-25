@@ -9,11 +9,11 @@ type Props = {
 
 export default function ProductData({ product, onEditData }: Props) {
   const [data, setData] = useState<ProductBase>(product);
-  const [showHide, setShowHide] = useState<string>("line-clamp-4");
+  const [showHide, setShowHide] = useState<string>("line-clamp-2");
   const [edit, setEdit] = useState(false);
 
   const onShowHide = () => {
-    setShowHide((prev) => (prev ? "" : "line-clamp-4"));
+    setShowHide((prev) => (prev ? "" : "line-clamp-2"));
   };
 
   const onEdit = (event: MouseEvent<HTMLElement>) => {

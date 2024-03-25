@@ -5,6 +5,7 @@ import { useSnackbar } from "react-simple-snackbar";
 import SearchBar from "components/SearchBar";
 import ProductCard from "components/ProductCard";
 import SticyLink from "components/StickyLink";
+import EmptyState from "components/EmptyState";
 import { Product } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
@@ -17,7 +18,7 @@ export default function Products() {
 
   const onSearch = (search: string) => {
     if (search) {
-      const filtered = products.filter((product) =>
+      const filtered = data.filter((product) =>
         product.name.toLocaleLowerCase().includes(search)
       );
       setProducts(filtered);
@@ -48,7 +49,7 @@ export default function Products() {
   }, [actionData]);
 
   return (
-    <div className="mt-11 flex flex-col items-center w-full">
+    <div className="mt-11 flex flex-col items-center w-full h-full">
       <SearchBar onSearch={onSearch} placeholder="Buscar productos" />
       <SticyLink to={ROUTES.NEW_PRODUCT} title="Nuevo producto" />
       <div
@@ -67,6 +68,7 @@ export default function Products() {
             />
           ))}
       </div>
+      {products.length === 0 && <EmptyState name="productos" />}
     </div>
   );
 }
