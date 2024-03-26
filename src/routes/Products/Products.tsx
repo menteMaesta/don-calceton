@@ -26,6 +26,7 @@ export default function Products() {
       setProducts(data);
     }
   };
+
   const handleRemove = (event: MouseEvent<HTMLElement>, productId: string) => {
     event.preventDefault();
     const formData = new FormData();

@@ -38,16 +38,6 @@ export default function ProductDetails() {
     submit(formData, { method: "post" });
   };
 
-  const onEdit = (data: ProductBase) => {
-    const formData = new FormData();
-    formData.append("products", "editProduct");
-    formData.append("productId", `${product.id}`);
-    formData.append("name", data.name);
-    formData.append("price", `${data.price}`);
-    formData.append("description", data.description);
-    submit(formData, { method: "post" });
-  };
-
   useEffect(() => {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
@@ -64,7 +54,7 @@ export default function ProductDetails() {
 
   return (
     <div className={classnames("w-full mt-14 px-4")}>
-      <ProductData product={product} onEditData={onEdit} />
+      <ProductData product={product} />
 
       <section className="relative flex flex-col items-center w-full">
         <SectionDivider section="Variantes" />

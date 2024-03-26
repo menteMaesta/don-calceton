@@ -20,6 +20,7 @@ import Dashboard from "routes/Dashboard/Dashboard";
 import ErrorPage from "./Error/Error";
 
 import Products from "routes/Products/Products";
+import EditProduct from "routes/Products/EditProduct";
 import { getProducts, getProduct } from "routes/Products/loader";
 
 import NewProduct from "routes/Products/NewProduct";
@@ -54,6 +55,12 @@ const router = createBrowserRouter([
         loader: getProduct,
         action: productsActions,
         element: <ProductDetails />,
+      },
+      {
+        path: ROUTES.EDIT_PRODUCT,
+        loader: getProduct,
+        action: productsActions,
+        element: <EditProduct />,
       },
       {
         path: ROUTES.NEW_VARIANT,
