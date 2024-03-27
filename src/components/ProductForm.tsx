@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { ProductBase } from "helpers/customTypes";
+import Button from "./Button";
 
 type Props = {
   data?: ProductBase;
@@ -71,7 +72,7 @@ export default function ProductForm({
         />
       </label>
       <div className="flex flex-row space-x-5">
-        <button
+        <Button
           disabled={
             data?.name === "" ||
             data?.description === "" ||
@@ -79,15 +80,9 @@ export default function ProductForm({
           }
           type="submit"
           name="products"
-          className={classnames(
-            "bg-slate-700 text-white font-medium",
-            "rounded py-1 px-4 mt-2",
-            "active:bg-slate-800",
-            "disabled:bg-slate-300 disabled:cursor-not-allowed"
-          )}
         >
           Guardar
-        </button>
+        </Button>
         <Link
           to={cancelLink}
           type="button"

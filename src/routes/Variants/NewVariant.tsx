@@ -5,6 +5,7 @@ import classnames from "classnames";
 import { VariantBase, Blob, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import ImageCard from "components/ImageCard";
+import Button from "components/Button";
 
 export default function NewVariant() {
   const { productId = "" } = useParams();
@@ -137,7 +138,7 @@ export default function NewVariant() {
         </div>
 
         <div className="flex flex-row space-x-5">
-          <button
+          <Button
             disabled={
               data?.name === "" ||
               data?.quantity === undefined ||
@@ -147,16 +148,10 @@ export default function NewVariant() {
             type="submit"
             name="variant"
             value="create"
-            className={classnames(
-              "bg-slate-700 text-white font-medium",
-              "rounded py-1 px-4 mt-2",
-              "active:bg-slate-800",
-              "disabled:bg-slate-300 disabled:cursor-not-allowed"
-            )}
             onClick={onSave}
           >
             Guardar
-          </button>
+          </Button>
           <Link
             to={`${ROUTES.PRODUCT.replace(":productId", productId)}`}
             type="button"

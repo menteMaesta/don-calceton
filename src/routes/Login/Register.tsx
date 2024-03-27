@@ -2,6 +2,7 @@ import { useState, ChangeEvent, Fragment, useEffect } from "react";
 import { Form, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
+import Button from "components/Button";
 import { RegisterData, ErrorType } from "helpers/customTypes";
 
 export default function Register() {
@@ -74,19 +75,14 @@ export default function Register() {
           />
         </label>
 
-        <button
+        <Button
           disabled={!data.fullName || !data.email || !data.password}
           type="submit"
           name="user"
           value="register"
-          className={classnames(
-            "bg-slate-800 text-white font-medium",
-            "rounded py-1 px-4 mt-2",
-            "disabled:bg-slate-300 disabled:cursor-not-allowed"
-          )}
         >
           Guardar
-        </button>
+        </Button>
       </Form>
     </Fragment>
   );

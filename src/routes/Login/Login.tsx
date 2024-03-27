@@ -2,6 +2,7 @@ import { useState, ChangeEvent, Fragment, useEffect } from "react";
 import { Form, Link, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
+import Button from "components/Button";
 import { ROUTES } from "helpers/constants";
 import { ErrorType } from "helpers/customTypes";
 
@@ -69,19 +70,14 @@ export default function Login() {
         >
           olvidaste tu contraseña?
         </Link>
-        <button
+        <Button
           disabled={!data.email || !data.password}
           type="submit"
           name="user"
           value="login"
-          className={classnames(
-            "bg-slate-800 text-white font-medium",
-            "rounded py-1 px-4 mt-2",
-            "disabled:bg-slate-300 disabled:cursor-not-allowed"
-          )}
         >
           Guardar
-        </button>
+        </Button>
       </Form>
     </Fragment>
   );

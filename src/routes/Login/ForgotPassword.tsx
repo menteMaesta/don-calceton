@@ -2,6 +2,7 @@ import { useState, ChangeEvent, Fragment, useEffect } from "react";
 import { Form, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
+import Button from "components/Button";
 import { ErrorType } from "helpers/customTypes";
 
 export default function ForgotPassword() {
@@ -53,19 +54,14 @@ export default function ForgotPassword() {
           />
         </label>
 
-        <button
+        <Button
           disabled={!data.email}
           type="submit"
           name="user"
           value="forgot_password"
-          className={classnames(
-            "bg-slate-800 text-white font-medium",
-            "rounded py-1 px-4 mt-2",
-            "disabled:bg-slate-300 disabled:cursor-not-allowed"
-          )}
         >
           Enviar
-        </button>
+        </Button>
       </Form>
     </Fragment>
   );
