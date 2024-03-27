@@ -1,6 +1,6 @@
 import { MouseEvent, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import classnames from "classnames";
+import { useParams } from "react-router-dom";
+import ElementCard from "components/ElementCard";
 import { Variant } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import DefaultPic from "assets/default-pic.png";
@@ -28,28 +28,25 @@ export default function VariantCard({ variant, onRemove }: Props) {
   };
 
   return (
-    <Link
-      to={`${ROUTES.PRODUCT.replace(
+    <ElementCard
+      elementId={`${variant.id}`}
+      title={variant.name}
+      type="variant"
+      onRemove={onRemove}
+      route={`${ROUTES.PRODUCT.replace(
         ":productId",
         productId
       )}${ROUTES.VARIANT.replace(":variantId", `${variant.id}`)}`}
-      className={classnames(
-        "flex flex-wrap",
-        "rounded py-2 px-4",
-        "bg-white shadow relative",
-        "items-center justify-center"
-      )}
+      footer={
+        <div className="flex px-2">
+          <p className="w-3/5 text-lg font-semibold">{variant.name}</p>
+          <p className="w-2/5 pt-2 px-2 mb-2 text-right">
+            <span className="text-sm">stock: </span>
+            {variant.quantity}
+          </p>
+        </div>
+      }
     >
-      <i
-        role="button"
-        onClick={(event) => onRemove(event, `${variant.id}`)}
-        className={classnames(
-          "absolute right-2 top-2",
-          "fa-solid fa-circle-xmark",
-          "text-gray-300",
-          "hover:text-gray-500 active:text-gray-500"
-        )}
-      />
       {variant.images.length > 1 && (
         <button
           onClick={handlePrevImage}
@@ -78,11 +75,6 @@ export default function VariantCard({ variant, onRemove }: Props) {
           <i className="fa-solid fa-angle-right" />
         </button>
       )}
-      <p className="w-3/5 text-lg font-semibold">{variant.name}</p>
-      <p className="w-2/5 pt-2 px-2 mb-2 text-right">
-        <span className="text-sm">stock: </span>
-        {variant.quantity}
-      </p>
-    </Link>
+    </ElementCard>
   );
 }
