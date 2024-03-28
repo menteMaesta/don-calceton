@@ -14,6 +14,7 @@ export default function Button({ disabled, children, ...props }: Props) {
       className={classnames(
         "bg-slate-800 text-white font-medium",
         "rounded py-1 px-4",
+        "active:bg-slate-800",
         "disabled:bg-slate-300 disabled:cursor-not-allowed",
         className
       )}

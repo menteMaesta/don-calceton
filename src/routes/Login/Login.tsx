@@ -3,13 +3,17 @@ import { Form, Link, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import Button from "components/Button";
+import PasswordInput from "components/PasswordInput";
 import { ROUTES } from "helpers/constants";
 import { ErrorType } from "helpers/customTypes";
 
 export default function Login() {
   const actionData = useActionData() as ErrorType;
   const [openSnackbar] = useSnackbar();
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
   const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, password: event.target.value }));
@@ -45,21 +49,21 @@ export default function Login() {
             value={data.email}
             onChange={onChangeEmail}
             placeholder="calcetas@mail.com"
-            className="rounded-lg border-slate-400 border py-2 px-3"
+            className={classnames(
+              "rounded-lg border",
+              "border-slate-400",
+              "py-2 px-3 w-full"
+            )}
           />
         </label>
 
-        <label>
-          <p>contraseña</p>
-          <input
-            type="password"
-            name="password"
-            value={data.password}
-            onChange={onChangePassword}
-            placeholder="tu contraseña"
-            className="rounded-lg border-slate-400 border py-2 px-3"
-          />
-        </label>
+        <PasswordInput
+          label="contraseña"
+          name="password"
+          value={data.password}
+          onChange={onChangePassword}
+          placeholder="tu contraseña"
+        />
         <Link
           to={ROUTES.FORGOT_PASSWORD}
           className={classnames(

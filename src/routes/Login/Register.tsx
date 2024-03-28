@@ -3,6 +3,7 @@ import { Form, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import Button from "components/Button";
+import PasswordInput from "components/PasswordInput";
 import { RegisterData, ErrorType } from "helpers/customTypes";
 
 export default function Register() {
@@ -63,17 +64,13 @@ export default function Register() {
           />
         </label>
 
-        <label>
-          <p>contraseña</p>
-          <input
-            type="password"
-            name="password"
-            value={data.password}
-            onChange={onChange}
-            placeholder="tu contraseña"
-            className="rounded-lg border-slate-400 border py-2 px-3"
-          />
-        </label>
+        <PasswordInput
+          label="contraseña"
+          name="password"
+          value={data.password}
+          onChange={onChange}
+          placeholder="tu contraseña"
+        />
 
         <Button
           disabled={!data.fullName || !data.email || !data.password}

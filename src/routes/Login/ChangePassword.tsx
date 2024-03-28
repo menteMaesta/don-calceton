@@ -3,6 +3,7 @@ import { useSubmit, useParams, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import Button from "components/Button";
+import PasswordInput from "components/PasswordInput";
 import { ErrorType } from "helpers/customTypes";
 
 export default function ChangePassword() {
@@ -46,29 +47,21 @@ export default function ChangePassword() {
       <p className="text-3xl font-bold text-slate-600">Cambio de contraseña</p>
 
       <div className="flex flex-col mt-16 space-y-6">
-        <label>
-          <p>Nueva contraseña</p>
-          <input
-            type="password"
-            name="password"
-            value={data.password}
-            onChange={onChange}
-            placeholder="tu contraseña"
-            className="rounded-lg border-slate-400 border py-2 px-3"
-          />
-        </label>
+        <PasswordInput
+          label="Nueva contraseña"
+          name="password"
+          value={data.password}
+          onChange={onChange}
+          placeholder="tu contraseña"
+        />
 
-        <label>
-          <p>Confirma la contraseña</p>
-          <input
-            type="password"
-            name="confirm_password"
-            value={data.confirm_password}
-            onChange={onChange}
-            placeholder="tu contraseña"
-            className="rounded-lg border-slate-400 border py-2 px-3"
-          />
-        </label>
+        <PasswordInput
+          label="Confirma la contraseña"
+          name="confirm_password"
+          value={data.confirm_password}
+          onChange={onChange}
+          placeholder="tu contraseña"
+        />
 
         <Button
           disabled={
