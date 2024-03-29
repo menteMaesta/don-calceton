@@ -3,6 +3,7 @@ import { Form, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import Button from "components/Button";
+import Input from "components/Input";
 import { ErrorType } from "helpers/customTypes";
 
 export default function ForgotPassword() {
@@ -42,17 +43,14 @@ export default function ForgotPassword() {
       </p>
 
       <Form className="flex flex-col mt-12 space-y-6" method="post">
-        <label>
-          <p>correo</p>
-          <input
-            type="email"
-            name="email"
-            value={data.email}
-            onChange={onChangeEmail}
-            placeholder="calcetas@mail.com"
-            className="rounded-lg border-slate-400 border py-2 px-3"
-          />
-        </label>
+        <Input
+          label="Correo"
+          type="email"
+          name="email"
+          value={data.email}
+          onChange={onChangeEmail}
+          placeholder="calcetas@mail.com"
+        />
 
         <Button
           disabled={!data.email}

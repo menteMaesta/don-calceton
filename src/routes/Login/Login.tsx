@@ -4,6 +4,7 @@ import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import Button from "components/Button";
 import PasswordInput from "components/PasswordInput";
+import Input from "components/Input";
 import { ROUTES } from "helpers/constants";
 import { ErrorType } from "helpers/customTypes";
 
@@ -41,29 +42,23 @@ export default function Login() {
       <p className="text-3xl font-bold text-slate-600">Don Calcetón</p>
 
       <Form className="flex flex-col mt-16 space-y-6" method="post">
-        <label>
-          <p>correo</p>
-          <input
-            type="email"
-            name="email"
-            value={data.email}
-            onChange={onChangeEmail}
-            placeholder="calcetas@mail.com"
-            className={classnames(
-              "rounded-lg border",
-              "border-slate-400",
-              "py-2 px-3 w-full"
-            )}
-          />
-        </label>
+        <Input
+          label="Correo"
+          type="email"
+          name="email"
+          value={data.email}
+          onChange={onChangeEmail}
+          placeholder="calcetas@mail.com"
+        />
 
         <PasswordInput
-          label="contraseña"
+          label="Contraseña"
           name="password"
           value={data.password}
           onChange={onChangePassword}
           placeholder="tu contraseña"
         />
+
         <Link
           to={ROUTES.FORGOT_PASSWORD}
           className={classnames(

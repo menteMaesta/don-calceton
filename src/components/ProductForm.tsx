@@ -2,7 +2,8 @@ import { ChangeEvent, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { ProductBase } from "helpers/customTypes";
-import Button from "./Button";
+import Button from "components/Button";
+import Input from "components/Input";
 
 type Props = {
   data?: ProductBase;
@@ -24,38 +25,26 @@ export default function ProductForm({
       className="flex flex-col mt-14 space-y-6 items-center"
       onSubmit={onSubmit}
     >
-      <label className="w-full sm:w-3/6">
-        <p>Nombre</p>
-        <input
-          name="name"
-          placeholder="Playera"
-          value={data?.name || ""}
-          onChange={onChange}
-          className={classnames(
-            "rounded-lg",
-            "border-slate-400 border",
-            "py-2 px-3",
-            "w-full"
-          )}
-        />
-      </label>
-      <label className="w-full sm:w-3/6">
-        <p>Precio base</p>
-        <input
-          type="number"
-          name="price"
-          step="0.01"
-          placeholder="150.30"
-          value={data?.price || ""}
-          onChange={onChange}
-          className={classnames(
-            "rounded-lg",
-            "border-slate-400 border",
-            "py-2 px-3",
-            "w-full"
-          )}
-        />
-      </label>
+      <Input
+        label="Nombre"
+        name="name"
+        placeholder="Playera"
+        value={data?.name || ""}
+        onChange={onChange}
+        labelClassName="w-full sm:w-3/6"
+      />
+
+      <Input
+        label="Precio base"
+        type="number"
+        name="price"
+        step="0.01"
+        placeholder="150.30"
+        value={data?.price || ""}
+        onChange={onChange}
+        labelClassName="w-full sm:w-3/6"
+      />
+
       <label className="w-full sm:w-3/6">
         <p>Descripción</p>
         <textarea

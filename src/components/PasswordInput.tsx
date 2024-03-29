@@ -27,6 +27,7 @@ export default function PasswordInput({ label, className, ...other }: props) {
         {...other}
       />
       <button
+        type="button"
         className={classnames(
           "absolute top-9 right-2",
           "fa-solid",

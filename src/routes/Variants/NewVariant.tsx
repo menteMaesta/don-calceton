@@ -6,6 +6,7 @@ import { VariantBase, Blob, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import ImageCard from "components/ImageCard";
 import Button from "components/Button";
+import Input from "components/Input";
 
 export default function NewVariant() {
   const { productId = "" } = useParams();
@@ -75,43 +76,28 @@ export default function NewVariant() {
     <div className="mt-11 w-full px-4">
       <p className="mt-9 font-semibold text-center text-lg">Nueva variante</p>
       <div className="flex flex-col mt-14 space-y-6 items-center">
-        <label className="w-full sm:w-3/6">
-          <p>Nombre</p>
-          <input
-            name="name"
-            placeholder="Playera rosa"
-            value={data?.name || ""}
-            onChange={onChange}
-            className={classnames(
-              "rounded-lg",
-              "border-slate-400 border",
-              "py-2 px-3",
-              "w-full"
-            )}
-          />
-        </label>
-        <label className="w-full sm:w-3/6">
-          <p>Stock</p>
-          <input
-            type="number"
-            name="quantity"
-            step="1"
-            placeholder="50"
-            value={data?.quantity || ""}
-            onChange={onChange}
-            className={classnames(
-              "rounded-lg",
-              "border-slate-400 border",
-              "py-2 px-3",
-              "w-full"
-            )}
-          />
-          {!valid && (
-            <p className="text-red-900 text-sm pl-2">
-              Solo se pueden guardar valores enteros
-            </p>
-          )}
-        </label>
+        <Input
+          label="Nombre"
+          name="name"
+          placeholder="Playera rosa"
+          value={data?.name || ""}
+          onChange={onChange}
+          labelClassName="w-full sm:w-3/6"
+        />
+
+        <Input
+          label="Stock"
+          type="number"
+          name="quantity"
+          step="1"
+          placeholder="50"
+          value={data?.quantity || ""}
+          onChange={onChange}
+          labelClassName="w-full sm:w-3/6"
+          helpText={
+            valid ? undefined : "Solo se pueden guardar valores enteros"
+          }
+        />
 
         <label className="w-fit">
           <p className="bg-slate-700 w-fit p-2 text-white rounded cursor-pointer">
