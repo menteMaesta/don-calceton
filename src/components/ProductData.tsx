@@ -35,7 +35,9 @@ export default function ProductData({ product }: Props) {
         )}
       />
 
-      <p className="text-2xl w-2/5 font-bold">{product.name}</p>
+      <p className="text-2xl w-2/5 font-bold" data-testid="product-name">
+        {product.name}
+      </p>
       <p
         className={classnames(
           "bg-black text-white",

@@ -53,7 +53,7 @@ export default function ProductDetails() {
   }, [actionData]);
 
   return (
-    <div className={classnames("w-full mt-14 px-4")}>
+    <div className={classnames("w-full mt-14 px-4")} data-testid="product-page">
       <ProductData product={product} />
 
       <section className="relative flex flex-col items-center w-full">

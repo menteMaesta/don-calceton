@@ -13,6 +13,7 @@ export default function SearchBar({ onSearch, placeholder = "Buscar" }: Props) {
   return (
     <div className="mt-4 w-full flex justify-center items-center">
       <input
+        data-testid="search-bar"
         type="search"
         name="search"
         onChange={onChange}

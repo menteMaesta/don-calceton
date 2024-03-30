@@ -22,7 +22,7 @@ describe("ProductCard", () => {
       </BrowserRouter>
     );
     const image = getByTestId("product-img_1") as HTMLImageElement;
-    const link = getByTestId("product-card-link_1") as HTMLAnchorElement;
+    const link = getByTestId("product-link_1") as HTMLAnchorElement;
 
     expect(link.getAttribute("href")).toEqual("/products/1");
     expect(getByTestId("product-name_1").innerHTML).toEqual("Test Product");
