@@ -12,7 +12,7 @@ import { ROUTES } from "helpers/constants";
 export default function Products() {
   const data = useLoaderData() as Product[];
   const submit = useSubmit();
-  const actionData = useActionData() as ErrorType;
+  const actionData = useActionData() as ErrorType & { id: string };
   const [openSnackbar] = useSnackbar();
   const [products, setProducts] = useState<Product[]>(data);
 

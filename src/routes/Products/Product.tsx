@@ -13,7 +13,7 @@ import EmptyState from "components/EmptyState";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
-  const actionData = useActionData() as ErrorType;
+  const actionData = useActionData() as ErrorType & { id: string };
   const submit = useSubmit();
   const [openSnackbar] = useSnackbar();
   const [variants, setVariants] = useState(product?.variants);
