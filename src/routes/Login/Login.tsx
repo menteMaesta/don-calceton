@@ -28,7 +28,7 @@ export default function Login() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   return (
     <Fragment>

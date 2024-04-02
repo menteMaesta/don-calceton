@@ -70,7 +70,7 @@ export default function NewVariant() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   return (
     <div className="mt-11 w-full px-4">

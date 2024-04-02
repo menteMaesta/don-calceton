@@ -6,13 +6,13 @@ import SearchBar from "components/SearchBar";
 import ProductCard from "components/ProductCard";
 import SticyLink from "components/StickyLink";
 import EmptyState from "components/EmptyState";
-import { Product } from "helpers/customTypes";
+import { Product, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
 export default function Products() {
   const data = useLoaderData() as Product[];
   const submit = useSubmit();
-  const actionData = useActionData() as any;
+  const actionData = useActionData() as ErrorType;
   const [openSnackbar] = useSnackbar();
   const [products, setProducts] = useState<Product[]>(data);
 
@@ -39,7 +39,7 @@ export default function Products() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   useEffect(() => {
     if (actionData?.statusText === "200") {

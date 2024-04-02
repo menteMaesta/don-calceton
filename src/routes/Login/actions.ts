@@ -9,8 +9,8 @@ import { LoginData, RegisterData, ResetPassword } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
 export const loginActions = async ({ request }: ActionFunctionArgs) => {
-  let formData = await request.formData();
-  let user = formData.get("user");
+  const formData = await request.formData();
+  const user = formData.get("user");
   switch (user) {
     case "login":
       return handleLogin(formData);

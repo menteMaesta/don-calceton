@@ -2,7 +2,7 @@ import { useEffect, useState, MouseEvent } from "react";
 import classnames from "classnames";
 import { useLoaderData, useSubmit, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
-import { Product, ProductBase } from "helpers/customTypes";
+import { Product, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import VariantCard from "components/VariantCard";
 import SectionDivider from "components/SectionDivider";
@@ -13,7 +13,7 @@ import EmptyState from "components/EmptyState";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
-  const actionData = useActionData() as any;
+  const actionData = useActionData() as ErrorType;
   const submit = useSubmit();
   const [openSnackbar] = useSnackbar();
   const [variants, setVariants] = useState(product?.variants);
@@ -42,7 +42,7 @@ export default function ProductDetails() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   useEffect(() => {
     if (actionData?.statusText === "200") {

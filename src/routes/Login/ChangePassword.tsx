@@ -33,7 +33,7 @@ export default function ChangePassword() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   return (
     <Fragment>

@@ -18,7 +18,7 @@ export default function ForgotPassword() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   return (
     <Fragment>

@@ -9,8 +9,8 @@ import { ROUTES } from "helpers/constants";
 import { VariantBase } from "helpers/customTypes";
 
 export const variantActions = async ({ request }: ActionFunctionArgs) => {
-  let formData = await request.formData();
-  let variant = formData.get("variant");
+  const formData = await request.formData();
+  const variant = formData.get("variant");
   switch (variant) {
     case "create":
       return handleNewVariant(formData);

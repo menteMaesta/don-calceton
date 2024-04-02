@@ -4,8 +4,8 @@ import { removeVariant } from "routes/Variants/api";
 import { ROUTES } from "helpers/constants";
 
 export const productsActions = async ({ request }: ActionFunctionArgs) => {
-  let formData = await request.formData();
-  let products = formData.get("products");
+  const formData = await request.formData();
+  const products = formData.get("products");
   switch (products) {
     case "create":
       return handleNewProduct(formData);

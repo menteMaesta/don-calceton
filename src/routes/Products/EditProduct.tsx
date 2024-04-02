@@ -18,7 +18,7 @@ export default function EditProduct() {
     } else if (actionData) {
       openSnackbar(actionData);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
