@@ -24,9 +24,11 @@ export default function ProductForm({
     <form
       className="flex flex-col mt-14 space-y-6 items-center"
       onSubmit={onSubmit}
+      data-testid="product-form"
     >
       <Input
         label="Nombre"
+        data-testid="name_input"
         name="name"
         placeholder="Playera"
         value={data?.name || ""}
@@ -77,7 +79,7 @@ export default function ProductForm({
           type="button"
           className={classnames(
             "bg-white text-black font-medium",
-            "rounded py-1 px-4 mt-2 shadow",
+            "rounded py-1 px-4 shadow",
             "disabled:bg-slate-100 disabled:cursor-not-allowed",
             "disabled:text-slate-300 cursor-pointer"
           )}

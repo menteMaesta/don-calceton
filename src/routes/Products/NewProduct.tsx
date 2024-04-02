@@ -17,7 +17,7 @@ export default function NewProduct() {
     } else if (actionData) {
       openSnackbar(actionData);
     }
-  }, [actionData]);
+  }, [actionData, openSnackbar]);
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -40,7 +40,12 @@ export default function NewProduct() {
 
   return (
     <div className="mt-11 w-full px-4">
-      <p className="mt-9 font-semibold text-center text-lg">Nuevo producto</p>
+      <p
+        className="mt-9 font-semibold text-center text-lg"
+        data-testid="product-form-title"
+      >
+        Nuevo producto
+      </p>
       <ProductForm
         data={data}
         onChange={onChange}
