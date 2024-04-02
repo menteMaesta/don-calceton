@@ -4,7 +4,7 @@ import classnames from "classnames";
 
 type Props = {
   elementId: string;
-  title: string;
+  title?: string;
   children: ReactNode;
   footer: ReactNode;
   type: "product" | "variant";
@@ -32,6 +32,7 @@ export default function ElementCard({
       data-testid={`${type}-link_${elementId}`}
     >
       <i
+        data-testid={`${type}-remove_${elementId}`}
         role="button"
         onClick={(event) => onRemove(event, `${elementId}`)}
         className={classnames(
@@ -41,12 +42,14 @@ export default function ElementCard({
           "hover:text-gray-500 active:text-gray-500"
         )}
       />
-      <p
-        className="w-full font-semibold text-center"
-        data-testid={`${type}-name_${elementId}`}
-      >
-        {title}
-      </p>
+      {title && (
+        <p
+          className="w-full font-semibold text-center"
+          data-testid={`${type}-name_${elementId}`}
+        >
+          {title}
+        </p>
+      )}
       <div className="relative h-64 flex items-center justify-center">
         {children}
       </div>
