@@ -86,7 +86,7 @@ export default function VariantData({ variant, onEditData }: Props) {
             className={classnames(
               "rounded-lg",
               "text-2xl font-bold",
-              "w-10/12 mb-2",
+              "w-full mr-14 mb-2",
               "px-1",
               "border-slate-400 border"
             )}
@@ -97,7 +97,12 @@ export default function VariantData({ variant, onEditData }: Props) {
             type="number"
             name="quantity"
             placeholder={`${variant.quantity}`}
-            className="py-0 rounded-b rounded-t pr-1 pl-1 ml-2"
+            className={classnames(
+              "rounded-b rounded-t",
+              "pr-1 pl-1",
+              "ml-2",
+              "pt-0 pb-0"
+            )}
             value={data.quantity}
             onChange={onChange}
             labelClassName="flex flex-row"
