@@ -55,8 +55,8 @@ export async function generateForgotPassword({ email }: { email: string }) {
 }
 
 export async function updatePassword({
-  new_password,
-  forgot_token,
+  newPassword,
+  forgotToken,
 }: ResetPassword) {
   const response = await fetch(
     `${import.meta.env.VITE_BACKEND_URL}/update_password`,
@@ -66,8 +66,8 @@ export async function updatePassword({
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        new_password,
-        forgot_token,
+        newPassword,
+        forgotToken,
       }),
     }
   );

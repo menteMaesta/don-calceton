@@ -10,5 +10,5 @@ export const ROUTES = {
   VARIANT: "/variant/:variantId",
   FORGOT_PASSWORD: "/forgot_password",
   GO_TO_MAIL: "/to_mail",
-  CHANGE_PASSWORD: "/:forgot_token/change_password",
+  CHANGE_PASSWORD: "/:forgotToken/change_password",
 };

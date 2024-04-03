@@ -7,7 +7,7 @@ import PasswordInput from "components/PasswordInput";
 import { ErrorType } from "helpers/customTypes";
 
 export default function ChangePassword() {
-  const { forgot_token = "" } = useParams();
+  const { forgotToken = "" } = useParams();
   const submit = useSubmit();
   const actionData = useActionData() as ErrorType;
   const [openSnackbar] = useSnackbar();
@@ -23,8 +23,8 @@ export default function ChangePassword() {
   const onSave = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("forgot_token", forgot_token);
-    formData.append("new_password", data.password);
+    formData.append("forgotToken", forgotToken);
+    formData.append("newPassword", data.password);
     formData.append("user", "change_password");
     submit(formData, { method: "post" });
   };

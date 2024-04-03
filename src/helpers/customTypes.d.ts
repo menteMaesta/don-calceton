@@ -6,8 +6,8 @@ export type RegisterData = {
   admin: boolean;
 };
 export type ResetPassword = {
-  forgot_token: string;
-  new_password: string;
+  forgotToken: string;
+  newPassword: string;
 };
 export interface ProductBase {
   name: string;

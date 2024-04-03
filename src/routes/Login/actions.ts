@@ -73,8 +73,8 @@ const handleForgotPassword = async (formData: FormData) => {
 
 const handleChangePassword = async (formData: FormData) => {
   const data = {
-    forgot_token: formData.get("forgot_token"),
-    new_password: formData.get("new_password"),
+    forgotToken: formData.get("forgotToken"),
+    newPassword: formData.get("newPassword"),
   } as ResetPassword;
 
   const { data: response, status } = await updatePassword(data);
