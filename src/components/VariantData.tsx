@@ -52,6 +52,7 @@ export default function VariantData({ variant, onEditData }: Props) {
       )}
     >
       <i
+        data-testid="variant-data_edit"
         role="button"
         title="editar"
         onClick={onEdit}
@@ -65,6 +66,7 @@ export default function VariantData({ variant, onEditData }: Props) {
       {edit && (
         <Fragment>
           <button
+            data-testid="variant-data_save"
             className={classnames(
               "absolute right-9 top-2",
               "fa-solid fa-check",
@@ -79,6 +81,7 @@ export default function VariantData({ variant, onEditData }: Props) {
           />
 
           <input
+            data-testid="variant-data_name-input"
             name="name"
             placeholder={variant.name}
             value={data.name}
@@ -93,6 +96,7 @@ export default function VariantData({ variant, onEditData }: Props) {
           />
 
           <Input
+            data-testid="variant-data_quantity-input"
             label="stock:"
             type="number"
             name="quantity"
@@ -112,6 +116,7 @@ export default function VariantData({ variant, onEditData }: Props) {
       {!edit && (
         <Fragment>
           <p
+            data-testid="variant-data_name"
             className={classnames(
               "text-2xl font-bold",
               "w-full mb-2",
@@ -120,7 +125,9 @@ export default function VariantData({ variant, onEditData }: Props) {
           >
             {variant.name}
           </p>
-          <p className="cursor-default">stock: {variant.quantity}</p>
+          <p data-testid="variant-data_quantity" className="cursor-default">
+            stock: {variant.quantity}
+          </p>
         </Fragment>
       )}
     </main>
