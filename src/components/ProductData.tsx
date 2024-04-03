@@ -26,6 +26,7 @@ export default function ProductData({ product }: Props) {
       )}
     >
       <Link
+        data-testid="product-data_edit"
         to={ROUTES.EDIT_PRODUCT.replace(":productId", `${product.id}`)}
         className={classnames(
           "absolute right-2 top-2",
@@ -35,10 +36,11 @@ export default function ProductData({ product }: Props) {
         )}
       />
 
-      <p className="text-2xl w-2/5 font-bold" data-testid="product-name">
+      <p className="text-2xl w-2/5 font-bold" data-testid="product-data_name">
         {product.name}
       </p>
       <p
+        data-testid="product-data_price"
         className={classnames(
           "bg-black text-white",
           "w-fit",
@@ -47,10 +49,14 @@ export default function ProductData({ product }: Props) {
       >
         Precio base: ${product.price}
       </p>
-      <p className={classnames(showHide, "w-full pt-2 overflow-hidden")}>
+      <p
+        data-testid="product-data_description"
+        className={classnames(showHide, "w-full pt-2 overflow-hidden")}
+      >
         {product.description}
       </p>
       <button
+        data-testid="product-data_show-hide"
         className={classnames(
           "text-gray-300 text-start",
           "hover:text-gray-500",

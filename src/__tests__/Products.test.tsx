@@ -148,7 +148,7 @@ describe("Products", () => {
     await userEvent.click(productCard);
 
     await waitFor(() => screen.getByTestId("product-page"));
-    expect(screen.getByTestId("product-name").innerHTML).toEqual(
+    expect(screen.getByTestId("product-data_name").innerHTML).toEqual(
       products[0].name
     );
   });

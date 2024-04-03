@@ -41,7 +41,7 @@ export default function EditProduct() {
   };
 
   return (
-    <div className="mt-11 w-full px-4">
+    <div className="mt-11 w-full px-4" data-testid="edit-product_page">
       <p className="mt-9 font-semibold text-center text-lg">Editar producto</p>
       <ProductForm
         data={data}
