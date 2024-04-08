@@ -94,8 +94,12 @@ export default function NewVariant() {
           value={data?.quantity || ""}
           onChange={onChange}
           labelClassName="w-full sm:w-3/6"
-          helpText={
-            valid ? undefined : "Solo se pueden guardar valores enteros"
+          otherElements={
+            valid ? undefined : (
+              <p className={classnames("text-red-900", "text-sm pl-2")}>
+                "Solo se pueden guardar valores enteros"
+              </p>
+            )
           }
         />
 

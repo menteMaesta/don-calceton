@@ -1,19 +1,17 @@
 import { InputHTMLAttributes } from "react";
 import classnames from "classnames";
 
-type props = {
+export type props = {
   label: string;
   labelClassName?: string;
-  helpText?: string;
-  helpTextClassName?: string;
+  otherElements?: JSX.Element;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export default function Input({
   label,
   className,
   labelClassName,
-  helpText,
-  helpTextClassName,
+  otherElements,
   ...other
 }: props) {
   return (
@@ -28,17 +26,7 @@ export default function Input({
         )}
         {...other}
       />
-      {helpText && (
-        <p
-          className={classnames(
-            "text-red-900",
-            "text-sm pl-2",
-            helpTextClassName
-          )}
-        >
-          {helpText}
-        </p>
-      )}
+      {otherElements && otherElements}
     </label>
   );
 }
