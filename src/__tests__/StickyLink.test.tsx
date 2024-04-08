@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import StickyLink from "../components/StickyLink";
+import StickyLink from "components/StickyLink";
 import { BrowserRouter } from "react-router-dom";
 
 describe("StickyLink", () => {

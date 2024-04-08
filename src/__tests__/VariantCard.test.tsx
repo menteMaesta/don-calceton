@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import VariantCard from "../components/VariantCard";
+import VariantCard from "components/VariantCard";
 import { BrowserRouter } from "react-router-dom";
 
 describe("VariantCard", () => {

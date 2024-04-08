@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import SectionDivider from "../components/SectionDivider";
+import SectionDivider from "components/SectionDivider";
 
 describe("SectionDivider", () => {
   it("renders the section name correctly", () => {
