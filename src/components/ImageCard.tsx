@@ -16,6 +16,7 @@ export default function ImageCard({ onRemove, image }: Props) {
       )}
     >
       <i
+        data-testid={`remove-button_${image.src}`}
         role="button"
         onClick={(event) => onRemove(event)}
         className={classnames(
@@ -26,7 +27,7 @@ export default function ImageCard({ onRemove, image }: Props) {
         )}
       />
       <div className="h-36 flex items-center justify-center">
-        <img className="max-h-36" src={image.src} />
+        <img className="max-h-36" src={image.src} alt={image.name} />
       </div>
       <p>{image.name}</p>
     </div>
