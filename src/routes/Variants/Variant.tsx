@@ -6,6 +6,7 @@ import { Variant, ErrorType, VariantBase } from "helpers/customTypes";
 import DefaultPic from "assets/default-pic.png";
 import SectionDivider from "components/SectionDivider";
 import VariantData from "components/VariantData";
+import ImageCard from "src/components/ImageCard";
 
 export default function VariantDetails() {
   const variant = useLoaderData() as Variant;
@@ -53,7 +54,7 @@ export default function VariantDetails() {
   }, [actionData, openSnackbar]);
 
   return (
-    <div className={classnames("w-full mt-14 px-4")}>
+    <div className={classnames("w-full mt-14 px-4")} data-testid="variant-page">
       <VariantData variant={variant} onEditData={onEdit} />
 
       <section className="relative flex flex-col items-center w-full">
@@ -77,38 +78,21 @@ export default function VariantDetails() {
             "sm:grid-cols-3 w-full",
             "pt-7 px-4"
           )}
+          data-testid="image-list"
         >
           {variant.images &&
             variant.images.map((image) => (
-              <div
-                className={classnames(
-                  "max-h-64 bg-white",
-                  "flex justify-center",
-                  "rounded shadow",
-                  "relative"
-                )}
-                key={image.id}
-              >
-                <i
-                  role="button"
-                  title="eliminar"
-                  onClick={(event) => onRemove(event, `${image.id}`)}
-                  className={classnames(
-                    "absolute right-2 top-2",
-                    "fa-solid fa-circle-xmark",
-                    "text-gray-300",
-                    "hover:text-gray-500 active:text-gray-500"
-                  )}
-                />
-                <img
-                  className="object-contain max-h-64"
-                  src={
-                    image?.name
-                      ? `${import.meta.env.VITE_BASE_URL}/${image?.name}`
-                      : DefaultPic
-                  }
-                />
-              </div>
+              <ImageCard
+                onRemove={(event) => onRemove(event, `${image.id}`)}
+                image={{
+                  name: image.name,
+                  src: image?.name
+                    ? `${import.meta.env.VITE_BASE_URL}/${image?.name}`
+                    : DefaultPic,
+                }}
+                className={classnames("max-h-64", "flex justify-center")}
+                imageClassName="object-contain max-h-64"
+              />
             ))}
         </div>
       </section>

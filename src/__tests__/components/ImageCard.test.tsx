@@ -17,12 +17,6 @@ describe("ImageCard", () => {
 
     expect(imageElement).toBeInTheDocument();
     expect(imageElement.getAttribute("src")).toBe(mockImage.src);
-    expect(imageElement).toHaveClass("max-h-36");
-    expect(imageElement.parentElement).toHaveClass(
-      "h-36 flex",
-      "items-center",
-      "justify-center"
-    );
     expect(imageElement.parentElement?.parentElement).toHaveClass(
       "flex flex-col",
       "items-center p-4 bg-white",
