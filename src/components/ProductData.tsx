@@ -24,6 +24,7 @@ export default function ProductData({ product }: Props) {
         "px-4 py-2",
         "rounded-md shadow"
       )}
+      data-testid={`product-data_${product.id}`}
     >
       <Link
         data-testid="product-data_edit"

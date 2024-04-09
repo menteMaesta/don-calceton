@@ -63,22 +63,24 @@ export default function ProductDetails() {
           to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
           title="Nueva variante"
         />
-        <div
-          className={classnames(
-            "grid grid-cols-1 gap-4",
-            "sm:grid-cols-3 w-full",
-            "mt-7 px-4"
-          )}
-        >
-          {variants &&
-            variants.map((variant) => (
+        {variants && (
+          <div
+            className={classnames(
+              "grid grid-cols-1 gap-4",
+              "sm:grid-cols-3 w-full",
+              "mt-7 px-4"
+            )}
+            data-testid="variant-list"
+          >
+            {variants.map((variant) => (
               <VariantCard
                 key={variant.id}
                 variant={variant}
                 onRemove={handleRemove}
               />
             ))}
-        </div>
+          </div>
+        )}
         {variants.length === 0 && <EmptyState name="variantes" />}
       </section>
     </div>
