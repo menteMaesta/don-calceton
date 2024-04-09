@@ -19,7 +19,7 @@ describe("ImageCard", () => {
     expect(imageElement.getAttribute("src")).toBe(mockImage.src);
     expect(imageElement.parentElement?.parentElement).toHaveClass(
       "flex flex-col",
-      "items-center p-4 bg-white",
+      "items-center bg-white",
       "shadow rounded relative"
     );
 

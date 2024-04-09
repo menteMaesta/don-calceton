@@ -123,6 +123,9 @@ export default function NewVariant() {
               key={key}
               onRemove={(event) => onRemoveFile(event, key)}
               image={blob}
+              imageContainerClassName="flex items-center justify-center h-36"
+              imageClassName="max-h-36 p-4"
+              showName
             />
           ))}
         </div>

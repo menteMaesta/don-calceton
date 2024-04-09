@@ -3,7 +3,7 @@ import classnames from "classnames";
 
 type Props = {
   onRemove: (event: MouseEvent<HTMLElement>) => void;
-  image: { name: string; src: string };
+  image: { id?: number; name: string; src: string };
   showName?: boolean;
   className?: string;
   imageContainerClassName?: string;
@@ -26,6 +26,7 @@ export default function ImageCard({
         "shadow rounded relative",
         className
       )}
+      data-testid={`image-card_${image.id || image.src}`}
     >
       <i
         data-testid={`remove-button_${image.src}`}

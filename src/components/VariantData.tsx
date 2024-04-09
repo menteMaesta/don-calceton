@@ -50,6 +50,7 @@ export default function VariantData({ variant, onEditData }: Props) {
         "px-4 py-2",
         "relative"
       )}
+      data-testid={`variant-data_${variant.id}`}
     >
       <i
         data-testid="variant-data_edit"

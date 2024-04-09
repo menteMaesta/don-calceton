@@ -83,8 +83,10 @@ export default function VariantDetails() {
           {variant.images &&
             variant.images.map((image) => (
               <ImageCard
+                key={image.id}
                 onRemove={(event) => onRemove(event, `${image.id}`)}
                 image={{
+                  id: image.id,
                   name: image.name,
                   src: image?.name
                     ? `${import.meta.env.VITE_BASE_URL}/${image?.name}`
