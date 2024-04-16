@@ -74,7 +74,7 @@ export default function NewVariant() {
   }, [actionData, openSnackbar]);
 
   return (
-    <div className="mt-11 w-full px-4">
+    <div className="mt-11 w-full px-4" data-testid="new-variant_page">
       <p className="mt-9 font-semibold text-center text-lg">Nueva variante</p>
       <div className="flex flex-col mt-14 space-y-6 items-center">
         <Input
@@ -84,6 +84,7 @@ export default function NewVariant() {
           value={data?.name || ""}
           onChange={onChange}
           labelClassName="w-full sm:w-3/6"
+          data-testid="new-variant-name_input"
         />
 
         <Input
@@ -102,6 +103,7 @@ export default function NewVariant() {
               </p>
             )
           }
+          data-testid="new-variant-quantity_input"
         />
 
         <VariantImageUploader onFileSelect={onFileSelect} />
@@ -131,6 +133,7 @@ export default function NewVariant() {
             name="variant"
             value="create"
             onClick={onSave}
+            data-testid="new-variant-submit_button"
           >
             Guardar
           </Button>
@@ -143,6 +146,7 @@ export default function NewVariant() {
               "disabled:bg-slate-100 disabled:cursor-not-allowed",
               "disabled:text-slate-300 cursor-pointer"
             )}
+            data-testid="new-variant-cancel_button"
           >
             Cancelar
           </Link>
