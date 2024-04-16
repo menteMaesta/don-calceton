@@ -7,6 +7,7 @@ import DefaultPic from "assets/default-pic.png";
 import SectionDivider from "components/SectionDivider";
 import VariantData from "components/VariantData";
 import ImageCard from "src/components/ImageCard";
+import VariantImageUploader from "src/components/VariantImageUploader";
 
 export default function VariantDetails() {
   const variant = useLoaderData() as Variant;
@@ -59,19 +60,11 @@ export default function VariantDetails() {
 
       <section className="relative flex flex-col items-center w-full">
         <SectionDivider section="Imagenes" />
-        <label className={classnames("w-fit sticky top-12 z-10 mt-4")}>
-          <p className="bg-slate-700 w-fit p-2 text-white rounded cursor-pointer sticky top-12 z-10">
-            Imagenes (PNG, JPG)
-          </p>
-          <input
-            className="opacity-0 w-0 h-0 absolute -top-1"
-            type="file"
-            name="images"
-            accept=".jpg, .jpeg, .png"
-            multiple
-            onChange={onFileSelect}
-          />
-        </label>
+        <VariantImageUploader
+          onFileSelect={onFileSelect}
+          className="sticky top-12 z-10 mt-4"
+          labelProps={{ className: "sticky top-12 z-10" }}
+        />
         <div
           className={classnames(
             "grid grid-cols-1 gap-4",

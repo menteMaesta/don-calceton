@@ -7,6 +7,7 @@ import { ROUTES } from "helpers/constants";
 import ImageCard from "components/ImageCard";
 import Button from "components/Button";
 import Input from "components/Input";
+import VariantImageUploader from "components/VariantImageUploader";
 
 export default function NewVariant() {
   const { productId = "" } = useParams();
@@ -103,19 +104,7 @@ export default function NewVariant() {
           }
         />
 
-        <label className="w-fit">
-          <p className="bg-slate-700 w-fit p-2 text-white rounded cursor-pointer">
-            Imagenes (PNG, JPG)
-          </p>
-          <input
-            className="opacity-0 w-0 h-0 absolute -top-1"
-            type="file"
-            name="images"
-            accept=".jpg, .jpeg, .png"
-            multiple
-            onChange={onFileSelect}
-          />
-        </label>
+        <VariantImageUploader onFileSelect={onFileSelect} />
 
         <div className="grid grid-cols-2 gap-2 sm:w-3/6 sm:grid-cols-3">
           {blobs?.map((blob, key) => (
