@@ -75,7 +75,7 @@ export default function Login() {
           name="user"
           value="login"
         >
-          Guardar
+          Entrar
         </Button>
       </Form>
     </Fragment>
