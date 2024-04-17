@@ -38,13 +38,19 @@ export default function ChangePassword() {
   return (
     <Fragment>
       <i
+        data-testid="change-password_component"
         className={classnames(
           "fa-solid fa-socks",
           "text-9xl text-slate-700",
           "mb-4 mt-24"
         )}
       />
-      <p className="text-3xl font-bold text-slate-600">Cambio de contraseña</p>
+      <p
+        className="text-3xl font-bold text-slate-600"
+        data-testid="change-password_title"
+      >
+        Cambio de contraseña
+      </p>
 
       <div className="flex flex-col mt-16 space-y-6">
         <PasswordInput
@@ -53,6 +59,7 @@ export default function ChangePassword() {
           value={data.password}
           onChange={onChange}
           placeholder="tu contraseña"
+          data-testid="change-password_input"
         />
 
         <PasswordInput
@@ -61,6 +68,7 @@ export default function ChangePassword() {
           value={data.confirm_password}
           onChange={onChange}
           placeholder="tu contraseña"
+          data-testid="change-password_confirm_input"
         />
 
         <Button
@@ -71,6 +79,7 @@ export default function ChangePassword() {
           }
           type="submit"
           onClick={onSave}
+          data-testid="change-password_submit"
         >
           Guardar
         </Button>
