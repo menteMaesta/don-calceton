@@ -23,13 +23,17 @@ export default function ForgotPassword() {
   return (
     <Fragment>
       <i
+        data-testid="forgot-password-component"
         className={classnames(
           "fa-solid fa-socks",
           "text-9xl text-slate-700",
           "mb-4 mt-24"
         )}
       />
-      <p className="text-2xl font-bold text-slate-600">
+      <p
+        className="text-2xl font-bold text-slate-600"
+        data-testid="forgot-password_title"
+      >
         Olvidaste tu contraseña?
       </p>
       <p
@@ -38,6 +42,7 @@ export default function ForgotPassword() {
           "w-4/5 sm:w-full",
           "sm:text-center pt-2"
         )}
+        data-testid="forgot-password_description"
       >
         Escribe aquí tu correo y enviaremos un mensaje de actualización
       </p>
@@ -57,6 +62,7 @@ export default function ForgotPassword() {
           type="submit"
           name="user"
           value="forgot_password"
+          data-testid="forgot-password_submit"
         >
           Enviar
         </Button>
