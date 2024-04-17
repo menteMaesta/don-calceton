@@ -2,24 +2,23 @@ import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
-import Register from "src/routes/Login/Register";
+import RegisterAdmin from "src/routes/Login/RegisterAdmin";
 import { ROUTES } from "src/helpers/constants";
 
-describe("Register component", () => {
-  test("renders register form", async () => {
-    const routes = [
-      {
-        path: ROUTES.REGISTER,
-        element: <Register />,
-        action: () => [],
-      },
-    ];
+describe("RegisterAdmin", () => {
+  const routes = [
+    {
+      path: ROUTES.REGISTER_ADMIN,
+      element: <RegisterAdmin />,
+      action: () => [],
+    },
+  ];
 
-    const router = createMemoryRouter(routes, {
-      initialEntries: [ROUTES.REGISTER],
-    });
-
-    const { getByLabelText, getByText } = render(
+  const router = createMemoryRouter(routes, {
+    initialEntries: [ROUTES.REGISTER_ADMIN],
+  });
+  test("renders the registration form", async () => {
+    const { getByText, getByLabelText } = render(
       <React.StrictMode>
         <SnackbarProvider>
           <RouterProvider router={router} />
