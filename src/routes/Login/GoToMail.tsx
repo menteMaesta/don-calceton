@@ -13,13 +13,19 @@ export default function GotoMail() {
           "mb-4 mt-24 ml-12"
         )}
       />
-      <p className="text-2xl font-bold text-slate-600">Listo!</p>
+      <p
+        className="text-2xl font-bold text-slate-600"
+        data-testid="to-mail_title"
+      >
+        Listo!
+      </p>
       <p
         className={classnames(
           "text-sm text-slate-600",
           "w-4/5 sm:w-full",
           "text-center pt-2"
         )}
+        data-testid="to-mail_description"
       >
         En tu bandeja de correo te dejamos las instrucciones para restablecer tu
         contraseña
@@ -31,6 +37,7 @@ export default function GotoMail() {
           "rounded py-1 px-4 mt-12",
           "disabled:bg-slate-300 disabled:cursor-not-allowed"
         )}
+        data-testid="to-mail_link"
       >
         Ir al inicio
       </Link>
