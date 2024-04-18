@@ -14,11 +14,13 @@ export default function ForgotPassword() {
   const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, email: event.target.value }));
   };
+
   useEffect(() => {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData, openSnackbar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   return (
     <Fragment>

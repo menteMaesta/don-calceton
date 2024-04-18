@@ -52,7 +52,8 @@ export default function VariantDetails() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData, openSnackbar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   return (
     <div className={classnames("w-full mt-14 px-4")} data-testid="variant-page">

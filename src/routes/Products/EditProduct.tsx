@@ -18,7 +18,8 @@ export default function EditProduct() {
     } else if (actionData) {
       openSnackbar(actionData);
     }
-  }, [actionData, openSnackbar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

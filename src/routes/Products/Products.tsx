@@ -39,7 +39,8 @@ export default function Products() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData, openSnackbar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   useEffect(() => {
     if (actionData?.statusText === "200") {

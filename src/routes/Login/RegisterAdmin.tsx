@@ -40,7 +40,8 @@ export default function RegisterAdmin() {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
-  }, [actionData, openSnackbar]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   return (
     <Fragment>
