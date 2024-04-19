@@ -2,6 +2,7 @@ import { useState, ChangeEvent, MouseEvent, useEffect } from "react";
 import { useSubmit, useParams, Link, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
+import imageCompression from "browser-image-compression";
 import { VariantBase, Blob, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import ImageCard from "components/ImageCard";
@@ -55,14 +56,26 @@ export default function NewVariant() {
       setBlobs((prev) => prev.filter((_, key) => key !== index));
     }
   };
-  const onSave = (event: MouseEvent<HTMLElement>) => {
+  const onSave = async (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const formData = new FormData();
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
     formData.append("data", JSON.stringify(data));
     formData.append("variant", "create");
     formData.append("productId", productId);
     for (const blob of blobs) {
-      formData.append("images[]", blob.file, blob.name);
+      try {
+        const compressedFile = await imageCompression(blob.file, options);
+        formData.append("images[]", compressedFile, blob.name);
+      } catch (error) {
+        console.log(error);
+      }
     }
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
@@ -143,7 +156,7 @@ export default function NewVariant() {
             type="button"
             className={classnames(
               "bg-white text-black font-medium",
-              "rounded py-1 px-4 mt-2 shadow",
+              "rounded py-1 px-4 shadow",
               "disabled:bg-slate-100 disabled:cursor-not-allowed",
               "disabled:text-slate-300 cursor-pointer"
             )}

@@ -1,5 +1,6 @@
 import { MouseEvent, useEffect, ChangeEvent } from "react";
 import classnames from "classnames";
+import imageCompression from "browser-image-compression";
 import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import { Variant, ErrorType, VariantBase } from "helpers/customTypes";
@@ -33,16 +34,28 @@ export default function VariantDetails() {
     submit(formData, { method: "post" });
   };
 
-  const onFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+  const onFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const files = event.target.files;
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
 
     const formData = new FormData();
     formData.append("variant", "createImages");
     formData.append("variantId", `${variant.id}`);
+    console.log("PASA");
     if (files) {
       for (const file of files) {
-        formData.append("images[]", file, file.name);
+        try {
+          const compressedFile = await imageCompression(file, options);
+          formData.append("images[]", compressedFile, file.name);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     submit(formData, { method: "post", encType: "multipart/form-data" });

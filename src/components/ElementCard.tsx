@@ -38,7 +38,7 @@ export default function ElementCard({
         className={classnames(
           "absolute right-2 top-2",
           "fa-solid fa-circle-xmark",
-          "text-gray-300",
+          "text-gray-300 z-[1]",
           "hover:text-gray-500 active:text-gray-500"
         )}
       />
