@@ -19,7 +19,7 @@ export default function Products() {
   const onSearch = (search: string) => {
     if (search) {
       const filtered = data.filter((product) =>
-        product.name.toLocaleLowerCase().includes(search)
+        product.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       );
       setProducts(filtered);
     } else {

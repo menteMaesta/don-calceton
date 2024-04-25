@@ -21,7 +21,7 @@ export default function ProductDetails() {
   const onSearch = (search: string) => {
     if (search) {
       const filtered = product?.variants.filter((variant) =>
-        variant.name.toLocaleLowerCase().includes(search)
+        variant.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       );
       setVariants(filtered);
     } else {
