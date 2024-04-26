@@ -12,6 +12,7 @@ describe("ProductDetails", () => {
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
     price: 100,
+    wholesalePrice: 80,
     variants: [
       {
         id: 3,
@@ -70,7 +71,10 @@ describe("ProductDetails", () => {
     expect(variantList).toBeInTheDocument();
     expect(variantList).toHaveClass(
       "grid grid-cols-1 gap-4",
-      "sm:grid-cols-3 w-full",
+      "sm:grid-cols-2",
+      "md:grid-cols-3",
+      "lg:grid-cols-5",
+      "w-full",
       "mt-7 px-4"
     );
     expect(variantCard).toBeInTheDocument();

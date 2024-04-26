@@ -21,6 +21,7 @@ const products = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
     price: 100,
+    wholesalePrice: 80,
     variants: [
       {
         id: 3,
@@ -82,8 +83,14 @@ describe("Products", () => {
       </React.StrictMode>
     );
 
-    const productCards = await waitFor(() =>
-      screen.getAllByTestId(/product-link_/)
+    const productList = await waitFor(() => screen.getByTestId("product-list"));
+    const productCards = screen.getAllByTestId(/product-link_/);
+
+    expect(productList).toBeInTheDocument();
+    expect(productList).toHaveClass(
+      "sm:grid-cols-2",
+      "md:grid-cols-3",
+      "lg:grid-cols-5"
     );
     expect(productCards.length).toBeGreaterThan(0);
   });

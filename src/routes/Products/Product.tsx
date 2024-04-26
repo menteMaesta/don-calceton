@@ -68,7 +68,8 @@ export default function ProductDetails() {
           <div
             className={classnames(
               "grid grid-cols-1 gap-4",
-              "sm:grid-cols-3 w-full",
+              "sm:grid-cols-2 md:grid-cols-3",
+              "lg:grid-cols-5 w-full",
               "mt-7 px-4"
             )}
             data-testid="variant-list"
