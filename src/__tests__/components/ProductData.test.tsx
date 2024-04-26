@@ -17,6 +17,7 @@ const mockProduct = {
   name: "Playera",
   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   price: 100,
+  wholesalePrice: 80,
   createdAt: "2024-03-25T20:58:31.805+00:00",
   updatedAt: "2024-03-25T20:58:31.805+00:00",
   variants: [
@@ -42,17 +43,24 @@ describe("ProductData", () => {
 
     const productName = screen.getByTestId("product-data_name");
     const productPrice = screen.getByTestId("product-data_price");
+    const productWholesalePrice = screen.getByTestId(
+      "product-data_wholesale-price"
+    );
     const productDescription = screen.getByTestId("product-data_description");
     const productShowHide = screen.getByTestId("product-data_show-hide");
 
     expect(productName).toBeInTheDocument();
     expect(productPrice).toBeInTheDocument();
     expect(productDescription).toBeInTheDocument();
+    expect(productWholesalePrice).toBeInTheDocument();
     expect(productShowHide).toBeInTheDocument();
 
     expect(productName).toHaveTextContent(mockProduct.name);
     expect(productPrice).toHaveTextContent(
       `Precio base: $${mockProduct.price}`
+    );
+    expect(productWholesalePrice).toHaveTextContent(
+      `Mayoreo: $${mockProduct.wholesalePrice}`
     );
     expect(productDescription).toHaveTextContent(mockProduct.description);
   });

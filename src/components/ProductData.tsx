@@ -40,16 +40,28 @@ export default function ProductData({ product }: Props) {
       <p className="text-2xl w-2/5 font-bold" data-testid="product-data_name">
         {product.name}
       </p>
-      <p
-        data-testid="product-data_price"
-        className={classnames(
-          "bg-black text-white",
-          "w-fit",
-          "rounded-full px-2"
-        )}
-      >
-        Precio base: ${product.price}
-      </p>
+      <div className="flex items-center space-x-2">
+        <p
+          data-testid="product-data_price"
+          className={classnames(
+            "bg-slate-600 text-white",
+            "w-fit",
+            "rounded-full px-2"
+          )}
+        >
+          Precio base: ${product.price}
+        </p>
+        <p
+          data-testid="product-data_wholesale-price"
+          className={classnames(
+            "bg-slate-600 text-white",
+            "w-fit",
+            "rounded-full px-2"
+          )}
+        >
+          Mayoreo: ${product.wholesalePrice}
+        </p>
+      </div>
       <p
         data-testid="product-data_description"
         className={classnames(showHide, "w-full pt-2 overflow-hidden")}
