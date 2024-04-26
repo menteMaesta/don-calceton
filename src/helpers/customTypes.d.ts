@@ -12,6 +12,7 @@ export type ResetPassword = {
 export interface ProductBase {
   name: string;
   price: number;
+  wholesalePrice: number;
   description: string;
 }
 export interface Product extends ProductBase {

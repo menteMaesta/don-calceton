@@ -47,6 +47,17 @@ export default function ProductForm({
         labelClassName="w-full sm:w-3/6"
       />
 
+      <Input
+        label="Precio a mayoreo"
+        type="number"
+        name="wholesalePrice"
+        step="0.01"
+        placeholder="130"
+        value={data?.wholesalePrice || ""}
+        onChange={onChange}
+        labelClassName="w-full sm:w-3/6"
+      />
+
       <label className="w-full sm:w-3/6">
         <p>Descripción</p>
         <textarea

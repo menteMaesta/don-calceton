@@ -36,6 +36,7 @@ export default function EditProduct() {
     formData.append("products", "editProduct");
     formData.append("name", data?.name || "");
     formData.append("price", `${data?.price}` || "");
+    formData.append("wholesalePrice", `${data?.wholesalePrice}` || "");
     formData.append("description", data?.description || "");
     formData.append("productId", `${data?.id}` || "");
     submit(formData, { method: "post" });

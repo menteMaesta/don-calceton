@@ -35,6 +35,7 @@ export default function NewProduct() {
     formData.append("products", "create");
     formData.append("name", data?.name || "");
     formData.append("price", `${data?.price}` || "");
+    formData.append("wholesalePrice", `${data?.wholesalePrice}` || "");
     formData.append("description", data?.description || "");
     submit(formData, { method: "post" });
   };

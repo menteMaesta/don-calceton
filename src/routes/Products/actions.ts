@@ -26,6 +26,7 @@ export const handleNewProduct = async (form: FormData) => {
   const { data: response, status } = await postProduct({
     name: formData.name as string,
     price: Number(formData.price),
+    wholesalePrice: Number(formData.wholesalePrice),
     description: formData.description as string,
   });
 
@@ -43,6 +44,7 @@ export const handleEditProduct = async (form: FormData) => {
     {
       name: formData.name as string,
       price: Number(formData.price),
+      wholesalePrice: Number(formData.wholesalePrice),
       description: formData.description as string,
     },
     formData.productId as string
