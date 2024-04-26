@@ -44,7 +44,7 @@ export default function ProductData({ product }: Props) {
         <p
           data-testid="product-data_price"
           className={classnames(
-            "bg-slate-600 text-white",
+            "bg-slate-950 text-white",
             "w-fit",
             "rounded-full px-2"
           )}
@@ -54,7 +54,7 @@ export default function ProductData({ product }: Props) {
         <p
           data-testid="product-data_wholesale-price"
           className={classnames(
-            "bg-slate-600 text-white",
+            "bg-slate-950 text-white",
             "w-fit",
             "rounded-full px-2"
           )}

@@ -36,7 +36,7 @@ export default function ProductCard({ product, onRemove }: Props) {
       >
         <p
           className={classnames(
-            "bg-slate-600 text-white",
+            "bg-slate-950 text-white",
             "w-fit sm:text-sm",
             "rounded-full px-2"
           )}
@@ -48,7 +48,7 @@ export default function ProductCard({ product, onRemove }: Props) {
         </p>
         <p
           className={classnames(
-            "bg-slate-600 text-white",
+            "bg-slate-950 text-white",
             "w-fit mt-1 sm:text-sm",
             "rounded-full px-2"
           )}
