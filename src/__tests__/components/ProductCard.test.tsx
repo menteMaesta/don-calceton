@@ -10,6 +10,7 @@ describe("ProductCard", () => {
       id: 1,
       name: "Test Product",
       price: 100,
+      wholesalePrice: 80,
       description: "Test Description",
       updatedAt: "2021-10-10",
       createdAt: "2021-10-10",
@@ -27,6 +28,9 @@ describe("ProductCard", () => {
     expect(link.getAttribute("href")).toEqual("/products/1");
     expect(getByTestId("product-name_1").innerHTML).toEqual("Test Product");
     expect(getByTestId("product-price_1").innerHTML).toContain(product.price);
+    expect(getByTestId("product-wholesale-price_1").innerHTML).toContain(
+      product.wholesalePrice
+    );
     expect(image.src).toEqual(
       "http://localhost:3000/src/assets/default-pic.png"
     );

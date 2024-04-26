@@ -28,18 +28,37 @@ export default function ProductCard({ product, onRemove }: Props) {
         </p>
       }
     >
-      <p
+      <div
         className={classnames(
-          "bg-black text-white",
-          "w-fit absolute bottom-0 right-0",
-          "rounded-full px-2"
+          "absolute bottom-0 right-0",
+          "flex flex-col items-end"
         )}
-        data-testid={`product-price_${product.id}`}
       >
-        <span>Base $</span>
-        {product.price}
-        <span> MXN</span>
-      </p>
+        <p
+          className={classnames(
+            "bg-slate-600 text-white",
+            "w-fit sm:text-sm",
+            "rounded-full px-2"
+          )}
+          data-testid={`product-price_${product.id}`}
+        >
+          <span>Base $</span>
+          {product.price}
+          <span> MXN</span>
+        </p>
+        <p
+          className={classnames(
+            "bg-slate-600 text-white",
+            "w-fit mt-1 sm:text-sm",
+            "rounded-full px-2"
+          )}
+          data-testid={`product-wholesale-price_${product.id}`}
+        >
+          <span>Mayoreo $</span>
+          {product.wholesalePrice}
+          <span> MXN</span>
+        </p>
+      </div>
       <img
         data-testid={`product-img_${product.id}`}
         className="max-h-64"
