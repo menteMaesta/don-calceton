@@ -9,6 +9,7 @@ describe("ProductForm", () => {
     const data = {
       name: "Product 1",
       price: 10,
+      wholesalePrice: 9,
       description: "Description",
     } as ProductBase;
 
@@ -25,6 +26,7 @@ describe("ProductForm", () => {
 
     expect(screen.getByLabelText("Nombre")).toHaveValue("Product 1");
     expect(screen.getByLabelText("Precio base")).toHaveValue(10);
+    expect(screen.getByLabelText("Precio a mayoreo")).toHaveValue(9);
     expect(screen.getByLabelText("Descripción")).toHaveValue("Description");
   });
 
@@ -114,6 +116,10 @@ describe("ProductForm", () => {
     expect(screen.getByLabelText("Precio base")).toHaveAttribute(
       "placeholder",
       "150.30"
+    );
+    expect(screen.getByLabelText("Precio a mayoreo")).toHaveAttribute(
+      "placeholder",
+      "130"
     );
     expect(screen.getByLabelText("Descripción")).toHaveAttribute(
       "placeholder",
