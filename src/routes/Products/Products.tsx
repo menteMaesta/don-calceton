@@ -51,7 +51,7 @@ export default function Products() {
   }, [actionData]);
 
   return (
-    <div className="mt-11 flex flex-col items-center w-full h-full">
+    <div className="mt-11 flex flex-col items-center w-full">
       <SearchBar onSearch={onSearch} placeholder="Buscar productos" />
       <SticyLink to={ROUTES.NEW_PRODUCT} title="Nuevo producto" />
       <div

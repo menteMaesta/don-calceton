@@ -40,7 +40,7 @@ describe("ProductDetails", () => {
     ];
 
     const router = createMemoryRouter(routes, {
-      initialEntries: [`/products/${product.id}`],
+      initialEntries: [ROUTES.PRODUCT.replace(":productId", `${product.id}`)],
     });
 
     const { getByTestId, getByText, getByPlaceholderText } = render(
@@ -95,7 +95,9 @@ describe("ProductDetails", () => {
     ];
 
     const router = createMemoryRouter(routes, {
-      initialEntries: [`/products/${productWithoutVariants.id}`],
+      initialEntries: [
+        ROUTES.PRODUCT.replace(":productId", `${productWithoutVariants.id}`),
+      ],
     });
 
     const { getByTestId } = render(

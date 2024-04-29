@@ -8,7 +8,7 @@ export type Props = {
   children: ReactNode;
   footer: ReactNode;
   type: "product" | "variant";
-  onRemove: (event: MouseEvent<HTMLElement>, productId: string) => void;
+  onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
   route: string;
 };
 export default function ElementCard({
@@ -31,17 +31,19 @@ export default function ElementCard({
       )}
       data-testid={`${type}-link_${elementId}`}
     >
-      <i
-        data-testid={`${type}-remove_${elementId}`}
-        role="button"
-        onClick={(event) => onRemove(event, `${elementId}`)}
-        className={classnames(
-          "absolute right-2 top-2",
-          "fa-solid fa-circle-xmark",
-          "text-gray-300 z-[1]",
-          "hover:text-gray-500 active:text-gray-500"
-        )}
-      />
+      {onRemove && (
+        <i
+          data-testid={`${type}-remove_${elementId}`}
+          role="button"
+          onClick={(event) => onRemove(event, `${elementId}`)}
+          className={classnames(
+            "absolute right-2 top-2",
+            "fa-solid fa-circle-xmark",
+            "text-gray-300 z-[1]",
+            "hover:text-gray-500 active:text-gray-500"
+          )}
+        />
+      )}
       {title && (
         <p
           className="w-full font-semibold text-center"

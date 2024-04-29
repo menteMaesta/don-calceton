@@ -2,7 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
 
-export default function Dashboard() {
+export default function Store() {
   return (
     <div
       className={classnames(
@@ -21,7 +21,7 @@ export default function Dashboard() {
         )}
       >
         <Link
-          to={ROUTES.DASHBOARD}
+          to={ROUTES.STORE}
           className={classnames("flex items-center space-x-2")}
         >
           <i
@@ -31,7 +31,7 @@ export default function Dashboard() {
               "ml-2"
             )}
           />
-          <p className="font-medium text-slate-700">Don Calcetón</p>
+          <p className="font-medium text-slate-700">Tienda Don Calcetón</p>
         </Link>
         <Link
           to={ROUTES.STORE}
@@ -39,12 +39,12 @@ export default function Dashboard() {
         >
           <i
             className={classnames(
-              "fa-solid fa-store",
+              "fa-solid fa-cart-shopping",
               "text-xl text-slate-700",
               "ml-2"
             )}
           />
-          <p className="font-medium text-slate-700">Tienda</p>
+          <p className="font-medium text-slate-700">Carrito</p>
         </Link>
       </div>
 

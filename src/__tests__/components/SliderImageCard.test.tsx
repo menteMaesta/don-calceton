@@ -1,6 +1,7 @@
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, act } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import SliderImageCard from "components/SliderImageCard";
+import { ROUTES } from "helpers/constants";
 
 describe("SliderImageCard", () => {
   const images = [
@@ -20,7 +21,7 @@ describe("SliderImageCard", () => {
           onRemove={onRemove}
           type="product"
           footer={<p>Footer</p>}
-          route="/products/1"
+          route={ROUTES.PRODUCT.replace(":productId", "1")}
         />
       </BrowserRouter>
     );
@@ -47,7 +48,7 @@ describe("SliderImageCard", () => {
           onRemove={onRemove}
           type="product"
           footer={<p>Footer</p>}
-          route="/products/1"
+          route={ROUTES.PRODUCT.replace(":productId", "1")}
         />
       </BrowserRouter>
     );
@@ -67,7 +68,7 @@ describe("SliderImageCard", () => {
           onRemove={onRemove}
           type="product"
           footer={<p>Footer</p>}
-          route="/products/1"
+          route={ROUTES.PRODUCT.replace(":productId", "1")}
         />
       </BrowserRouter>
     );
@@ -76,15 +77,15 @@ describe("SliderImageCard", () => {
     const nextButton = getByTestId("next-image_button");
 
     expect(getByTestId("slider-image_1")).toBeInTheDocument();
-    prevButton.click();
+    act(() => prevButton.click());
     await waitFor(() =>
       expect(getByTestId("slider-image_3")).toBeInTheDocument()
     );
-    nextButton.click();
+    act(() => nextButton.click());
     await waitFor(() =>
       expect(getByTestId("slider-image_1")).toBeInTheDocument()
     );
-    nextButton.click();
+    act(() => nextButton.click());
     await waitFor(() =>
       expect(getByTestId("slider-image_2")).toBeInTheDocument()
     );

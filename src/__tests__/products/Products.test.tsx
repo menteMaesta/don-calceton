@@ -49,7 +49,9 @@ describe("Products", () => {
         loader: () => [],
       },
     ];
-    const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.DASHBOARD],
+    });
 
     render(
       <React.StrictMode>
@@ -73,7 +75,9 @@ describe("Products", () => {
         loader: () => products,
       },
     ];
-    const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.DASHBOARD],
+    });
 
     render(
       <React.StrictMode>
@@ -103,7 +107,9 @@ describe("Products", () => {
         loader: () => [],
       },
     ];
-    const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.DASHBOARD],
+    });
 
     render(
       <React.StrictMode>
@@ -135,7 +141,9 @@ describe("Products", () => {
         element: <ProductDetails />,
       },
     ];
-    const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.DASHBOARD],
+    });
 
     render(
       <React.StrictMode>
@@ -150,7 +158,7 @@ describe("Products", () => {
 
     expect(productCard).toBeInTheDocument();
     expect(productCard.getAttribute("href")).toEqual(
-      `/products/${products[0].id}`
+      ROUTES.PRODUCT.replace(":productId", `${products[0].id}`)
     );
     await userEvent.click(productCard);
 

@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import ProductCard from "components/ProductCard.tsx";
 import { ProductListItem } from "helpers/customTypes";
+import { ROUTES } from "helpers/constants";
 
 describe("ProductCard", () => {
   it("renders correctly", () => {
@@ -25,7 +26,9 @@ describe("ProductCard", () => {
     const image = getByTestId("slider-image_default") as HTMLImageElement;
     const link = getByTestId("product-link_1") as HTMLAnchorElement;
 
-    expect(link.getAttribute("href")).toEqual("/products/1");
+    expect(link.getAttribute("href")).toEqual(
+      ROUTES.PRODUCT.replace(":productId", "1")
+    );
     expect(getByTestId("product-name_1").innerHTML).toEqual("Test Product");
     expect(getByTestId("product-price_1").innerHTML).toContain(product.price);
     expect(getByTestId("product-wholesale-price_1").innerHTML).toContain(

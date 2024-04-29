@@ -98,7 +98,7 @@ describe("ProductData", () => {
       },
     ];
     const router = createMemoryRouter(routes, {
-      initialEntries: ["/products/4"],
+      initialEntries: [ROUTES.PRODUCT.replace(":productId", "4")],
     });
 
     render(

@@ -32,6 +32,8 @@ import Varaint from "routes/Variants/Variant";
 import { variantActions } from "routes/Variants/actions";
 import { fetchVariant } from "routes/Variants/loader";
 
+import Store from "routes/Store/Store";
+
 const router = createBrowserRouter([
   {
     path: ROUTES.DASHBOARD,
@@ -116,6 +118,12 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
     ],
+  },
+  {
+    path: ROUTES.STORE,
+    element: <Store />,
+    errorElement: <ErrorPage />,
+    children: [],
   },
 ]);
 
