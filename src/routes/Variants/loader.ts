@@ -1,5 +1,4 @@
 import { LoaderFunctionArgs } from "react-router-dom";
-import { handleUnauthorized } from "helpers/unauthorized";
 import { getVariant } from "./api";
 
 export const fetchVariant = async ({ params }: LoaderFunctionArgs) => {
@@ -9,11 +8,7 @@ export const fetchVariant = async ({ params }: LoaderFunctionArgs) => {
   );
 
   if (status !== 200) {
-    if (data.errors[0].message === "Unauthorized access") {
-      return handleUnauthorized();
-    } else {
-      throw data.errors[0];
-    }
+    throw data.errors[0];
   }
   return data;
 };
