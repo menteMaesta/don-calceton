@@ -35,7 +35,7 @@ describe("VariantCard", () => {
       `variant-quantity_${variant.id}`
     );
     const variantImage = screen.getByTestId(
-      `variant-image_${variant.images[0].id}`
+      `slider-image_${variant.images[0].id}`
     );
 
     expect(
@@ -57,7 +57,7 @@ describe("VariantCard", () => {
         />
       </BrowserRouter>
     );
-    const variantImage = screen.getByTestId("variant-image_default");
+    const variantImage = screen.getByTestId("slider-image_default");
 
     expect(variantImage).toBeInTheDocument();
     expect(variantImage).toHaveAttribute("src", "/src/assets/default-pic.png");
@@ -78,10 +78,10 @@ describe("VariantCard", () => {
     );
 
     const variantImage = screen.getByTestId(
-      `variant-image_${currentVariant.images[0].id}`
+      `slider-image_${currentVariant.images[0].id}`
     );
-    const prevButton = screen.getByTestId("variant-card_prev-image");
-    const nextButton = screen.getByTestId("variant-card_next-image");
+    const prevButton = screen.getByTestId("prev-image_button");
+    const nextButton = screen.getByTestId("next-image_button");
 
     expect(variantImage).toBeInTheDocument();
     expect(prevButton).toBeInTheDocument();

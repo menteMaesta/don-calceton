@@ -6,15 +6,15 @@ import SearchBar from "components/SearchBar";
 import ProductCard from "components/ProductCard";
 import SticyLink from "components/StickyLink";
 import EmptyState from "components/EmptyState";
-import { Product, ErrorType } from "helpers/customTypes";
+import { ProductListItem, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 
 export default function Products() {
-  const data = useLoaderData() as Product[];
+  const data = useLoaderData() as ProductListItem[];
   const submit = useSubmit();
   const actionData = useActionData() as ErrorType & { id: string };
   const [openSnackbar] = useSnackbar();
-  const [products, setProducts] = useState<Product[]>(data);
+  const [products, setProducts] = useState<ProductListItem[]>(data);
 
   const onSearch = (search: string) => {
     if (search) {

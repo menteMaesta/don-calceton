@@ -1,9 +1,8 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
 import { useParams } from "react-router-dom";
-import ElementCard from "components/ElementCard";
+import SliderImageCard from "components/SliderImageCard";
 import { Variant } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
-import DefaultPic from "assets/default-pic.png";
 
 type Props = {
   variant: Variant;
@@ -11,24 +10,9 @@ type Props = {
 };
 export default function VariantCard({ variant, onRemove }: Props) {
   const { productId = "" } = useParams();
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const handleNextImage = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setImageIndex((currentIndex) =>
-      currentIndex === variant.images.length - 1 ? 0 : currentIndex + 1
-    );
-  };
-
-  const handlePrevImage = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setImageIndex((currentIndex) =>
-      currentIndex === 0 ? variant.images.length - 1 : currentIndex - 1
-    );
-  };
 
   return (
-    <ElementCard
+    <SliderImageCard
       elementId={`${variant.id}`}
       type="variant"
       onRemove={onRemove}
@@ -53,40 +37,7 @@ export default function VariantCard({ variant, onRemove }: Props) {
           </p>
         </div>
       }
-    >
-      {variant.images.length > 1 && (
-        <button
-          onClick={handlePrevImage}
-          className="absolute left-2 text-slate-500"
-          data-testid="variant-card_prev-image"
-        >
-          <i className="fa-solid fa-angle-left" />
-        </button>
-      )}
-      <div className="w-full flex items-center justify-center">
-        <img
-          data-testid={`variant-image_${
-            variant.images[imageIndex]?.id || "default"
-          }`}
-          className="max-h-64"
-          src={
-            variant.images[imageIndex]?.name
-              ? `${import.meta.env.VITE_BASE_URL}/${
-                  variant.images[imageIndex]?.name
-                }`
-              : DefaultPic
-          }
-        />
-      </div>
-      {variant.images.length > 1 && (
-        <button
-          onClick={handleNextImage}
-          className="absolute right-2 text-slate-500"
-          data-testid="variant-card_next-image"
-        >
-          <i className="fa-solid fa-angle-right" />
-        </button>
-      )}
-    </ElementCard>
+      images={variant.images}
+    />
   );
 }

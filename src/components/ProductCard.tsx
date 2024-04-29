@@ -1,18 +1,16 @@
 import { MouseEvent } from "react";
 import classnames from "classnames";
-import ElementCard from "components/ElementCard";
-import { Product } from "helpers/customTypes";
+import { ProductListItem } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
-import DefaultPic from "assets/default-pic.png";
+import SliderImageCard from "./SliderImageCard";
 
 type Props = {
-  product: Product;
+  product: ProductListItem;
   onRemove: (event: MouseEvent<HTMLElement>, productId: string) => void;
 };
 export default function ProductCard({ product, onRemove }: Props) {
-  const imageName = product.variants[0]?.images[0]?.name;
   return (
-    <ElementCard
+    <SliderImageCard
       elementId={`${product.id}`}
       title={product.name}
       type="product"
@@ -27,6 +25,7 @@ export default function ProductCard({ product, onRemove }: Props) {
           {product.description}
         </p>
       }
+      images={product.variants}
     >
       <div
         className={classnames(
@@ -59,15 +58,6 @@ export default function ProductCard({ product, onRemove }: Props) {
           <span> MXN</span>
         </p>
       </div>
-      <img
-        data-testid={`product-img_${product.id}`}
-        className="max-h-64"
-        src={
-          imageName
-            ? `${import.meta.env.VITE_BASE_URL}/${imageName}`
-            : DefaultPic
-        }
-      />
-    </ElementCard>
+    </SliderImageCard>
   );
 }

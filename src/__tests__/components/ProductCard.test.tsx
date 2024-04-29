@@ -2,7 +2,7 @@ import { describe, it } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import ProductCard from "components/ProductCard.tsx";
-import { Product } from "helpers/customTypes";
+import { ProductListItem } from "helpers/customTypes";
 
 describe("ProductCard", () => {
   it("renders correctly", () => {
@@ -15,14 +15,14 @@ describe("ProductCard", () => {
       updatedAt: "2021-10-10",
       createdAt: "2021-10-10",
       variants: [],
-    } as Product;
+    } as ProductListItem;
 
     const { getByTestId } = render(
       <BrowserRouter>
         <ProductCard product={product} onRemove={vi.fn()} />
       </BrowserRouter>
     );
-    const image = getByTestId("product-img_1") as HTMLImageElement;
+    const image = getByTestId("slider-image_default") as HTMLImageElement;
     const link = getByTestId("product-link_1") as HTMLAnchorElement;
 
     expect(link.getAttribute("href")).toEqual("/products/1");

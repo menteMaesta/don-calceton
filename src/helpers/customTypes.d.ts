@@ -21,6 +21,12 @@ export interface Product extends ProductBase {
   createdAt: string;
   variants: Variant[];
 }
+export interface ProductListItem extends ProductBase {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  variants: Image[];
+}
 export interface VariantBase {
   name: string;
   productId: number;
@@ -41,3 +47,4 @@ export type Image = {
 };
 export type Blob = { src: string; name: string; file: File };
 export type ErrorType = { statusText: string; message: string };
+export type SliderImage = { id: number; name: string };

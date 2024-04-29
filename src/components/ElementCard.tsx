@@ -2,7 +2,7 @@ import { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
-type Props = {
+export type Props = {
   elementId: string;
   title?: string;
   children: ReactNode;
