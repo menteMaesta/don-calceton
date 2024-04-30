@@ -33,7 +33,12 @@ export default function SliderImageCard({
       {images.length > 1 && (
         <button
           onClick={handlePrevImage}
-          className="absolute left-2 text-slate-500"
+          className={
+            "absolute left-2 " +
+            "text-slate-500 " +
+            "h-full w-5 " +
+            "hover:text-slate-900 hover:text-lg"
+          }
           data-testid="prev-image_button"
         >
           <i className="fa-solid fa-angle-left" />
@@ -59,7 +64,12 @@ export default function SliderImageCard({
       {images.length > 1 && (
         <button
           onClick={handleNextImage}
-          className="absolute right-2 text-slate-500"
+          className={
+            "absolute right-2 " +
+            "text-slate-500 " +
+            "h-full w-5 " +
+            "hover:text-slate-900 hover:text-lg"
+          }
           data-testid="next-image_button"
         >
           <i className="fa-solid fa-angle-right" />

@@ -2,6 +2,12 @@ import { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 
+type ElementCardWrapperProps = {
+  route?: string;
+  className?: string;
+  "data-testid"?: string;
+  children: ReactNode;
+};
 export type Props = {
   elementId: string;
   title?: string;
@@ -9,8 +15,17 @@ export type Props = {
   footer: ReactNode;
   type: "product" | "variant";
   onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
-  route: string;
+  route?: string;
 };
+
+function ElementCardWrapper({ route, ...props }: ElementCardWrapperProps) {
+  if (route) {
+    return <Link to={route} {...props} />;
+  } else {
+    return <div {...props} />;
+  }
+}
+
 export default function ElementCard({
   elementId,
   title,
@@ -21,8 +36,8 @@ export default function ElementCard({
   route,
 }: Props) {
   return (
-    <Link
-      to={route}
+    <ElementCardWrapper
+      route={route}
       className={classnames(
         "flex flex-col",
         "rounded p-2",
@@ -56,6 +71,6 @@ export default function ElementCard({
         {children}
       </div>
       {footer}
-    </Link>
+    </ElementCardWrapper>
   );
 }

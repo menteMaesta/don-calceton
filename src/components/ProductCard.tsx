@@ -6,7 +6,7 @@ import SliderImageCard from "./SliderImageCard";
 
 type Props = {
   product: ProductListItem;
-  onRemove: (event: MouseEvent<HTMLElement>, productId: string) => void;
+  onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
 };
 export default function ProductCard({ product, onRemove }: Props) {
   return (

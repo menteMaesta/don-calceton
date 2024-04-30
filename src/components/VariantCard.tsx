@@ -6,7 +6,7 @@ import { ROUTES } from "helpers/constants";
 
 type Props = {
   variant: Variant;
-  onRemove: (event: MouseEvent<HTMLElement>, variantId: string) => void;
+  onRemove?: (event: MouseEvent<HTMLElement>, variantId: string) => void;
 };
 export default function VariantCard({ variant, onRemove }: Props) {
   const { productId = "" } = useParams();
