@@ -33,6 +33,7 @@ import { variantActions } from "routes/Variants/actions";
 import { fetchVariant } from "routes/Variants/loader";
 
 import Store from "routes/Store/Store";
+import ProductList from "routes/Store/ProductList/ProductList";
 
 const router = createBrowserRouter([
   {
@@ -123,7 +124,13 @@ const router = createBrowserRouter([
     path: ROUTES.STORE,
     element: <Store />,
     errorElement: <ErrorPage />,
-    children: [],
+    children: [
+      {
+        index: true,
+        element: <ProductList />,
+        loader: getProducts,
+      },
+    ],
   },
 ]);
 
