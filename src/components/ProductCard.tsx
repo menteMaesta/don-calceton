@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
-import classnames from "classnames";
 import { ProductListItem } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
+import Prices from "components/Prices";
 import SliderImageCard from "./SliderImageCard";
 
 type Props = {
@@ -27,37 +27,11 @@ export default function ProductCard({ product, onRemove }: Props) {
       }
       images={product.variants}
     >
-      <div
-        className={classnames(
-          "absolute bottom-0 right-0",
-          "flex flex-col items-end"
-        )}
-      >
-        <p
-          className={classnames(
-            "bg-slate-950 text-white",
-            "w-fit sm:text-sm",
-            "rounded-full px-2"
-          )}
-          data-testid={`product-price_${product.id}`}
-        >
-          <span>Base $</span>
-          {product.price}
-          <span> MXN</span>
-        </p>
-        <p
-          className={classnames(
-            "bg-slate-950 text-white",
-            "w-fit mt-1 sm:text-sm",
-            "rounded-full px-2"
-          )}
-          data-testid={`product-wholesale-price_${product.id}`}
-        >
-          <span>Mayoreo $</span>
-          {product.wholesalePrice}
-          <span> MXN</span>
-        </p>
-      </div>
+      <Prices
+        id={product.id}
+        price={product.price}
+        wholesalePrice={product.wholesalePrice}
+      />
     </SliderImageCard>
   );
 }

@@ -15,6 +15,7 @@ const config: ViteConfig = {
       assets: "/src/assets",
       helpers: "/src/helpers",
       components: "/src/components",
+      storeComponents: "/src/storeComponents",
     },
   },
   test: {

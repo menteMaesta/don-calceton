@@ -38,6 +38,13 @@ export interface Variant extends VariantBase {
   updatedAt: string;
   createdAt: string;
 }
+export interface VariantListItem extends VariantBase {
+  id: number;
+  images?: Pick<Image, "id" | "name">;
+  productName: string;
+  productPrice: number;
+  productWholesalePrice: number;
+}
 export type Image = {
   id: number;
   name: string;
@@ -48,3 +55,4 @@ export type Image = {
 export type Blob = { src: string; name: string; file: File };
 export type ErrorType = { statusText: string; message: string };
 export type SliderImage = { id: number; name: string };
+export type Option = { value: number; label: string };

@@ -30,10 +30,10 @@ import ProductDetails from "routes/Products/Product";
 import NewVariant from "routes/Variants/NewVariant";
 import Varaint from "routes/Variants/Variant";
 import { variantActions } from "routes/Variants/actions";
-import { fetchVariant } from "routes/Variants/loader";
+import { fetchVariant, fetchStorefrontData } from "routes/Variants/loader";
 
 import Store from "routes/Store/Store";
-import ProductList from "routes/Store/ProductList/ProductList";
+import VariantList from "src/routes/Store/VariantList/VariantList";
 
 const router = createBrowserRouter([
   {
@@ -127,8 +127,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ProductList />,
-        loader: getProducts,
+        element: <VariantList />,
+        loader: fetchStorefrontData,
       },
     ],
   },

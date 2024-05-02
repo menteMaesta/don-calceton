@@ -60,6 +60,20 @@ export async function getVariants(productId: string) {
   return { data, status: response.status };
 }
 
+export async function getAllVariants() {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/all_variants`,
+    {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return { data, status: response.status };
+}
+
 export async function getVariant(productId: string, variantId: string) {
   const response = await fetch(
     `${

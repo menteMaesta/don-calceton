@@ -30,8 +30,8 @@ describe("ProductCard", () => {
       ROUTES.PRODUCT.replace(":productId", "1")
     );
     expect(getByTestId("product-name_1").innerHTML).toEqual("Test Product");
-    expect(getByTestId("product-price_1").innerHTML).toContain(product.price);
-    expect(getByTestId("product-wholesale-price_1").innerHTML).toContain(
+    expect(getByTestId("price_1").innerHTML).toContain(product.price);
+    expect(getByTestId("wholesale-price_1").innerHTML).toContain(
       product.wholesalePrice
     );
     expect(image.src).toEqual(
