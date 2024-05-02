@@ -35,16 +35,22 @@ export default function Store() {
         </Link>
         <Link
           to={ROUTES.STORE}
-          className={classnames("flex items-center", "space-x-2 pr-2")}
+          className={classnames(
+            "flex items-center",
+            "space-x-2 pr-2",
+            "text-slate-200",
+            "cursor-not-allowed"
+          )}
+          onClick={(e) => e.preventDefault()}
         >
           <i
             className={classnames(
               "fa-solid fa-cart-shopping",
-              "text-xl text-slate-700",
+              "text-xl",
               "ml-2"
             )}
           />
-          <p className="font-medium text-slate-700">Carrito</p>
+          <p className="font-medium">Carrito</p>
         </Link>
       </div>
 
