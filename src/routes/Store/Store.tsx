@@ -4,7 +4,10 @@ import { ROUTES } from "helpers/constants";
 import { VariantListItem } from "helpers/customTypes";
 
 export default function Store() {
-  const cart = useLoaderData() as VariantListItem[];
+  const { totalItems } = useLoaderData() as {
+    cart: VariantListItem[];
+    totalItems: number;
+  };
 
   return (
     <div
@@ -51,7 +54,7 @@ export default function Store() {
               "ml-2"
             )}
           />
-          {cart?.length > 0 && (
+          {totalItems > 0 && (
             <span
               className={
                 "absolute -top-2 -left-2 " +
@@ -60,7 +63,7 @@ export default function Store() {
                 "px-1 leading-4"
               }
             >
-              {cart?.length}
+              {totalItems}
             </span>
           )}
           <p className="font-medium">Carrito</p>
