@@ -1,8 +1,11 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLoaderData } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
+import { VariantListItem } from "helpers/customTypes";
 
 export default function Store() {
+  const cart = useLoaderData() as VariantListItem[];
+
   return (
     <div
       className={classnames(
@@ -37,11 +40,9 @@ export default function Store() {
           to={ROUTES.STORE}
           className={classnames(
             "flex items-center",
-            "space-x-2 pr-2",
-            "text-slate-200",
-            "cursor-not-allowed"
+            "space-x-2 pr-2 relative",
+            "text-slate-700"
           )}
-          onClick={(e) => e.preventDefault()}
         >
           <i
             className={classnames(
@@ -50,6 +51,16 @@ export default function Store() {
               "ml-2"
             )}
           />
+          <span
+            className={
+              "absolute -top-2 -left-2 " +
+              "bg-red-500 text-white " +
+              "text-xs rounded-full " +
+              "px-1 leading-4"
+            }
+          >
+            {cart?.length}
+          </span>
           <p className="font-medium">Carrito</p>
         </Link>
       </div>

@@ -30,10 +30,15 @@ import ProductDetails from "routes/Products/Product";
 import NewVariant from "routes/Variants/NewVariant";
 import Varaint from "routes/Variants/Variant";
 import { variantActions } from "routes/Variants/actions";
-import { fetchVariant, fetchStorefrontData } from "routes/Variants/loader";
+import { fetchVariant } from "routes/Variants/loader";
 
 import Store from "routes/Store/Store";
-import VariantList from "src/routes/Store/VariantList/VariantList";
+import VariantList from "routes/Store/VariantList/VariantList";
+import {
+  fetchStorefrontData,
+  getCartItems,
+} from "routes/Store/VariantList/loader";
+import { storeActions } from "routes/Store/VariantList/actions";
 
 const router = createBrowserRouter([
   {
@@ -124,11 +129,13 @@ const router = createBrowserRouter([
     path: ROUTES.STORE,
     element: <Store />,
     errorElement: <ErrorPage />,
+    loader: getCartItems,
     children: [
       {
         index: true,
         element: <VariantList />,
         loader: fetchStorefrontData,
+        action: storeActions,
       },
     ],
   },

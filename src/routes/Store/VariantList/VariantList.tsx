@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useSubmit } from "react-router-dom";
 import Select from "react-select";
 import classnames from "classnames";
 import EmptyState from "components/EmptyState";
@@ -7,6 +7,7 @@ import VariantItem from "storeComponents/VariantItem";
 import { VariantListItem, Option } from "helpers/customTypes";
 
 export default function VariantList() {
+  const submit = useSubmit();
   const { variants, productOptions } = useLoaderData() as {
     variants: VariantListItem[];
     productOptions: Option[];
@@ -23,6 +24,22 @@ export default function VariantList() {
       option.find((item) => item.value === variant.productId)
     );
     setFilteredVariants(filtered);
+  };
+
+  const onAddToCart = (variant: VariantListItem) => {
+    const formData = new FormData();
+    formData.append("id", `${variant.id}`);
+    formData.append("name", variant.name);
+    formData.append("productId", `${variant.productId}`);
+    formData.append("quantity", `${variant.quantity}`);
+    formData.append("productName", variant.productName);
+    formData.append("productPrice", `${variant.productPrice}`);
+    formData.append(
+      "productWholesalePrice",
+      `${variant.productWholesalePrice}`
+    );
+    formData.append("store", "addVariant");
+    submit(formData, { method: "post" });
   };
 
   return (
@@ -52,7 +69,11 @@ export default function VariantList() {
         >
           {filteredVariants &&
             filteredVariants.map((variant) => (
-              <VariantItem key={variant.id} variant={variant} />
+              <VariantItem
+                key={variant.id}
+                variant={variant}
+                onAddToCart={onAddToCart}
+              />
             ))}
         </div>
       ) : (

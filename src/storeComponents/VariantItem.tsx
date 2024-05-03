@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import ElementCard from "components/ElementCard";
 import Button from "components/Button";
 import Prices from "components/Prices";
@@ -6,9 +7,14 @@ import DefaultPic from "assets/default-pic.png";
 
 type props = {
   variant: VariantListItem;
+  onAddToCart: (variant: VariantListItem) => void;
 };
 
-export default function VariantItem({ variant }: props) {
+export default function VariantItem({ variant, onAddToCart }: props) {
+  const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    onAddToCart(variant);
+  };
   return (
     <ElementCard
       elementId="variant-item"
@@ -16,12 +22,7 @@ export default function VariantItem({ variant }: props) {
       type="variant"
       footer={
         <div className="flex w-full items-center justify-center pt-2">
-          <Button
-            disabled
-            title="Desactivado porque esta en proceso de ser creado"
-          >
-            Añadir al carrito
-          </Button>
+          <Button onClick={handleAddToCart}>Añadir al carrito</Button>
         </div>
       }
     >
