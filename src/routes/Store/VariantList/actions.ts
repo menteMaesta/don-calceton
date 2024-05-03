@@ -8,6 +8,8 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
   switch (store) {
     case "addVariant":
       return handleAddVariant(formData);
+    case "removeVariant":
+      return handleRemoveFromCart(formData);
     default:
       break;
   }
@@ -15,13 +17,36 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
 
 const addToCart = (item: VariantListItem) => {
   let cart: VariantListItem[] = JSON.parse(Cookies.get("cart") || "[]");
+  const itemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
 
   if (!cart) {
     cart = [];
   }
+  if (itemIndex !== -1) {
+    cart[itemIndex].orderQuantity!++;
+  } else {
+    cart.push({ ...item, orderQuantity: 1 });
+  }
 
-  cart.push(item);
   Cookies.set("cart", JSON.stringify(cart), { expires: 100 });
+};
+
+const handleRemoveFromCart = (form: FormData) => {
+  const formData = Object.fromEntries(form);
+  const itemId = Number(formData.id);
+  let cart: VariantListItem[] = JSON.parse(Cookies.get("cart") || "[]");
+  const itemIndex = cart.findIndex((cartItem) => cartItem.id === itemId);
+
+  if (itemIndex !== -1) {
+    if (cart[itemIndex].orderQuantity === 1) {
+      cart = cart.filter((cartItem) => cartItem.id !== itemId);
+    } else {
+      cart[itemIndex].orderQuantity!--;
+    }
+  }
+
+  Cookies.set("cart", JSON.stringify(cart), { expires: 100 });
+  return true;
 };
 
 export const handleAddVariant = async (form: FormData) => {

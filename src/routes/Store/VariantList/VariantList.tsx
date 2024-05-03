@@ -8,9 +8,10 @@ import { VariantListItem, Option } from "helpers/customTypes";
 
 export default function VariantList() {
   const submit = useSubmit();
-  const { variants, productOptions } = useLoaderData() as {
+  const { variants, productOptions, cart } = useLoaderData() as {
     variants: VariantListItem[];
     productOptions: Option[];
+    cart: VariantListItem[];
   };
   const [filteredVariants, setFilteredVariants] =
     useState<VariantListItem[]>(variants);
@@ -39,6 +40,13 @@ export default function VariantList() {
       `${variant.productWholesalePrice}`
     );
     formData.append("store", "addVariant");
+    submit(formData, { method: "post" });
+  };
+
+  const onRemoveFromCart = (variantId: number) => {
+    const formData = new FormData();
+    formData.append("id", `${variantId}`);
+    formData.append("store", "removeVariant");
     submit(formData, { method: "post" });
   };
 
@@ -73,6 +81,11 @@ export default function VariantList() {
                 key={variant.id}
                 variant={variant}
                 onAddToCart={onAddToCart}
+                onRemoveFromCart={onRemoveFromCart}
+                inCart={
+                  cart.find((item) => item.id === variant.id)?.orderQuantity ||
+                  0
+                }
               />
             ))}
         </div>

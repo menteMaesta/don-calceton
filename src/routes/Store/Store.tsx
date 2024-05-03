@@ -51,16 +51,18 @@ export default function Store() {
               "ml-2"
             )}
           />
-          <span
-            className={
-              "absolute -top-2 -left-2 " +
-              "bg-red-500 text-white " +
-              "text-xs rounded-full " +
-              "px-1 leading-4"
-            }
-          >
-            {cart?.length}
-          </span>
+          {cart?.length > 0 && (
+            <span
+              className={
+                "absolute -top-2 -left-2 " +
+                "bg-red-500 text-white " +
+                "text-xs rounded-full " +
+                "px-1 leading-4"
+              }
+            >
+              {cart?.length}
+            </span>
+          )}
           <p className="font-medium">Carrito</p>
         </Link>
       </div>

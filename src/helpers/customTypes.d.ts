@@ -44,6 +44,7 @@ export interface VariantListItem extends VariantBase {
   productName: string;
   productPrice: number;
   productWholesalePrice: number;
+  orderQuantity?: number;
 }
 export type Image = {
   id: number;
