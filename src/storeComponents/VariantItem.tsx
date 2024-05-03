@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 import ElementCard from "components/ElementCard";
-import Button from "components/Button";
+import AddProductButton from "storeComponents/AddProductButton";
 import Prices from "components/Prices";
 import { VariantListItem } from "helpers/customTypes";
 import DefaultPic from "assets/default-pic.png";
@@ -26,35 +26,18 @@ export default function VariantItem({
     event.preventDefault();
     onRemoveFromCart(variant.id);
   };
+
   return (
     <ElementCard
       elementId="variant-item"
       title={variant.name}
       type="variant"
       footer={
-        <div className="flex w-full items-center justify-center pt-2">
-          {inCart > 0 ? (
-            <div
-              className={
-                "bg-slate-800 text-white " +
-                "font-medium " +
-                "rounded py-1 px-4"
-              }
-            >
-              <i
-                className={"fa-solid fa-minus " + "cursor-pointer"}
-                onClick={handleRemove}
-              />
-              <span className="mx-6">{inCart}</span>
-              <i
-                className={"fa-solid fa-plus " + "cursor-pointer"}
-                onClick={handleAddToCart}
-              />
-            </div>
-          ) : (
-            <Button onClick={handleAddToCart}>Agregar</Button>
-          )}
-        </div>
+        <AddProductButton
+          onAddToCart={handleAddToCart}
+          onRemoveFromCart={handleRemove}
+          inCart={inCart}
+        />
       }
     >
       <div className="w-full flex items-center justify-center">

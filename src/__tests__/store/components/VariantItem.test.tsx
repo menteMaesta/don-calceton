@@ -14,21 +14,42 @@ describe("VariantItem", () => {
   };
 
   it("renders variant name", () => {
-    const { getByTestId } = render(<VariantItem variant={variant} />);
+    const { getByTestId } = render(
+      <VariantItem
+        variant={variant}
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={vi.fn()}
+        inCart={0}
+      />
+    );
     const title = getByTestId("variant-link_variant-item");
     expect(title).toBeInTheDocument();
     expect(title).toHaveTextContent(variant.name);
   });
 
   it("renders variant price", () => {
-    const { getByTestId } = render(<VariantItem variant={variant} />);
+    const { getByTestId } = render(
+      <VariantItem
+        variant={variant}
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={vi.fn()}
+        inCart={0}
+      />
+    );
     const price = getByTestId("price_1");
     expect(price).toBeInTheDocument();
     expect(price).toHaveTextContent(`Base $${variant.productPrice} MXN`);
   });
 
   it("renders variant wholesale price", () => {
-    const { getByTestId } = render(<VariantItem variant={variant} />);
+    const { getByTestId } = render(
+      <VariantItem
+        variant={variant}
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={vi.fn()}
+        inCart={0}
+      />
+    );
     const wholesale = getByTestId("wholesale-price_1");
     expect(wholesale).toBeInTheDocument();
     expect(wholesale).toHaveTextContent(
@@ -37,7 +58,14 @@ describe("VariantItem", () => {
   });
 
   it("renders variant image", () => {
-    const { getByTestId } = render(<VariantItem variant={variant} />);
+    const { getByTestId } = render(
+      <VariantItem
+        variant={variant}
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={vi.fn()}
+        inCart={0}
+      />
+    );
     const image = getByTestId("store-item_1");
     expect(image).toBeInTheDocument();
   });
@@ -52,8 +80,31 @@ describe("VariantItem", () => {
       productPrice: 10,
       productWholesalePrice: 5,
     };
-    const { getByTestId } = render(<VariantItem variant={variantNoImage} />);
+    const { getByTestId } = render(
+      <VariantItem
+        variant={variantNoImage}
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={vi.fn()}
+        inCart={0}
+      />
+    );
     const image = getByTestId("store-item_default");
     expect(image).toBeInTheDocument();
+  });
+
+  it("renders add item button", () => {
+    const { getByTestId } = render(
+      <VariantItem
+        variant={variant}
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={vi.fn()}
+        inCart={0}
+      />
+    );
+    const addButton = getByTestId("add-products_button");
+    const addButtonText = getByTestId("add-to-cart");
+    expect(addButton).toBeInTheDocument();
+    expect(addButtonText).toBeInTheDocument();
+    expect(addButtonText).toHaveTextContent("Agregar");
   });
 });

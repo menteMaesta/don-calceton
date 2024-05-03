@@ -62,6 +62,7 @@ export default function Store() {
                 "text-xs rounded-full " +
                 "px-1 leading-4"
               }
+              data-testid="cart-total_badge"
             >
               {totalItems}
             </span>

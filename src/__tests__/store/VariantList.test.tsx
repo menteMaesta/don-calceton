@@ -3,6 +3,7 @@ import { render, waitFor } from "@testing-library/react";
 import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import VariantList from "routes/Store/VariantList/VariantList";
+import Store from "routes/Store/Store";
 import { ROUTES } from "helpers/constants";
 
 describe("VariantList", () => {
@@ -63,6 +64,7 @@ describe("VariantList", () => {
               productWholesalePrice: 130,
             },
           ],
+          cart: [],
         }),
       },
     ];
@@ -81,5 +83,56 @@ describe("VariantList", () => {
     const variantList = await waitFor(() => getByTestId("variant-item_list"));
     expect(variantList).toBeInTheDocument();
     expect(variantList.children).toHaveLength(2);
+  });
+
+  test("cart tag is the same as the total items in the cart", async () => {
+    const cart = [
+      {
+        id: 1,
+        orderQuantity: 2,
+      },
+    ];
+    const routes = [
+      {
+        path: ROUTES.STORE,
+        element: <Store />,
+        loader: () => ({ cart, totalItems: cart[0].orderQuantity }),
+        children: [
+          {
+            index: true,
+            element: <VariantList />,
+            loader: () => ({
+              variants: [{ id: 1 }],
+              cart,
+            }),
+            action: () => true,
+          },
+        ],
+      },
+    ];
+
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.STORE],
+    });
+    const { getByTestId, queryByTestId } = render(
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
+    );
+
+    const variantList = await waitFor(() => getByTestId("variant-item_list"));
+    const addButton = getByTestId("add-products_button");
+    const addItemButton = getByTestId("add-item-to-cart");
+    const cartTag = getByTestId("cart-total_badge");
+
+    expect(variantList).toBeInTheDocument();
+    expect(addButton).toBeInTheDocument();
+    expect(addButton).toHaveTextContent("2");
+    expect(queryByTestId("add-to-cart")).not.toBeInTheDocument();
+    expect(addItemButton).toBeInTheDocument();
+    expect(cartTag).toBeInTheDocument();
+    expect(cartTag).toHaveTextContent("2");
   });
 });

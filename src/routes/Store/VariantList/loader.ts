@@ -6,7 +6,7 @@ import { Product, VariantListItem } from "helpers/customTypes";
 export const fetchStorefrontData = async () => {
   const variants = await fetchAllVariants();
   const products = await getProducts();
-  const { cart } = await getCartItems();
+  const { cart = [] } = await getCartItems();
   const productOptions = products
     .filter((product: Product) => product.variants.length > 0)
     .map((product: Product) => ({
