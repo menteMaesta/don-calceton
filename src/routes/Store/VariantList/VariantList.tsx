@@ -54,6 +54,7 @@ export default function VariantList() {
     <div className="mt-11 flex flex-col items-center w-full">
       <Select
         isMulti
+        isSearchable={false}
         onChange={onFilter}
         options={productOptions}
         styles={{

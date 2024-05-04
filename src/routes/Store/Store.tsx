@@ -49,7 +49,7 @@ export default function Store() {
               isActive ? "border-slate-700/100" : "",
               isTransitioning ? "text-slate-200" : "",
               "flex items-center self-end pb-1",
-              "space-x-2 pr-2 relative",
+              "space-x-2 pr-4 relative",
             ].join(" ")
           }
         >
