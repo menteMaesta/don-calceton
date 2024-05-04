@@ -34,6 +34,8 @@ import { fetchVariant } from "routes/Variants/loader";
 
 import Store from "routes/Store/Store";
 import VariantList from "routes/Store/VariantList/VariantList";
+import Cart from "routes/Store/Cart/Cart";
+
 import {
   fetchStorefrontData,
   getCartItems,
@@ -136,6 +138,11 @@ const router = createBrowserRouter([
         element: <VariantList />,
         loader: fetchStorefrontData,
         action: storeActions,
+      },
+      {
+        path: ROUTES.CART,
+        element: <Cart />,
+        loader: getCartItems,
       },
     ],
   },

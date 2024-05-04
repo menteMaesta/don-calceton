@@ -12,4 +12,5 @@ export const ROUTES = {
   GO_TO_MAIL: "/to_mail",
   CHANGE_PASSWORD: "/:forgotToken/change_password",
   STORE: "/",
+  CART: "/cart",
 };

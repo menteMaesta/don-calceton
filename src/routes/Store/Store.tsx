@@ -1,4 +1,4 @@
-import { Outlet, Link, useLoaderData } from "react-router-dom";
+import { Outlet, Link, NavLink, useLoaderData } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
 import { VariantListItem } from "helpers/customTypes";
@@ -39,13 +39,19 @@ export default function Store() {
           />
           <p className="font-medium text-slate-700">Tienda Don Calcetón</p>
         </Link>
-        <Link
-          to={ROUTES.STORE}
-          className={classnames(
-            "flex items-center",
-            "space-x-2 pr-2 relative",
-            "text-slate-700"
-          )}
+        <NavLink
+          to={ROUTES.CART}
+          className={({ isActive, isPending, isTransitioning }) =>
+            [
+              "text-slate-700",
+              "border-b-2 border-slate-700/0",
+              isPending ? "text-slate-200" : "",
+              isActive ? "border-slate-700/100" : "",
+              isTransitioning ? "text-slate-200" : "",
+              "flex items-center self-end pb-1",
+              "space-x-2 pr-2 relative",
+            ].join(" ")
+          }
         >
           <i
             className={classnames(
@@ -68,7 +74,7 @@ export default function Store() {
             </span>
           )}
           <p className="font-medium">Carrito</p>
-        </Link>
+        </NavLink>
       </div>
 
       <Outlet />
