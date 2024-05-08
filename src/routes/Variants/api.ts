@@ -74,6 +74,25 @@ export async function getAllVariants() {
   return { data, status: response.status };
 }
 
+export async function getAllCartVariants({
+  variantIds,
+}: {
+  variantIds: string[];
+}) {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/cart_items`,
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ variantIds }),
+    }
+  );
+  const data = await response.json();
+  return { data, status: response.status };
+}
+
 export async function getVariant(productId: string, variantId: string) {
   const response = await fetch(
     `${

@@ -1,8 +1,9 @@
 import { useLoaderData } from "react-router-dom";
-import { VariantListItem } from "helpers/customTypes";
+import { CartItem } from "helpers/customTypes";
+import VariantImageSlider from "src/storeComponents/VariantImageSlider";
 
 export default function Cart() {
-  const { cart } = useLoaderData() as { cart: VariantListItem[] };
+  const cart = useLoaderData() as CartItem[];
 
   return (
     <div className="mt-11 flex flex-col w-full px-4">
@@ -10,14 +11,16 @@ export default function Cart() {
         <i className={"fa-solid fa-cart-shopping " + "text-xl " + "ml-2"} />
         Productos <span>{cart.length}</span>
       </p>
-      <div className="mt-8 flex flex-col space-y-4">
+      <div
+        className={
+          "mt-8 " +
+          "grid grid-cols-1 gap-4 " +
+          "sm:grid-cols-1 md:grid-cols-2 " +
+          "lg:grid-cols-3 w-full"
+        }
+      >
         {cart.map((item) => (
-          <div key={item.id} className="bg-white p-4 rounded">
-            <p>{item.name}</p>
-            <p>
-              Cantidad <span>{item.orderQuantity}</span>
-            </p>
-          </div>
+          <VariantImageSlider key={item.id} item={item} />
         ))}
       </div>
     </div>

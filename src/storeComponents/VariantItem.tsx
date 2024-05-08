@@ -9,14 +9,14 @@ type props = {
   variant: VariantListItem;
   onAddToCart: (variant: VariantListItem) => void;
   onRemoveFromCart: (variantId: number) => void;
-  inCart?: number;
+  inCart?: boolean;
 };
 
 export default function VariantItem({
   variant,
   onAddToCart,
   onRemoveFromCart,
-  inCart = 0,
+  inCart = false,
 }: props) {
   const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

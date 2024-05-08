@@ -1,7 +1,12 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import Cookies from "js-cookie";
-import { VariantListItem } from "helpers/customTypes";
+import { CartItem } from "helpers/customTypes";
 
+const emptyOrderItem = {
+  quantity: 0,
+  type: 0,
+  images: [],
+};
 export const storeActions = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const store = formData.get("store");
@@ -15,17 +20,22 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-const addToCart = (item: VariantListItem) => {
-  let cart: VariantListItem[] = JSON.parse(Cookies.get("cart") || "[]");
-  const itemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
+const addToCart = (itemId: number) => {
+  let cart: CartItem[] = JSON.parse(Cookies.get("cart") || "[]");
+  const itemIndex = cart.findIndex((cartItem) => cartItem.id === itemId);
 
   if (!cart) {
     cart = [];
   }
   if (itemIndex !== -1) {
-    cart[itemIndex].orderQuantity!++;
+    if (cart[itemIndex].personalizations?.length) {
+      cart[itemIndex].personalizations![0].quantity++;
+    }
   } else {
-    cart.push({ ...item, orderQuantity: 1 });
+    cart.push({
+      id: itemId,
+      personalizations: [{ ...emptyOrderItem, quantity: 1 }],
+    });
   }
 
   Cookies.set("cart", JSON.stringify(cart), { expires: 100 });
@@ -34,15 +44,11 @@ const addToCart = (item: VariantListItem) => {
 const handleRemoveFromCart = (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
-  let cart: VariantListItem[] = JSON.parse(Cookies.get("cart") || "[]");
+  let cart: CartItem[] = JSON.parse(Cookies.get("cart") || "[]");
   const itemIndex = cart.findIndex((cartItem) => cartItem.id === itemId);
 
   if (itemIndex !== -1) {
-    if (cart[itemIndex].orderQuantity === 1) {
-      cart = cart.filter((cartItem) => cartItem.id !== itemId);
-    } else {
-      cart[itemIndex].orderQuantity!--;
-    }
+    cart = cart.filter((cartItem) => cartItem.id !== itemId);
   }
 
   Cookies.set("cart", JSON.stringify(cart), { expires: 100 });
@@ -51,15 +57,6 @@ const handleRemoveFromCart = (form: FormData) => {
 
 export const handleAddVariant = async (form: FormData) => {
   const formData = Object.fromEntries(form);
-  const newVariant = {
-    id: Number(formData.id),
-    name: formData.name as string,
-    productId: Number(formData.productId),
-    quantity: Number(formData.quantity),
-    productName: formData.productName as string,
-    productPrice: Number(formData.productPrice),
-    productWholesalePrice: Number(formData.productWholesalePrice),
-  } as VariantListItem;
-  addToCart(newVariant);
+  addToCart(Number(formData.id));
   return true;
 };

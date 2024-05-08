@@ -46,14 +46,26 @@ export interface VariantListItem extends VariantBase {
   productWholesalePrice: number;
   orderQuantity?: number;
 }
-export type Image = {
+export interface Image {
   id: number;
   name: string;
   variantId: number;
-  updatedAt: string;
-  createdAt: string;
-};
+  updatedAt?: string;
+  createdAt?: string;
+}
 export type Blob = { src: string; name: string; file: File };
 export type ErrorType = { statusText: string; message: string };
 export type SliderImage = { id: number; name: string };
 export type Option = { value: number; label: string };
+export type CartItem = {
+  id: number;
+  personalizations?: OrderItem[];
+} & Partial<Variant>;
+export type OrderItem = {
+  quantity: number;
+  type: number;
+  images: OrderImage[];
+};
+export interface OrderImage extends Image {
+  size: number;
+}

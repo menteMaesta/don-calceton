@@ -39,6 +39,7 @@ import Cart from "routes/Store/Cart/Cart";
 import {
   fetchStorefrontData,
   getCartItems,
+  getAllCartItems,
 } from "routes/Store/VariantList/loader";
 import { storeActions } from "routes/Store/VariantList/actions";
 
@@ -142,7 +143,7 @@ const router = createBrowserRouter([
       {
         path: ROUTES.CART,
         element: <Cart />,
-        loader: getCartItems,
+        loader: getAllCartItems,
       },
     ],
   },

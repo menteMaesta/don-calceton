@@ -12,34 +12,16 @@ describe("AddProductButton", () => {
     fireEvent.click(button);
 
     expect(onAddToCart).toHaveBeenCalled();
-    expect(queryByTestId("add-item-to-cart")).not.toBeInTheDocument();
     expect(queryByTestId("remove-from-cart")).not.toBeInTheDocument();
   });
 
-  it("should call onAddToCart when clicked and inCart is greater than 0", () => {
-    const onAddToCart = vi.fn();
-    const { getByTestId, queryByTestId } = render(
-      <AddProductButton
-        onAddToCart={onAddToCart}
-        onRemoveFromCart={vi.fn()}
-        inCart={2}
-      />
-    );
-
-    const button = getByTestId("add-item-to-cart");
-    fireEvent.click(button);
-
-    expect(onAddToCart).toHaveBeenCalled();
-    expect(queryByTestId("add-to-cart")).not.toBeInTheDocument();
-  });
-
-  it("should call onRemoveFromCart when clicked and inCart is greater than 0", () => {
+  it("should call onRemoveFromCart when clicked and inCart is true", () => {
     const onRemoveFromCart = vi.fn();
     const { getByTestId } = render(
       <AddProductButton
         onAddToCart={vi.fn()}
         onRemoveFromCart={onRemoveFromCart}
-        inCart={1}
+        inCart
       />
     );
 

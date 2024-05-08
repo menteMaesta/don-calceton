@@ -89,14 +89,25 @@ describe("VariantList", () => {
     const cart = [
       {
         id: 1,
-        orderQuantity: 2,
+        personalizations: [
+          {
+            quantity: 1,
+            type: 0,
+            images: [],
+          },
+          {
+            quantity: 1,
+            type: 0,
+            images: [],
+          },
+        ],
       },
     ];
     const routes = [
       {
         path: ROUTES.STORE,
         element: <Store />,
-        loader: () => ({ cart, totalItems: cart[0].orderQuantity }),
+        loader: () => ({ cart, totalItems: 2 }),
         children: [
           {
             index: true,
@@ -123,15 +134,14 @@ describe("VariantList", () => {
     );
 
     const variantList = await waitFor(() => getByTestId("variant-item_list"));
-    const addButton = getByTestId("add-products_button");
-    const addItemButton = getByTestId("add-item-to-cart");
+    const addButtonContainer = getByTestId("add-products_button");
+    const removeItem = getByTestId("remove-from-cart");
     const cartTag = getByTestId("cart-total_badge");
 
     expect(variantList).toBeInTheDocument();
-    expect(addButton).toBeInTheDocument();
-    expect(addButton).toHaveTextContent("2");
+    expect(addButtonContainer).toBeInTheDocument();
     expect(queryByTestId("add-to-cart")).not.toBeInTheDocument();
-    expect(addItemButton).toBeInTheDocument();
+    expect(removeItem).toBeInTheDocument();
     expect(cartTag).toBeInTheDocument();
     expect(cartTag).toHaveTextContent("2");
   });

@@ -6,11 +6,13 @@ import DefaultPic from "assets/default-pic.png";
 type Props = {
   images: SliderImage[];
   children?: ReactNode;
+  imageClassName?: string;
 } & Omit<ElementCardProps, "children">;
 export default function SliderImageCard({
   images,
   children,
   type,
+  imageClassName = "",
   ...otherProps
 }: Props) {
   const [imageIndex, setImageIndex] = useState(0);
@@ -48,7 +50,7 @@ export default function SliderImageCard({
       <div className="w-full flex items-center justify-center">
         <img
           data-testid={`slider-image_${images[imageIndex]?.id || "default"}`}
-          className="max-h-64"
+          className={`${imageClassName} ` + "max-h-64"}
           alt={
             images[imageIndex]?.id
               ? `${type} image ${images[imageIndex].id}`

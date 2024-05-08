@@ -30,15 +30,6 @@ export default function VariantList() {
   const onAddToCart = (variant: VariantListItem) => {
     const formData = new FormData();
     formData.append("id", `${variant.id}`);
-    formData.append("name", variant.name);
-    formData.append("productId", `${variant.productId}`);
-    formData.append("quantity", `${variant.quantity}`);
-    formData.append("productName", variant.productName);
-    formData.append("productPrice", `${variant.productPrice}`);
-    formData.append(
-      "productWholesalePrice",
-      `${variant.productWholesalePrice}`
-    );
     formData.append("store", "addVariant");
     submit(formData, { method: "post" });
   };
@@ -83,10 +74,7 @@ export default function VariantList() {
                 variant={variant}
                 onAddToCart={onAddToCart}
                 onRemoveFromCart={onRemoveFromCart}
-                inCart={
-                  cart.find((item) => item.id === variant.id)?.orderQuantity ||
-                  0
-                }
+                inCart={cart.some((item) => item.id === variant.id)}
               />
             ))}
         </div>

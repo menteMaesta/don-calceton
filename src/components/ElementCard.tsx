@@ -16,6 +16,7 @@ export type Props = {
   type: "product" | "variant";
   onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
   route?: string;
+  className?: string;
 };
 
 function ElementCardWrapper({ route, ...props }: ElementCardWrapperProps) {
@@ -34,6 +35,7 @@ export default function ElementCard({
   type,
   onRemove,
   route,
+  className = "",
 }: Props) {
   return (
     <ElementCardWrapper
@@ -42,7 +44,8 @@ export default function ElementCard({
         "flex flex-col",
         "rounded p-2",
         "bg-white shadow",
-        "relative"
+        "relative",
+        className
       )}
       data-testid={`${type}-link_${elementId}`}
     >
