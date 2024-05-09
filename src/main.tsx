@@ -144,6 +144,7 @@ const router = createBrowserRouter([
         path: ROUTES.CART,
         element: <Cart />,
         loader: getAllCartItems,
+        action: storeActions,
       },
     ],
   },

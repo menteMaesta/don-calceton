@@ -1,9 +1,35 @@
-import { useLoaderData } from "react-router-dom";
+import { MouseEvent } from "react";
+import { useLoaderData, useSubmit } from "react-router-dom";
 import { CartItem } from "helpers/customTypes";
 import VariantImageSlider from "src/storeComponents/VariantImageSlider";
 
 export default function Cart() {
   const cart = useLoaderData() as CartItem[];
+  const submit = useSubmit();
+
+  const onRemoveFromCart = (
+    event: MouseEvent<HTMLElement>,
+    variantId: string
+  ) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("id", `${variantId}`);
+    formData.append("store", "removeVariant");
+    submit(formData, { method: "post" });
+  };
+
+  const onChangeQuantity = (
+    variantId: string,
+    quantity: number,
+    personalizationId: string
+  ) => {
+    const formData = new FormData();
+    formData.append("id", `${variantId}`);
+    formData.append("store", "addVariantItem");
+    formData.append("quantity", `${quantity}`);
+    formData.append("personalizationId", personalizationId);
+    submit(formData, { method: "post" });
+  };
 
   return (
     <div className="mt-11 flex flex-col w-full px-4">
@@ -20,7 +46,12 @@ export default function Cart() {
         }
       >
         {cart.map((item) => (
-          <VariantImageSlider key={item.id} item={item} />
+          <VariantImageSlider
+            key={item.id}
+            item={item}
+            onRemove={onRemoveFromCart}
+            handleChangeQuantity={onChangeQuantity}
+          />
         ))}
       </div>
     </div>

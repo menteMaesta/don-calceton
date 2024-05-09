@@ -1,27 +1,33 @@
 import { Fragment } from "react";
-import Select from "react-select";
+import Select, { OnChangeValue } from "react-select";
 import Slider from "react-input-slider";
-import { OrderItem as OrderItemType } from "helpers/customTypes";
+import { OrderItem as OrderItemType, Option } from "helpers/customTypes";
 import VariantImageUploader from "components/VariantImageUploader";
 
 type Props = {
   item: OrderItemType;
   maxQuantity: number;
+  onChangeQuantity: (option: OnChangeValue<Option, false>) => void;
 };
 
-export default function OrderItem({ item, maxQuantity }: Props) {
+export default function OrderItem({
+  item,
+  maxQuantity,
+  onChangeQuantity,
+}: Props) {
   const options = new Array(maxQuantity)
     .fill(0)
-    .map((_, index) => ({ label: index + 1, value: index + 1 }));
+    .map((_, index) => ({ label: `${index + 1}`, value: index + 1 }));
+
   return (
     <Fragment>
       <label className="flex items-center space-x-2">
         <span>Cantidad: </span>
         <Select
           isSearchable={false}
-          onChange={() => {}}
+          onChange={onChangeQuantity}
           defaultValue={{
-            label: item.quantity,
+            label: `${item.quantity}`,
             value: item.quantity,
           }}
           options={options}
@@ -58,8 +64,7 @@ export default function OrderItem({ item, maxQuantity }: Props) {
           className="w-full"
           inputProps={{ disabled: true }}
           labelProps={{
-            className:
-              "w-full text-center bg-slate-200 text-slate-100 cursor-not-allowed",
+            className: "w-full text-center bg-gray-200 cursor-not-allowed",
           }}
           onFileSelect={() => {}}
         />
