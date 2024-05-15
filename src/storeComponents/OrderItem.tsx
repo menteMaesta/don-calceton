@@ -1,9 +1,11 @@
 import { ChangeEvent, Fragment, useState, useEffect } from "react";
 import Select, { OnChangeValue } from "react-select";
+import imageCompression from "browser-image-compression";
 import {
   OrderItem as OrderItemType,
   Option,
   Customization,
+  Blob,
 } from "helpers/customTypes";
 import VariantImageUploader from "components/VariantImageUploader";
 
@@ -12,6 +14,7 @@ type Props = {
   customizations?: Customization[];
   maxQuantity: number;
   onChange: (field: string, value: number) => void;
+  onChangeOrderItemImages: (blobs: Blob[]) => void;
 };
 
 type FormItemProps = {
@@ -33,6 +36,7 @@ export default function OrderItem({
   customizations = [],
   maxQuantity,
   onChange,
+  onChangeOrderItemImages,
 }: Props) {
   const [size, setSize] = useState(item.imageSize || 0);
   const [imageRange, setImageRange] = useState({ min: 0, max: 0 });
@@ -78,6 +82,32 @@ export default function OrderItem({
     onChange("imageSize", newSize);
   };
 
+  const onFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    const blobs = [];
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    if (files) {
+      for (const file of files) {
+        try {
+          const compressedFile = await imageCompression(file, options);
+
+          blobs.push({
+            src: URL.createObjectURL(file),
+            name: file.name,
+            file: compressedFile,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      onChangeOrderItemImages(blobs);
+    }
+  };
+
   return (
     <Fragment>
       <FormItem title="Cantidad">
@@ -94,12 +124,8 @@ export default function OrderItem({
       </FormItem>
       <FormItem title="Imagenes">
         <VariantImageUploader
-          inputProps={{ disabled: true }}
-          labelProps={{
-            className:
-              "w-full text-center " + "bg-slate-700/50 " + "cursor-not-allowed",
-          }}
-          onFileSelect={() => {}}
+          labelProps={{ className: "w-full text-center" }}
+          onFileSelect={onFileSelect}
         />
       </FormItem>
       <FormItem title="Tipo">

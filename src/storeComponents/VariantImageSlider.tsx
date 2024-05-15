@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 import { useSubmit } from "react-router-dom";
-import { CartItem } from "helpers/customTypes";
+import { CartItem, Blob } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
 import OrderItem from "./OrderItem";
 
@@ -26,6 +26,21 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
     submit(formData, { method: "post" });
   };
 
+  const onChangeOrderItemImages = (orderId: number, blobs: Blob[]) => {
+    const formData = new FormData();
+    formData.append("id", `${item.id}`);
+    formData.append("store", "updateVariantItemImages");
+    formData.append("orderId", `${orderId}`);
+    for (const blob of blobs) {
+      try {
+        formData.append("images[]", blob.file, blob.name);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    submit(formData, { method: "post", encType: "multipart/form-data" });
+  };
+
   return (
     <SliderImageCard
       title={item.name}
@@ -45,6 +60,9 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
               maxQuantity={item.quantity || 0}
               key={`${item.id}-${key}`}
               onChange={(field, value) => onChangeOrderItem(key, field, value)}
+              onChangeOrderItemImages={(blobs) =>
+                onChangeOrderItemImages(key, blobs)
+              }
             />
           ))}
         </div>

@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
+import { openDatabase } from "helpers/db";
 
 import { loginActions } from "routes/Login/actions";
 import Login from "routes/Login/Login";
@@ -150,10 +151,16 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <SnackbarProvider>
-      <RouterProvider router={router} />
-    </SnackbarProvider>
-  </React.StrictMode>
-);
+openDatabase()
+  .then(() => {
+    ReactDOM.createRoot(document.getElementById("root")!).render(
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
+    );
+  })
+  .catch((error) => {
+    console.error("Error opening database", error);
+  });
