@@ -1,29 +1,29 @@
 import { MouseEvent } from "react";
-import { OnChangeValue } from "react-select";
-import { CartItem, Option } from "helpers/customTypes";
+import { useSubmit } from "react-router-dom";
+import { CartItem } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
 import OrderItem from "./OrderItem";
 
 type Props = {
   item: CartItem;
   onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
-  handleChangeQuantity?: (
-    variantId: string,
-    quantity: number,
-    personalizationId: string
-  ) => void;
 };
 
-export default function VariantImageSlider({
-  item,
-  onRemove,
-  handleChangeQuantity = () => {},
-}: Props) {
-  const onChangeQuantity = (
-    option: OnChangeValue<Option, false>,
-    personalizationId: number
+export default function VariantImageSlider({ item, onRemove }: Props) {
+  const submit = useSubmit();
+
+  const onChangeOrderItem = (
+    orderId: number,
+    field: string,
+    newValue: number
   ) => {
-    handleChangeQuantity(`${item.id}`, option!.value, `${personalizationId}`);
+    const formData = new FormData();
+    formData.append("id", `${item.id}`);
+    formData.append("store", "updateVariantItem");
+    formData.append("orderId", `${orderId}`);
+    formData.append("field", `${field}`);
+    formData.append("newValue", `${newValue}`);
+    submit(formData, { method: "post" });
   };
 
   return (
@@ -41,9 +41,10 @@ export default function VariantImageSlider({
           {item.personalizations?.map((orderItem, key) => (
             <OrderItem
               item={orderItem}
+              customizations={item.customizations}
               maxQuantity={item.quantity || 0}
               key={`${item.id}-${key}`}
-              onChangeQuantity={(option) => onChangeQuantity(option, key)}
+              onChange={(field, value) => onChangeOrderItem(key, field, value)}
             />
           ))}
         </div>

@@ -18,19 +18,6 @@ export default function Cart() {
     submit(formData, { method: "post" });
   };
 
-  const onChangeQuantity = (
-    variantId: string,
-    quantity: number,
-    personalizationId: string
-  ) => {
-    const formData = new FormData();
-    formData.append("id", `${variantId}`);
-    formData.append("store", "addVariantItem");
-    formData.append("quantity", `${quantity}`);
-    formData.append("personalizationId", personalizationId);
-    submit(formData, { method: "post" });
-  };
-
   return (
     <div className="mt-11 flex flex-col w-full px-4">
       <p className="mt-4 font-bold">
@@ -50,7 +37,6 @@ export default function Cart() {
             key={item.id}
             item={item}
             onRemove={onRemoveFromCart}
-            handleChangeQuantity={onChangeQuantity}
           />
         ))}
       </div>

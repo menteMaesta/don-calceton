@@ -1,20 +1,16 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import Cookies from "js-cookie";
-import { CartItem } from "helpers/customTypes";
+import { CartItem, OrderItem } from "helpers/customTypes";
+import { EMPTY_ORDER_ITEM } from "helpers/constants";
 
-const emptyOrderItem = {
-  quantity: 0,
-  type: 0,
-  images: [],
-};
 export const storeActions = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const store = formData.get("store");
   switch (store) {
     case "addVariant":
       return handleAddVariant(formData);
-    case "addVariantItem":
-      return handleAddVariantItem(formData);
+    case "updateVariantItem":
+      return handleUpdateVariantItem(formData);
     case "removeVariant":
       return handleRemoveFromCart(formData);
     default:
@@ -52,7 +48,7 @@ export const handleAddVariant = async (form: FormData) => {
   } else {
     cart.push({
       id: itemId,
-      personalizations: [{ ...emptyOrderItem, quantity: 1 }],
+      personalizations: [{ ...EMPTY_ORDER_ITEM, quantity: 1 }],
     });
   }
 
@@ -60,16 +56,17 @@ export const handleAddVariant = async (form: FormData) => {
   return true;
 };
 
-export const handleAddVariantItem = async (form: FormData) => {
+export const handleUpdateVariantItem = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
-  const quantity = Number(formData.quantity);
-  const personalizationId = Number(formData.personalizationId);
+  const orderId = Number(formData.orderId);
+  const field = formData.field as keyof Omit<OrderItem, "images">;
+  const newValue = Number(formData.newValue);
   const cart: CartItem[] = JSON.parse(Cookies.get("cart") || "[]");
   const itemIndex = cart.findIndex((cartItem) => cartItem.id === itemId);
 
   if (itemIndex !== -1) {
-    cart[itemIndex].personalizations![personalizationId].quantity = quantity;
+    cart[itemIndex].personalizations![orderId][field] = newValue;
   }
 
   Cookies.set("cart", JSON.stringify(cart), { expires: 100 });

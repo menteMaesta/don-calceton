@@ -35,6 +35,7 @@ export interface VariantBase {
 export interface Variant extends VariantBase {
   id: number;
   images: Image[];
+  customizations?: Customization[];
   updatedAt: string;
   createdAt: string;
 }
@@ -63,9 +64,18 @@ export type CartItem = {
 } & Partial<Variant>;
 export type OrderItem = {
   quantity: number;
-  type: number;
-  images: OrderImage[];
+  customizationId?: number;
+  images?: OrderImage[];
+  imageSize: number;
 };
 export interface OrderImage extends Image {
   size: number;
 }
+export type Customization = {
+  id: number;
+  title: string;
+  maxSize: number;
+  minSize: number;
+  updatedAt?: string;
+  createdAt?: string;
+};
