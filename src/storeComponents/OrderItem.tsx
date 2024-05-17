@@ -18,6 +18,7 @@ type Props = {
   maxQuantity: number;
   onChange: (field: string, value: number) => void;
   onChangeOrderItemImages: (blobs: Blob[]) => void;
+  onDeleteOrderItemImages: (imageIndex: number) => void;
   index: string;
 };
 
@@ -27,6 +28,7 @@ export default function OrderItem({
   maxQuantity,
   onChange,
   onChangeOrderItemImages,
+  onDeleteOrderItemImages,
   index,
 }: Props) {
   const actionData = useActionData() as { isLoading: boolean; index: string };
@@ -132,7 +134,11 @@ export default function OrderItem({
         />
         {item.images &&
           item.images?.map((image, key) => (
-            <FileChip key={`${image.name}-${key}`} image={image} />
+            <FileChip
+              key={`${image.name}-${key}`}
+              image={image}
+              onRemove={() => onDeleteOrderItemImages(key)}
+            />
           ))}
       </FormItem>
       <FormItem title="Tipo">

@@ -41,6 +41,15 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
+  const onDeleteOrderItemImages = (orderId: number, imageIndex: number) => {
+    const formData = new FormData();
+    formData.append("id", `${item.id}`);
+    formData.append("store", "removeVariantItemImage");
+    formData.append("orderId", `${orderId}`);
+    formData.append("imageIndex", `${imageIndex}`);
+    submit(formData, { method: "post", encType: "multipart/form-data" });
+  };
+
   return (
     <SliderImageCard
       title={item.name}
@@ -62,6 +71,9 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
               onChange={(field, value) => onChangeOrderItem(key, field, value)}
               onChangeOrderItemImages={(blobs) =>
                 onChangeOrderItemImages(key, blobs)
+              }
+              onDeleteOrderItemImages={(imageIndex) =>
+                onDeleteOrderItemImages(key, imageIndex)
               }
               index={`${item.id}-${key}`}
             />

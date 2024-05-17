@@ -1,11 +1,13 @@
+import { MouseEvent } from "react";
 import { OrderImage } from "helpers/customTypes";
 import { KB } from "helpers/constants";
 
 type Props = {
   image: OrderImage;
+  onRemove: (event: MouseEvent<HTMLElement>) => void;
 };
 
-export default function FileChip({ image }: Props) {
+export default function FileChip({ image, onRemove }: Props) {
   return (
     <div
       className={
@@ -20,7 +22,7 @@ export default function FileChip({ image }: Props) {
       <span className="pr-5 text-xs">{(image.size / KB).toFixed(2)} KB</span>
       <i
         role="button"
-        onClick={() => {}}
+        onClick={onRemove}
         className={
           "absolute right-2 top-2 " +
           "fa-solid fa-circle-xmark " +

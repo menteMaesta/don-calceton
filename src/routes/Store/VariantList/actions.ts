@@ -1,6 +1,6 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import { openDB } from "idb";
-import { OrderItem } from "helpers/customTypes";
+import { OrderItem, OrderImage } from "helpers/customTypes";
 import { EMPTY_ORDER_ITEM } from "helpers/constants";
 
 export const storeActions = async ({ request }: ActionFunctionArgs) => {
@@ -98,13 +98,17 @@ export const handleRemoveVariantItemImage = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
   const orderId = Number(formData.orderId);
+  const imageIndex = Number(formData.imageIndex);
 
   const db = await openDB("don-calceton-cart", 1);
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
+  const newImages = oldOrderItem.personalizations[orderId].images.filter(
+    (_: OrderImage, index: number) => index !== imageIndex
+  );
 
   if (oldOrderItem) {
-    oldOrderItem.personalizations[orderId].images = form.getAll("images[]");
+    oldOrderItem.personalizations[orderId].images = newImages;
     await Promise.all([
       transaction.store.put({
         id: itemId,
