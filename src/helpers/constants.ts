@@ -21,3 +21,5 @@ export const EMPTY_ORDER_ITEM = {
   images: [],
   imageSize: 0,
 };
+
+export const KB = 1024;

@@ -63,6 +63,7 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
               onChangeOrderItemImages={(blobs) =>
                 onChangeOrderItemImages(key, blobs)
               }
+              index={`${item.id}-${key}`}
             />
           ))}
         </div>

@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import { openDB } from "idb";
 import { getAllCartVariants } from "routes/Variants/api";
 import { getProducts } from "routes/Products/loader";
 import { fetchAllVariants } from "routes/Variants/loader";
@@ -30,13 +30,16 @@ const getTotalCartItems = async (cart: CartItem[]) => {
 };
 
 export const getCartItems = async () => {
-  const cart = JSON.parse(Cookies.get("cart") || "[]") as CartItem[];
-  const totalItems = await getTotalCartItems(cart);
-  return { cart, totalItems };
+  const db = await openDB("don-calceton-cart", 1);
+  const all = await db.getAll("orderItems");
+
+  const totalItems = await getTotalCartItems(all);
+  return { cart: all, totalItems };
 };
 
 export const getAllCartItems = async () => {
-  const cart = JSON.parse(Cookies.get("cart") || "[]") as CartItem[];
+  const db = await openDB("don-calceton-cart", 1);
+  const cart = await db.getAll("orderItems");
   const cartIds = cart.map((item) => `${item.id}`);
   const { status, data } = await getAllCartVariants({ variantIds: cartIds });
 

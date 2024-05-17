@@ -1,4 +1,5 @@
 import { ChangeEvent, Fragment, useState, useEffect } from "react";
+import { useActionData } from "react-router-dom";
 import Select, { OnChangeValue } from "react-select";
 import imageCompression from "browser-image-compression";
 import {
@@ -8,6 +9,8 @@ import {
   Blob,
 } from "helpers/customTypes";
 import VariantImageUploader from "components/VariantImageUploader";
+import FormItem from "storeComponents/FormItem";
+import FileChip from "storeComponents/FileChip";
 
 type Props = {
   item: OrderItemType;
@@ -15,21 +18,8 @@ type Props = {
   maxQuantity: number;
   onChange: (field: string, value: number) => void;
   onChangeOrderItemImages: (blobs: Blob[]) => void;
+  index: string;
 };
-
-type FormItemProps = {
-  title: string;
-  children?: React.ReactNode;
-};
-
-function FormItem({ title, children }: FormItemProps) {
-  return (
-    <label className="flex flex-wrap sm:flex-nowrap items-center justify-between mb-2">
-      <span>{title}: </span>
-      <div className="relative sm:w-9/12 w-full">{children}</div>
-    </label>
-  );
-}
 
 export default function OrderItem({
   item,
@@ -37,9 +27,13 @@ export default function OrderItem({
   maxQuantity,
   onChange,
   onChangeOrderItemImages,
+  index,
 }: Props) {
+  const actionData = useActionData() as { isLoading: boolean; index: string };
+
   const [size, setSize] = useState(item.imageSize || 0);
   const [imageRange, setImageRange] = useState({ min: 0, max: 0 });
+  const [loading, setLoading] = useState(false);
 
   const quantityOptions = new Array(maxQuantity)
     .fill(0)
@@ -59,6 +53,12 @@ export default function OrderItem({
     });
   }, [item.customizationId, customizations]);
 
+  useEffect(() => {
+    if (!actionData?.isLoading && actionData?.index === index) {
+      setLoading(false);
+    }
+  }, [actionData, actionData?.isLoading, index]);
+
   const onChangeQuantity = (option: OnChangeValue<Option, false>) => {
     onChange("quantity", option!.value);
   };
@@ -73,6 +73,7 @@ export default function OrderItem({
         max: customization?.maxSize || 0,
       });
       onChange("customizationId", customization.id);
+      setSize(0);
     }
   };
 
@@ -83,6 +84,7 @@ export default function OrderItem({
   };
 
   const onFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
+    setLoading(true);
     const files = event.target.files;
     const blobs = [];
     const options = {
@@ -126,7 +128,12 @@ export default function OrderItem({
         <VariantImageUploader
           labelProps={{ className: "w-full text-center" }}
           onFileSelect={onFileSelect}
+          isLoading={loading}
         />
+        {item.images &&
+          item.images?.map((image, key) => (
+            <FileChip key={`${image.name}-${key}`} image={image} />
+          ))}
       </FormItem>
       <FormItem title="Tipo">
         <Select
