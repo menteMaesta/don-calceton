@@ -1,0 +1,33 @@
+import { OrderImage } from "helpers/customTypes";
+import { KB } from "helpers/constants";
+
+type Props = {
+  image: OrderImage;
+};
+
+export default function FileChip({ image }: Props) {
+  return (
+    <div
+      className={
+        "flex justify-between " +
+        "relative py-1 px-2 " +
+        "shadow rounded mt-2 items-center " +
+        "text-slate-600"
+      }
+      onClick={(event) => event.preventDefault()}
+    >
+      <span>{image.name}</span>
+      <span className="pr-5 text-xs">{(image.size / KB).toFixed(2)} KB</span>
+      <i
+        role="button"
+        onClick={() => {}}
+        className={
+          "absolute right-2 top-2 " +
+          "fa-solid fa-circle-xmark " +
+          "text-gray-300 " +
+          "hover:text-gray-500 active:text-gray-500"
+        }
+      />
+    </div>
+  );
+}

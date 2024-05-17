@@ -6,6 +6,7 @@ type props = {
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
   labelProps?: LabelHTMLAttributes<HTMLParagraphElement>;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  isLoading?: boolean;
   className?: string;
 };
 
@@ -13,10 +14,15 @@ export default function VariantImageUploader({
   onFileSelect,
   labelProps,
   inputProps,
+  isLoading,
   className,
 }: props) {
   const { className: labelClassName, ...restLabelProps } = labelProps || {};
-  const { className: inputClassName, ...restInputProps } = inputProps || {};
+  const {
+    className: inputClassName,
+    disabled,
+    ...restInputProps
+  } = inputProps || {};
   return (
     <label
       data-testid="variant-image-uploader"
@@ -26,12 +32,21 @@ export default function VariantImageUploader({
         className={classnames(
           "bg-slate-700 text-white",
           "w-fit p-2",
-          "rounded cursor-pointer",
+          "rounded",
+          {
+            "opacity-50 cursor-not-allowed": isLoading,
+            "cursor-pointer": !isLoading,
+          },
           labelClassName
         )}
         {...restLabelProps}
       >
-        Imagenes (PNG, JPG)
+        <span className={classnames({ "pl-6": !isLoading })}>
+          {isLoading && (
+            <i className={"fa-solid fa-spinner " + "animate-spin mr-2 "} />
+          )}
+          Imagenes (PNG, JPG)
+        </span>
       </p>
       <input
         className={classnames(
@@ -45,6 +60,7 @@ export default function VariantImageUploader({
         accept=".jpg, .jpeg, .png"
         multiple
         onChange={onFileSelect}
+        disabled={isLoading ? true : disabled}
         {...restInputProps}
       />
     </label>
