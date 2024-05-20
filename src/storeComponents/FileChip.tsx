@@ -18,7 +18,9 @@ export default function FileChip({ image, onRemove }: Props) {
       }
       onClick={(event) => event.preventDefault()}
     >
-      <span>{image.name}</span>
+      <span className="w-7/12 truncate" title={image.name}>
+        {image.name}
+      </span>
       <span className="pr-5 text-xs">{(image.size / KB).toFixed(2)} KB</span>
       <i
         role="button"

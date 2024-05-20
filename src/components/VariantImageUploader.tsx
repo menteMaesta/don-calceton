@@ -41,12 +41,10 @@ export default function VariantImageUploader({
         )}
         {...restLabelProps}
       >
-        <span className={classnames({ "pl-6": !isLoading })}>
-          {isLoading && (
-            <i className={"fa-solid fa-spinner " + "animate-spin mr-2 "} />
-          )}
-          Imagenes (PNG, JPG)
-        </span>
+        {isLoading && (
+          <i className={"fa-solid fa-spinner " + "animate-spin mr-2 "} />
+        )}
+        <span>Imagenes (PNG, JPG)</span>
       </p>
       <input
         className={classnames(
