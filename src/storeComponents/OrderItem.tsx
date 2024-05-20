@@ -113,8 +113,8 @@ export default function OrderItem({
   };
 
   return (
-    <Fragment>
-      <FormItem title="Cantidad">
+    <div>
+      <FormItem title="Cantidad" data-testid="order-item_quantity">
         <Select
           isSearchable={false}
           onChange={onChangeQuantity}
@@ -126,7 +126,7 @@ export default function OrderItem({
           placeholder="Cantidad"
         />
       </FormItem>
-      <FormItem title="Imagenes">
+      <FormItem title="Imagenes" data-testid="order-item_images">
         <VariantImageUploader
           labelProps={{ className: "w-full text-center" }}
           onFileSelect={onFileSelect}
@@ -141,8 +141,9 @@ export default function OrderItem({
             />
           ))}
       </FormItem>
-      <FormItem title="Tipo">
+      <FormItem title="Tipo" data-testid="order-item_customization">
         <Select
+          data-testid="order-item_customization-select"
           isSearchable={false}
           onChange={onCustomization}
           defaultValue={
@@ -157,8 +158,9 @@ export default function OrderItem({
           placeholder="Opciones"
         />
       </FormItem>
-      <FormItem title="Tamaño (cm)">
+      <FormItem title="Tamaño (cm)" data-testid="order-item_size">
         <input
+          data-testid="order-item_size-input"
           className="w-full"
           type="range"
           disabled={imageRange.max === 0}
@@ -175,6 +177,6 @@ export default function OrderItem({
           </Fragment>
         )}
       </FormItem>
-    </Fragment>
+    </div>
   );
 }

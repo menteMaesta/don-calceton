@@ -60,7 +60,7 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
       imageClassName="max-w-64 mr-5"
       onRemove={onRemove}
       footer={
-        <div className="w-full">
+        <div className="w-full" data-testid="personalization_list">
           <p className="mt-2 font-medium">Personalización</p>
           {item.personalizations?.map((orderItem, key) => (
             <OrderItem
