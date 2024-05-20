@@ -68,7 +68,8 @@ export type OrderItem = {
   images?: OrderImage[];
   imageSize: number;
 };
-export interface OrderImage extends Image {
+export interface OrderImage {
+  name: string;
   size: number;
 }
 export type Customization = {
