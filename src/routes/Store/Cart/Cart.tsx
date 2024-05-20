@@ -19,12 +19,13 @@ export default function Cart() {
   };
 
   return (
-    <div className="mt-11 flex flex-col w-full px-4">
-      <p className="mt-4 font-bold">
+    <div className="mt-11 flex flex-col w-full px-4" data-testid="cart_page">
+      <p className="mt-4 font-bold" data-testid="product_counter">
         <i className={"fa-solid fa-cart-shopping " + "text-xl " + "ml-2"} />
         Productos <span>{cart.length}</span>
       </p>
       <div
+        data-testid="cart_list"
         className={
           "mt-8 " +
           "grid grid-cols-1 gap-4 " +
