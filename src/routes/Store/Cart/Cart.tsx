@@ -1,10 +1,10 @@
 import { MouseEvent } from "react";
 import { useLoaderData, useSubmit } from "react-router-dom";
-import { CartItem } from "helpers/customTypes";
-import VariantImageSlider from "src/storeComponents/VariantImageSlider";
+import { CartItemType } from "helpers/customTypes";
+import CartItem from "src/storeComponents/CartItem";
 
 export default function Cart() {
-  const cart = useLoaderData() as CartItem[];
+  const cart = useLoaderData() as CartItemType[];
   const submit = useSubmit();
 
   const onRemoveFromCart = (
@@ -34,11 +34,7 @@ export default function Cart() {
         }
       >
         {cart.map((item) => (
-          <VariantImageSlider
-            key={item.id}
-            item={item}
-            onRemove={onRemoveFromCart}
-          />
+          <CartItem key={item.id} item={item} onRemove={onRemoveFromCart} />
         ))}
       </div>
     </div>

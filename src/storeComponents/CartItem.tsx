@@ -1,16 +1,16 @@
 import { MouseEvent } from "react";
 import { useSubmit } from "react-router-dom";
-import { CartItem, Blob } from "helpers/customTypes";
+import { CartItemType, Blob } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
 import Button from "components/Button";
 import OrderItem from "./OrderItem";
 
 type Props = {
-  item: CartItem;
+  item: CartItemType;
   onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
 };
 
-export default function VariantImageSlider({ item, onRemove }: Props) {
+export default function CartItem({ item, onRemove }: Props) {
   const submit = useSubmit();
 
   const onChangeOrderItem = (

@@ -86,7 +86,7 @@ export default function OrderItem({
     onChange("imageSize", newSize);
   };
 
-  const onFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeImages = async (event: ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
     const files = event.target.files;
     const blobs = [];
@@ -133,7 +133,7 @@ export default function OrderItem({
       <FormItem title="Imagenes" data-testid="order-item_images">
         <VariantImageUploader
           labelProps={{ className: "w-full text-center" }}
-          onFileSelect={onFileSelect}
+          onFileSelect={onChangeImages}
           isLoading={loading}
         />
         {item.images &&

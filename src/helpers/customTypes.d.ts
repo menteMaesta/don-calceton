@@ -58,7 +58,7 @@ export type Blob = { src: string; name: string; file: File };
 export type ErrorType = { statusText: string; message: string };
 export type SliderImage = { id: number; name: string };
 export type Option = { value: number; label: string };
-export type CartItem = {
+export type CartItemType = {
   id: number;
   personalizations?: OrderItem[];
 } & Partial<Variant>;

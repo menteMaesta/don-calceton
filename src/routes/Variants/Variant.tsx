@@ -47,7 +47,6 @@ export default function VariantDetails() {
     const formData = new FormData();
     formData.append("variant", "createImages");
     formData.append("variantId", `${variant.id}`);
-    console.log("PASA");
     if (files) {
       for (const file of files) {
         try {

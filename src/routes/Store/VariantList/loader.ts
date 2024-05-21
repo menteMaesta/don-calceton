@@ -2,7 +2,7 @@ import { openDB } from "idb";
 import { getAllCartVariants } from "routes/Variants/api";
 import { getProducts } from "routes/Products/loader";
 import { fetchAllVariants } from "routes/Variants/loader";
-import { Product, CartItem, OrderItem } from "helpers/customTypes";
+import { Product, CartItemType, OrderItem } from "helpers/customTypes";
 
 export const fetchStorefrontData = async () => {
   const variants = await fetchAllVariants();
@@ -17,8 +17,8 @@ export const fetchStorefrontData = async () => {
   return { variants, productOptions, cart };
 };
 
-const getTotalCartItems = async (cart: CartItem[]) => {
-  const totalItems = cart.reduce((acc: number, item: CartItem) => {
+const getTotalCartItems = async (cart: CartItemType[]) => {
+  const totalItems = cart.reduce((acc: number, item: CartItemType) => {
     acc +=
       item.personalizations?.reduce((total: number, element: OrderItem) => {
         total += element.quantity || 0;
@@ -46,7 +46,7 @@ export const getAllCartItems = async () => {
   if (status !== 200) {
     throw data.errors[0];
   }
-  const cartItems = data.map((item: CartItem) => ({
+  const cartItems = data.map((item: CartItemType) => ({
     ...item,
     ...cart.find((cartItem) => cartItem.id === item.id),
   }));

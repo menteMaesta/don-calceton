@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import VariantImageSlider from "storeComponents/VariantImageSlider";
+import CartItem from "src/storeComponents/CartItem";
 
-describe("VariantImageSlider", () => {
+describe("CartItem", () => {
   const item = {
     id: 1,
     name: "Test Item",
@@ -25,7 +25,7 @@ describe("VariantImageSlider", () => {
   const router = createMemoryRouter([
     {
       index: true,
-      element: <VariantImageSlider item={item} onRemove={onRemoveMock} />,
+      element: <CartItem item={item} onRemove={onRemoveMock} />,
     },
   ]);
 
