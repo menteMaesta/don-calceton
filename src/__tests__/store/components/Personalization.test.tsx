@@ -1,7 +1,7 @@
 import React from "react";
 import { render, within, fireEvent, act } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import OrderItem from "storeComponents/OrderItem";
+import Personalization from "storeComponents/Personalization/Personalization";
 
 describe("OrderItem", () => {
   const item = {
@@ -28,7 +28,7 @@ describe("OrderItem", () => {
     {
       index: true,
       element: (
-        <OrderItem
+        <Personalization
           item={item}
           customizations={customizations}
           maxQuantity={maxQuantity}
@@ -92,7 +92,7 @@ describe("OrderItem", () => {
       {
         index: true,
         element: (
-          <OrderItem
+          <Personalization
             item={{ ...item, customizationId: 0 }}
             customizations={customizations}
             maxQuantity={maxQuantity}

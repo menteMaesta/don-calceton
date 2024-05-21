@@ -1,3 +1,5 @@
+import { EMPTY_ORDER_ITEM } from "helpers/constants";
+
 export type LoginData = { email: string; password: string };
 export type RegisterData = {
   fullName: string;
@@ -62,16 +64,19 @@ export type CartItemType = {
   id: number;
   personalizations?: OrderItem[];
 } & Partial<Variant>;
+
 export type OrderItem = {
   quantity: number;
   customizationId?: number;
   images?: OrderImage[];
   imageSize: number;
 };
+
 export interface OrderImage {
   name: string;
   size: number;
 }
+
 export type Customization = {
   id: number;
   title: string;

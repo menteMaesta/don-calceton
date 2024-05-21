@@ -20,6 +20,5 @@ export const EMPTY_ORDER_ITEM = {
   customizationId: 0,
   images: [],
   imageSize: 0,
-};
-
+} as const;
 export const KB = 1024;

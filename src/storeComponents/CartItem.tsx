@@ -3,7 +3,7 @@ import { useSubmit } from "react-router-dom";
 import { CartItemType, Blob } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
 import Button from "components/Button";
-import OrderItem from "./OrderItem";
+import Personalization from "storeComponents/Personalization/Personalization";
 
 type Props = {
   item: CartItemType;
@@ -73,7 +73,7 @@ export default function CartItem({ item, onRemove }: Props) {
             nueva personalización
           </Button>
           {item.personalizations?.map((orderItem, key) => (
-            <OrderItem
+            <Personalization
               item={orderItem}
               customizations={item.customizations}
               maxQuantity={item.quantity || 0}
