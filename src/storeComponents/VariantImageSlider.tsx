@@ -2,6 +2,7 @@ import { MouseEvent } from "react";
 import { useSubmit } from "react-router-dom";
 import { CartItem, Blob } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
+import Button from "components/Button";
 import OrderItem from "./OrderItem";
 
 type Props = {
@@ -50,6 +51,13 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
+  const onAddPersonalization = () => {
+    const formData = new FormData();
+    formData.append("id", `${item.id}`);
+    formData.append("store", "addVariantPersonalization");
+    submit(formData, { method: "post" });
+  };
+
   return (
     <SliderImageCard
       title={item.name}
@@ -61,7 +69,9 @@ export default function VariantImageSlider({ item, onRemove }: Props) {
       onRemove={onRemove}
       footer={
         <div className="w-full" data-testid="personalization_list">
-          <p className="mt-2 font-medium">Personalización</p>
+          <Button className="font-normal my-2" onClick={onAddPersonalization}>
+            nueva personalización
+          </Button>
           {item.personalizations?.map((orderItem, key) => (
             <OrderItem
               item={orderItem}

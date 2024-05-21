@@ -19,7 +19,6 @@ describe("VariantItem", () => {
         variant={variant}
         onAddToCart={vi.fn()}
         onRemoveFromCart={vi.fn()}
-        inCart={0}
       />
     );
     const title = getByTestId("variant-link_variant-item");
@@ -33,7 +32,6 @@ describe("VariantItem", () => {
         variant={variant}
         onAddToCart={vi.fn()}
         onRemoveFromCart={vi.fn()}
-        inCart={0}
       />
     );
     const price = getByTestId("price_1");
@@ -47,7 +45,6 @@ describe("VariantItem", () => {
         variant={variant}
         onAddToCart={vi.fn()}
         onRemoveFromCart={vi.fn()}
-        inCart={0}
       />
     );
     const wholesale = getByTestId("wholesale-price_1");
@@ -63,7 +60,6 @@ describe("VariantItem", () => {
         variant={variant}
         onAddToCart={vi.fn()}
         onRemoveFromCart={vi.fn()}
-        inCart={0}
       />
     );
     const image = getByTestId("store-item_1");
@@ -85,7 +81,6 @@ describe("VariantItem", () => {
         variant={variantNoImage}
         onAddToCart={vi.fn()}
         onRemoveFromCart={vi.fn()}
-        inCart={0}
       />
     );
     const image = getByTestId("store-item_default");
@@ -98,7 +93,6 @@ describe("VariantItem", () => {
         variant={variant}
         onAddToCart={vi.fn()}
         onRemoveFromCart={vi.fn()}
-        inCart={0}
       />
     );
     const addButton = getByTestId("add-products_button");

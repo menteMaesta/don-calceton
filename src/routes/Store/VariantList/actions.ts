@@ -11,6 +11,8 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
       return handleAddVariant(formData);
     case "updateVariantItem":
       return handleUpdateVariantItem(formData);
+    case "addVariantPersonalization":
+      return handleAddVariantPersonalization(formData);
     case "updateVariantItemImages":
       return handleUpdateVariantItemImages(formData);
     case "removeVariantItemImage":
@@ -40,6 +42,27 @@ export const handleAddVariant = async (form: FormData) => {
     transaction.store.put({
       id: itemId,
       personalizations: [{ ...EMPTY_ORDER_ITEM, quantity: 1 }],
+    }),
+    transaction.done,
+  ]);
+
+  return true;
+};
+
+export const handleAddVariantPersonalization = async (form: FormData) => {
+  const formData = Object.fromEntries(form);
+  const itemId = Number(formData.id);
+  const db = await openDB("don-calceton-cart", 1);
+  const oldOrderItem = await db.get("orderItems", itemId);
+  const transaction = db.transaction("orderItems", "readwrite");
+
+  await Promise.all([
+    transaction.store.put({
+      id: itemId,
+      personalizations: [
+        ...oldOrderItem.personalizations,
+        { ...EMPTY_ORDER_ITEM, quantity: 1 },
+      ],
     }),
     transaction.done,
   ]);

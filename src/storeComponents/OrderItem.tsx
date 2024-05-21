@@ -32,6 +32,7 @@ export default function OrderItem({
   index,
 }: Props) {
   const actionData = useActionData() as { isLoading: boolean; index: string };
+  const personalizationNumber = Number(index.split("-")[1]) + 1;
 
   const [size, setSize] = useState(item.imageSize || 0);
   const [imageRange, setImageRange] = useState({ min: 0, max: 0 });
@@ -114,6 +115,9 @@ export default function OrderItem({
 
   return (
     <div>
+      <p className="text-sm text-slate-400 mb-2">
+        Personalización {personalizationNumber}:{" "}
+      </p>
       <FormItem title="Cantidad" data-testid="order-item_quantity">
         <Select
           isSearchable={false}
@@ -161,7 +165,7 @@ export default function OrderItem({
       <FormItem title="Tamaño (cm)" data-testid="order-item_size">
         <input
           data-testid="order-item_size-input"
-          className="w-full"
+          className="w-full mb-4"
           type="range"
           disabled={imageRange.max === 0}
           min={imageRange.min}
