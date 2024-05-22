@@ -29,7 +29,11 @@ export default function RangeInput({
   };
 
   return (
-    <FormItem title="Tamaño (cm)" data-testid="order-item_size">
+    <FormItem
+      title="Tamaño (cm)"
+      data-testid="order-item_size"
+      className="mb-4"
+    >
       <input
         data-testid="order-item_size-input"
         className="w-full mb-4"

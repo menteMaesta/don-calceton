@@ -30,9 +30,21 @@ export default function CartItem({ item, onRemove }: Props) {
       imageClassName="max-w-64 mr-5"
       onRemove={onRemove}
       footer={
-        <div className="w-full" data-testid="personalization_list">
-          <Button className="font-normal my-2" onClick={onAddPersonalization}>
-            nueva personalización
+        <div
+          className="w-full relative pt-7"
+          data-testid="personalization_list"
+        >
+          <Button
+            className={
+              "font-normal my-2 " +
+              "absolute -top-9 " +
+              "right-0 " +
+              "flex items-center"
+            }
+            onClick={onAddPersonalization}
+          >
+            <i className="fa-solid fa-plus pr-1" />
+            personalización
           </Button>
           {item.personalizations?.map((personalization, key) => (
             <Personalization

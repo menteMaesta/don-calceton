@@ -58,9 +58,29 @@ export default function Personalization({
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
+  const onRemovePersonalization = () => {
+    const formData = new FormData();
+    formData.append("id", `${cartItemId}`);
+    formData.append("store", "removeVariantPersonalization");
+    formData.append("personalizationId", `${id}`);
+    submit(formData, { method: "post" });
+  };
+
   return (
-    <div>
-      <p className="text-sm text-slate-400 mb-2">Personalización {id + 1}:</p>
+    <div className="relative">
+      <i
+        role="button"
+        onClick={onRemovePersonalization}
+        className={
+          "absolute left-0 " +
+          "fa-solid fa-circle-xmark " +
+          "text-gray-300 z-[1] " +
+          "hover:text-gray-500 active:text-gray-500"
+        }
+      />
+      <p className="text-sm text-slate-400 mb-2 ml-6">
+        Personalización {id + 1}:
+      </p>
       <QuantitySelector
         quantity={personalization.quantity}
         maxQuantity={maxQuantity}

@@ -3,10 +3,20 @@ type Props = {
   children?: React.ReactNode;
 } & React.HTMLAttributes<HTMLLabelElement>;
 
-export default function FormItem({ title, children, ...otherProps }: Props) {
+export default function FormItem({
+  title,
+  children,
+  className,
+  ...otherProps
+}: Props) {
   return (
     <label
-      className="flex flex-wrap sm:flex-nowrap items-start justify-between mb-2"
+      className={
+        "flex flex-wrap " +
+        "sm:flex-nowrap items-start " +
+        "justify-between mb-2 " +
+        className
+      }
       {...otherProps}
     >
       <span data-testid="form-item_label-title">{title}: </span>

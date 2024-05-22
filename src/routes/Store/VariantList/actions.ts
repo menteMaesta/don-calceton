@@ -13,6 +13,8 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
       return handleUpdateVariantItem(formData);
     case "addVariantPersonalization":
       return handleAddVariantPersonalization(formData);
+    case "removeVariantPersonalization":
+      return handleRemoveVariantPersonalization(formData);
     case "updateVariantItemImages":
       return handleUpdateVariantItemImages(formData);
     case "removeVariantItemImage":
@@ -66,6 +68,29 @@ export const handleAddVariantPersonalization = async (form: FormData) => {
     }),
     transaction.done,
   ]);
+
+  return true;
+};
+
+export const handleRemoveVariantPersonalization = async (form: FormData) => {
+  const formData = Object.fromEntries(form);
+  const itemId = Number(formData.id);
+  const personalizationId = Number(formData.personalizationId);
+  const db = await openDB("don-calceton-cart", 1);
+  const oldOrderItem = await db.get("orderItems", itemId);
+  const transaction = db.transaction("orderItems", "readwrite");
+
+  if (oldOrderItem) {
+    await Promise.all([
+      transaction.store.put({
+        id: itemId,
+        personalizations: oldOrderItem.personalizations.filter(
+          (_: PersonalizationType, index: number) => index !== personalizationId
+        ),
+      }),
+      transaction.done,
+    ]);
+  }
 
   return true;
 };
