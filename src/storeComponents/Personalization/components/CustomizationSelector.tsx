@@ -40,7 +40,6 @@ export default function CustomizationSelector({
   return (
     <FormItem title="Tipo" data-testid="order-item_customization">
       <Select
-        data-testid="order-item_customization-select"
         isSearchable={false}
         onChange={onCustomization}
         defaultValue={defaultCustomization}

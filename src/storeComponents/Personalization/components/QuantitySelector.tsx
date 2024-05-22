@@ -9,7 +9,11 @@ type Props = {
   onChange: (field: string, value: number) => void;
 };
 
-export default function Quantity({ quantity, maxQuantity, onChange }: Props) {
+export default function QuantitySelector({
+  quantity,
+  maxQuantity,
+  onChange,
+}: Props) {
   //create an array of options from 1 to maxQuantity
   const quantityOptions = new Array(maxQuantity)
     .fill(0)

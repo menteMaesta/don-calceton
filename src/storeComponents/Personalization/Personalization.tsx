@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSubmit } from "react-router-dom";
 import { PersonalizationType, Customization, Blob } from "helpers/customTypes";
-import Quantity from "./components/Quantity";
+import QuantitySelector from "./components/QuantitySelector";
 import ImageSelector from "./components/ImageSelector";
 import RangeInput from "./components/RangeInput";
 import CustomizationSelector from "./components/CustomizationSelector";
@@ -61,7 +61,7 @@ export default function Personalization({
   return (
     <div>
       <p className="text-sm text-slate-400 mb-2">Personalización {id + 1}:</p>
-      <Quantity
+      <QuantitySelector
         quantity={personalization.quantity}
         maxQuantity={maxQuantity}
         onChange={onChangeOrderItem}
