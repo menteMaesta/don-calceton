@@ -1,5 +1,6 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
+import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 import Cart from "routes/Store/Cart/Cart";
@@ -55,7 +56,9 @@ describe("Cart component", () => {
 
     const { getByTestId } = render(
       <React.StrictMode>
-        <RouterProvider router={router} />
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
       </React.StrictMode>
     );
 

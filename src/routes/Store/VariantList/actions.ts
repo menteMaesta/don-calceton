@@ -1,6 +1,6 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import { openDB } from "idb";
-import { OrderItem, OrderImage } from "helpers/customTypes";
+import { PersonalizationType, OrderImage } from "helpers/customTypes";
 import { EMPTY_ORDER_ITEM } from "helpers/constants";
 
 export const storeActions = async ({ request }: ActionFunctionArgs) => {
@@ -74,8 +74,8 @@ export const handleUpdateVariantItem = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
 
-  const orderId = Number(formData.orderId);
-  const field = formData.field as keyof Omit<OrderItem, "images">;
+  const personalizationId = Number(formData.personalizationId);
+  const field = formData.field as keyof Omit<PersonalizationType, "images">;
   const newValue = Number(formData.newValue);
 
   const db = await openDB("don-calceton-cart", 1);
@@ -83,7 +83,7 @@ export const handleUpdateVariantItem = async (form: FormData) => {
   const transaction = db.transaction("orderItems", "readwrite");
 
   if (oldOrderItem) {
-    oldOrderItem.personalizations[orderId][field] = newValue;
+    oldOrderItem.personalizations[personalizationId][field] = newValue;
     await Promise.all([
       transaction.store.put({
         id: itemId,
@@ -98,14 +98,15 @@ export const handleUpdateVariantItem = async (form: FormData) => {
 export const handleUpdateVariantItemImages = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
-  const orderId = Number(formData.orderId);
+  const personalizationId = Number(formData.personalizationId);
 
   const db = await openDB("don-calceton-cart", 1);
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
 
   if (oldOrderItem) {
-    oldOrderItem.personalizations[orderId].images = form.getAll("images[]");
+    oldOrderItem.personalizations[personalizationId].images =
+      form.getAll("images[]");
     await Promise.all([
       transaction.store.put({
         id: itemId,
@@ -114,24 +115,24 @@ export const handleUpdateVariantItemImages = async (form: FormData) => {
       transaction.done,
     ]);
   }
-  return { isLoading: false, index: `${itemId}-${orderId}` };
+  return { isLoading: false, index: `${itemId}-${personalizationId}` };
 };
 
 export const handleRemoveVariantItemImage = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
-  const orderId = Number(formData.orderId);
+  const personalizationId = Number(formData.personalizationId);
   const imageIndex = Number(formData.imageIndex);
 
   const db = await openDB("don-calceton-cart", 1);
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
-  const newImages = oldOrderItem.personalizations[orderId].images.filter(
-    (_: OrderImage, index: number) => index !== imageIndex
-  );
+  const newImages = oldOrderItem.personalizations[
+    personalizationId
+  ].images.filter((_: OrderImage, index: number) => index !== imageIndex);
 
   if (oldOrderItem) {
-    oldOrderItem.personalizations[orderId].images = newImages;
+    oldOrderItem.personalizations[personalizationId].images = newImages;
     await Promise.all([
       transaction.store.put({
         id: itemId,

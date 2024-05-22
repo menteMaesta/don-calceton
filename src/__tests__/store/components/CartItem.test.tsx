@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import CartItem from "src/storeComponents/CartItem";
 
@@ -32,7 +33,9 @@ describe("CartItem", () => {
   beforeEach(() => {
     render(
       <React.StrictMode>
-        <RouterProvider router={router} />
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
       </React.StrictMode>
     );
   });

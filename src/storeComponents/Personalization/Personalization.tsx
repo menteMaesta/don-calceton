@@ -1,67 +1,88 @@
 import { useState } from "react";
-import {
-  OrderItem as OrderItemType,
-  Customization,
-  Blob,
-} from "helpers/customTypes";
+import { useSubmit } from "react-router-dom";
+import { PersonalizationType, Customization, Blob } from "helpers/customTypes";
 import Quantity from "./components/Quantity";
 import ImageSelector from "./components/ImageSelector";
 import RangeInput from "./components/RangeInput";
 import CustomizationSelector from "./components/CustomizationSelector";
 
-const SECOND_ITEM_INDEX = 1;
-
 type Props = {
-  item: OrderItemType;
+  personalization: PersonalizationType;
+  id: number;
+  cartItemId: number;
   customizations?: Customization[];
   maxQuantity: number;
-  onChange: (field: string, value: number) => void;
-  onChangeOrderItemImages: (blobs: Blob[]) => void;
-  onDeleteOrderItemImages: (imageIndex: number) => void;
-  index: string;
 };
 
 export default function Personalization({
-  item,
+  personalization,
+  id,
+  cartItemId,
   customizations = [],
   maxQuantity,
-  onChange,
-  onChangeOrderItemImages,
-  onDeleteOrderItemImages,
-  index,
 }: Props) {
-  // Split the index to get the personalization key, add 1 because it starts at 0
-  const personalizationNumber = Number(index.split("-")[SECOND_ITEM_INDEX]) + 1;
+  const submit = useSubmit();
+  const [size, setSize] = useState(personalization.imageSize || 0);
 
-  const [size, setSize] = useState(item.imageSize || 0);
+  const onChangeOrderItem = (field: string, newValue: number) => {
+    const formData = new FormData();
+    formData.append("id", `${cartItemId}`);
+    formData.append("store", "updateVariantItem");
+    formData.append("personalizationId", `${id}`);
+    formData.append("field", `${field}`);
+    formData.append("newValue", `${newValue}`);
+    submit(formData, { method: "post" });
+  };
+
+  const onChangeOrderItemImages = (blobs: Blob[]) => {
+    const formData = new FormData();
+    formData.append("id", `${cartItemId}`);
+    formData.append("store", "updateVariantItemImages");
+    formData.append("personalizationId", `${id}`);
+    for (const blob of blobs) {
+      try {
+        formData.append("images[]", blob.file, blob.name);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    submit(formData, { method: "post", encType: "multipart/form-data" });
+  };
+
+  const onDeleteOrderItemImages = (imageIndex: number) => {
+    const formData = new FormData();
+    formData.append("id", `${cartItemId}`);
+    formData.append("store", "removeVariantItemImage");
+    formData.append("personalizationId", `${id}`);
+    formData.append("imageIndex", `${imageIndex}`);
+    submit(formData, { method: "post", encType: "multipart/form-data" });
+  };
 
   return (
     <div>
-      <p className="text-sm text-slate-400 mb-2">
-        Personalización {personalizationNumber}:
-      </p>
+      <p className="text-sm text-slate-400 mb-2">Personalización {id + 1}:</p>
       <Quantity
-        quantity={item.quantity}
+        quantity={personalization.quantity}
         maxQuantity={maxQuantity}
-        onChange={onChange}
+        onChange={onChangeOrderItem}
       />
       <ImageSelector
-        images={item.images}
+        images={personalization.images}
         onChangeOrderItemImages={onChangeOrderItemImages}
         onDeleteOrderItemImages={onDeleteOrderItemImages}
-        index={index}
+        index={`${cartItemId}-${id}`}
       />
       <CustomizationSelector
-        customizationId={item.customizationId}
+        customizationId={personalization.customizationId}
         customizations={customizations}
-        onChange={onChange}
+        onChange={onChangeOrderItem}
         setSize={setSize}
       />
       <RangeInput
         customizations={customizations}
-        customizationId={item.customizationId}
+        customizationId={personalization.customizationId}
         size={size}
-        onChange={onChange}
+        onChange={onChangeOrderItem}
         setSize={setSize}
       />
     </div>
