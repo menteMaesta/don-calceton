@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, within, act } from "@testing-library/react";
+import { ORDER_ITEM_FIELDS } from "helpers/constants";
 import CustomizationSelector from "storeComponents/Personalization/components/CustomizationSelector";
 
 describe("CustomizationSelector", () => {
@@ -50,7 +51,7 @@ describe("CustomizationSelector", () => {
     act(() => getByText(customizations[0].title).click());
 
     expect(onChange).toHaveBeenCalledWith(
-      "customizationId",
+      ORDER_ITEM_FIELDS.CUSTOMIZATION_ID,
       customizations[0].id
     );
   });
