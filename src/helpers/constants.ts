@@ -15,10 +15,18 @@ export const ROUTES = {
   CART: "/cart",
 };
 
+export const ORDER_ITEM_FIELDS = {
+  QUANTITY: "quantity",
+  CUSTOMIZATION_ID: "customizationId",
+  IMAGES: "images",
+  IMAGE_SIZE: "imageSize",
+};
+
 export const EMPTY_ORDER_ITEM = {
-  quantity: 0,
-  customizationId: 0,
-  images: [],
-  imageSize: 0,
+  [ORDER_ITEM_FIELDS.QUANTITY]: 0,
+  [ORDER_ITEM_FIELDS.CUSTOMIZATION_ID]: 0,
+  [ORDER_ITEM_FIELDS.IMAGES]: [],
+  [ORDER_ITEM_FIELDS.IMAGE_SIZE]: 0,
 } as const;
+
 export const KB = 1024;

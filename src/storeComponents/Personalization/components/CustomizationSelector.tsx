@@ -1,6 +1,7 @@
 import { SetStateAction } from "react";
 import Select, { OnChangeValue } from "react-select";
 import { Option, Customization } from "helpers/customTypes";
+import { ORDER_ITEM_FIELDS } from "helpers/constants";
 import FormItem from "storeComponents/FormItem";
 
 type Props = {
@@ -31,7 +32,7 @@ export default function CustomizationSelector({
       (customization) => customization.id === option?.value
     );
     if (customization) {
-      onChange("customizationId", customization.id);
+      onChange(ORDER_ITEM_FIELDS.CUSTOMIZATION_ID, customization.id);
       setSize(0);
     }
   };

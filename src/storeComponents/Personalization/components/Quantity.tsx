@@ -1,5 +1,6 @@
 import Select, { OnChangeValue } from "react-select";
 import { Option } from "helpers/customTypes";
+import { ORDER_ITEM_FIELDS } from "helpers/constants";
 import FormItem from "storeComponents/FormItem";
 
 type Props = {
@@ -16,7 +17,7 @@ export default function Quantity({ quantity, maxQuantity, onChange }: Props) {
 
   const onSelectQuantity = (option: OnChangeValue<Option, false>) => {
     if (option?.value) {
-      onChange("quantity", option.value);
+      onChange(ORDER_ITEM_FIELDS.QUANTITY, option.value);
     }
   };
 

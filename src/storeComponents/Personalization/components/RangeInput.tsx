@@ -1,6 +1,7 @@
 import { ChangeEvent, Fragment, SetStateAction } from "react";
 import FormItem from "storeComponents/FormItem";
 import { Customization } from "helpers/customTypes";
+import { ORDER_ITEM_FIELDS } from "helpers/constants";
 
 type Props = {
   customizations?: Customization[];
@@ -24,7 +25,7 @@ export default function RangeInput({
   const onChangeSize = (event: ChangeEvent<HTMLInputElement>) => {
     const newSize = parseFloat(event.target.value);
     setSize(newSize);
-    onChange("imageSize", newSize);
+    onChange(ORDER_ITEM_FIELDS.IMAGE_SIZE, newSize);
   };
 
   return (
