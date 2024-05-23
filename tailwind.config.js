@@ -10,5 +10,13 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        "[data-reach-accordion-button][aria-expanded=true] .accordion": {
+          transform: "rotate(180deg)",
+        },
+      });
+    },
+  ],
 };

@@ -22,6 +22,7 @@
     "storeComponents/*": "./src/storeComponents/*"
   },
   "dependencies": {
+    "@reach/accordion": "^0.18.0",
     "@reduxjs/toolkit": "^2.0.1",
     "browser-image-compression": "^2.0.2",
     "classnames": "^2.5.1",

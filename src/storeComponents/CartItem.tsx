@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 import { useSubmit } from "react-router-dom";
+import { Accordion, AccordionItem } from "@reach/accordion";
 import { CartItemType } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
 import Button from "components/Button";
@@ -30,9 +31,12 @@ export default function CartItem({ item, onRemove }: Props) {
       imageClassName="max-w-64 mr-5"
       onRemove={onRemove}
       footer={
-        <div
+        <Accordion
           className="w-full relative pt-7"
           data-testid="personalization_list"
+          multiple
+          collapsible
+          defaultIndex={0}
         >
           <Button
             className={
@@ -47,16 +51,17 @@ export default function CartItem({ item, onRemove }: Props) {
             personalización
           </Button>
           {item.personalizations?.map((personalization, key) => (
-            <Personalization
-              key={`${item.id}-${key}`}
-              id={key}
-              personalization={personalization}
-              cartItemId={item.id}
-              customizations={item.customizations}
-              maxQuantity={item.quantity || 0}
-            />
+            <AccordionItem key={`${item.id}-${key}`} className="relative">
+              <Personalization
+                id={key}
+                personalization={personalization}
+                cartItemId={item.id}
+                customizations={item.customizations}
+                maxQuantity={item.quantity || 0}
+              />
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       }
     />
   );

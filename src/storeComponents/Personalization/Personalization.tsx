@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useSubmit } from "react-router-dom";
+import { AccordionButton, AccordionPanel } from "@reach/accordion";
 import { PersonalizationType, Customization, Blob } from "helpers/customTypes";
 import QuantitySelector from "./components/QuantitySelector";
 import ImageSelector from "./components/ImageSelector";
@@ -67,44 +68,51 @@ export default function Personalization({
   };
 
   return (
-    <div className="relative">
+    <Fragment>
       <i
         role="button"
         onClick={onRemovePersonalization}
         className={
-          "absolute left-0 " +
+          "absolute left-0 top-1 " +
           "fa-solid fa-circle-xmark " +
           "text-gray-300 z-[1] " +
           "hover:text-gray-500 active:text-gray-500"
         }
       />
-      <p className="text-sm text-slate-400 mb-2 ml-6">
-        Personalización {id + 1}:
-      </p>
-      <QuantitySelector
-        quantity={personalization.quantity}
-        maxQuantity={maxQuantity}
-        onChange={onChangeOrderItem}
-      />
-      <ImageSelector
-        images={personalization.images}
-        onChangeOrderItemImages={onChangeOrderItemImages}
-        onDeleteOrderItemImages={onDeleteOrderItemImages}
-        index={`${cartItemId}-${id}`}
-      />
-      <CustomizationSelector
-        customizationId={personalization.customizationId}
-        customizations={customizations}
-        onChange={onChangeOrderItem}
-        setSize={setSize}
-      />
-      <RangeInput
-        customizations={customizations}
-        customizationId={personalization.customizationId}
-        size={size}
-        onChange={onChangeOrderItem}
-        setSize={setSize}
-      />
-    </div>
+      <AccordionButton
+        className={
+          "text-sm text-slate-400 " + "mb-2 ml-6 " + "hover:text-slate-500 "
+        }
+      >
+        <i className={"fa-solid fa-caret-down " + "accordion"} />
+        <span className="pl-1">Personalización {id + 1}</span>
+      </AccordionButton>
+      <AccordionPanel>
+        <QuantitySelector
+          quantity={personalization.quantity}
+          maxQuantity={maxQuantity}
+          onChange={onChangeOrderItem}
+        />
+        <ImageSelector
+          images={personalization.images}
+          onChangeOrderItemImages={onChangeOrderItemImages}
+          onDeleteOrderItemImages={onDeleteOrderItemImages}
+          index={`${cartItemId}-${id}`}
+        />
+        <CustomizationSelector
+          customizationId={personalization.customizationId}
+          customizations={customizations}
+          onChange={onChangeOrderItem}
+          setSize={setSize}
+        />
+        <RangeInput
+          customizations={customizations}
+          customizationId={personalization.customizationId}
+          size={size}
+          onChange={onChangeOrderItem}
+          setSize={setSize}
+        />
+      </AccordionPanel>
+    </Fragment>
   );
 }

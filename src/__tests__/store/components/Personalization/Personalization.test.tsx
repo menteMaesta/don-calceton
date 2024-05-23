@@ -1,5 +1,6 @@
 import React from "react";
 import { render, within } from "@testing-library/react";
+import { Accordion, AccordionItem } from "@reach/accordion";
 import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import Personalization from "storeComponents/Personalization/Personalization";
@@ -27,13 +28,17 @@ describe("OrderItem", () => {
     {
       index: true,
       element: (
-        <Personalization
-          id={1}
-          personalization={item}
-          cartItemId={cartItemId}
-          customizations={customizations}
-          maxQuantity={maxQuantity}
-        />
+        <Accordion>
+          <AccordionItem className="relative">
+            <Personalization
+              id={1}
+              personalization={item}
+              cartItemId={cartItemId}
+              customizations={customizations}
+              maxQuantity={maxQuantity}
+            />
+          </AccordionItem>
+        </Accordion>
       ),
     },
   ]);
