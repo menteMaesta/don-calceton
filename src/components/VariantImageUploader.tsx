@@ -30,7 +30,7 @@ export default function VariantImageUploader({
     >
       <p
         className={classnames(
-          "bg-slate-700 text-white",
+          "bg-slate-700",
           "w-fit p-2",
           "rounded",
           {

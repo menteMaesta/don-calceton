@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "postbuild": "scp -i ~/.ssh/id_github -r ~/Developer/don-calceton/dist/*  don-calceton@64.23.166.152:/var/www/rechinido/html",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix .",
     "preview": "vite preview",
     "test": "vitest",

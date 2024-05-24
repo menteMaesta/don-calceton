@@ -63,7 +63,7 @@ export default function ImageSelector({
         labelProps={{
           className:
             "w-full text-center " +
-            "bg-white text-neutral-500 " +
+            "bg-white text-slate-500 " +
             "border border-neutral-300 " +
             "rounded " +
             "py-2 " +

@@ -120,7 +120,10 @@ export default function NewVariant() {
           data-testid="new-variant-quantity_input"
         />
 
-        <VariantImageUploader onFileSelect={onFileSelect} />
+        <VariantImageUploader
+          labelProps={{ className: "text-white" }}
+          onFileSelect={onFileSelect}
+        />
 
         <div className="grid grid-cols-2 gap-2 sm:w-3/6 sm:grid-cols-3">
           {blobs?.map((blob, key) => (

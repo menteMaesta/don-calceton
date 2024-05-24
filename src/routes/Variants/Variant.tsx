@@ -76,7 +76,7 @@ export default function VariantDetails() {
         <VariantImageUploader
           onFileSelect={onFileSelect}
           className="sticky top-12 z-10 mt-4"
-          labelProps={{ className: "sticky top-12 z-10" }}
+          labelProps={{ className: "sticky top-12 z-10 text-white" }}
         />
         <div
           className={classnames(
