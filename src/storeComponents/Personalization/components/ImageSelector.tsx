@@ -60,7 +60,19 @@ export default function ImageSelector({
   return (
     <FormItem title="Imagenes" data-testid="order-item_images">
       <VariantImageUploader
-        labelProps={{ className: "w-full text-center" }}
+        labelProps={{
+          className:
+            "w-full text-center " +
+            "bg-white text-slate-500/[1] " +
+            "border border-neutral-300 " +
+            "rounded " +
+            "py-2 " +
+            "hover:bg-neutral-100 " +
+            "active:bg-neutral-100 " +
+            "focus:bg-neutral-100 " +
+            "focus-within:bg-neutral-100 " +
+            "cursor-pointer",
+        }}
         onFileSelect={onChangeImages}
         isLoading={loading}
       />

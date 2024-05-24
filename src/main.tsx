@@ -44,115 +44,115 @@ import {
 } from "routes/Store/VariantList/loader";
 import { storeActions } from "routes/Store/VariantList/actions";
 
-const router = createBrowserRouter([
-  {
-    path: ROUTES.DASHBOARD,
-    element: <Dashboard />,
-    errorElement: <ErrorPage />,
-    loader: hasToken,
-    children: [
-      {
-        index: true,
-        element: <Products />,
-        loader: getProducts,
-        action: productsActions,
-      },
-      {
-        path: ROUTES.NEW_PRODUCT,
-        element: <NewProduct />,
-        action: productsActions,
-      },
-      {
-        path: ROUTES.PRODUCT,
-        loader: getProduct,
-        action: productsActions,
-        element: <ProductDetails />,
-      },
-      {
-        path: ROUTES.EDIT_PRODUCT,
-        loader: getProduct,
-        action: productsActions,
-        element: <EditProduct />,
-      },
-      {
-        path: ROUTES.NEW_VARIANT,
-        element: <NewVariant />,
-        action: variantActions,
-      },
-      {
-        path: `${ROUTES.PRODUCT}${ROUTES.VARIANT}`,
-        element: <Varaint />,
-        loader: fetchVariant,
-        action: variantActions,
-      },
-    ],
-  },
-  {
-    element: <MainGuest />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: ROUTES.LOGIN,
-        element: <Login />,
-        errorElement: <ErrorPage />,
-        action: loginActions,
-        index: true,
-      },
-      // {
-      //   path: ROUTES.REGISTER,
-      //   element: <Register />,
-      //   errorElement: <ErrorPage />,
-      //   action: loginActions,
-      // },
-      // {
-      //   path: ROUTES.REGISTER_ADMIN,
-      //   element: <RegisterAdmin />,
-      //   errorElement: <ErrorPage />,
-      //   action: loginActions,
-      // },
-      {
-        path: ROUTES.FORGOT_PASSWORD,
-        element: <ForgotPassword />,
-        errorElement: <ErrorPage />,
-        action: loginActions,
-      },
-      {
-        path: ROUTES.CHANGE_PASSWORD,
-        element: <ChangePassword />,
-        errorElement: <ErrorPage />,
-        action: loginActions,
-      },
-      {
-        path: ROUTES.GO_TO_MAIL,
-        element: <GotoMail />,
-        errorElement: <ErrorPage />,
-      },
-    ],
-  },
-  {
-    path: ROUTES.STORE,
-    element: <Store />,
-    errorElement: <ErrorPage />,
-    loader: getCartItems,
-    children: [
-      {
-        index: true,
-        element: <VariantList />,
-        loader: fetchStorefrontData,
-        action: storeActions,
-      },
-      {
-        path: ROUTES.CART,
-        element: <Cart />,
-        loader: getAllCartItems,
-        action: storeActions,
-      },
-    ],
-  },
-]);
-
 openDatabase()
   .then(() => {
+    const router = createBrowserRouter([
+      {
+        path: ROUTES.DASHBOARD,
+        element: <Dashboard />,
+        errorElement: <ErrorPage />,
+        loader: hasToken,
+        children: [
+          {
+            index: true,
+            element: <Products />,
+            loader: getProducts,
+            action: productsActions,
+          },
+          {
+            path: ROUTES.NEW_PRODUCT,
+            element: <NewProduct />,
+            action: productsActions,
+          },
+          {
+            path: ROUTES.PRODUCT,
+            loader: getProduct,
+            action: productsActions,
+            element: <ProductDetails />,
+          },
+          {
+            path: ROUTES.EDIT_PRODUCT,
+            loader: getProduct,
+            action: productsActions,
+            element: <EditProduct />,
+          },
+          {
+            path: ROUTES.NEW_VARIANT,
+            element: <NewVariant />,
+            action: variantActions,
+          },
+          {
+            path: `${ROUTES.PRODUCT}${ROUTES.VARIANT}`,
+            element: <Varaint />,
+            loader: fetchVariant,
+            action: variantActions,
+          },
+        ],
+      },
+      {
+        element: <MainGuest />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: ROUTES.LOGIN,
+            element: <Login />,
+            errorElement: <ErrorPage />,
+            action: loginActions,
+            index: true,
+          },
+          // {
+          //   path: ROUTES.REGISTER,
+          //   element: <Register />,
+          //   errorElement: <ErrorPage />,
+          //   action: loginActions,
+          // },
+          // {
+          //   path: ROUTES.REGISTER_ADMIN,
+          //   element: <RegisterAdmin />,
+          //   errorElement: <ErrorPage />,
+          //   action: loginActions,
+          // },
+          {
+            path: ROUTES.FORGOT_PASSWORD,
+            element: <ForgotPassword />,
+            errorElement: <ErrorPage />,
+            action: loginActions,
+          },
+          {
+            path: ROUTES.CHANGE_PASSWORD,
+            element: <ChangePassword />,
+            errorElement: <ErrorPage />,
+            action: loginActions,
+          },
+          {
+            path: ROUTES.GO_TO_MAIL,
+            element: <GotoMail />,
+            errorElement: <ErrorPage />,
+          },
+        ],
+      },
+      {
+        path: ROUTES.STORE,
+        element: <Store />,
+        errorElement: <ErrorPage />,
+        loader: getCartItems,
+        children: [
+          {
+            index: true,
+            element: <VariantList />,
+            loader: fetchStorefrontData,
+            action: storeActions,
+          },
+          {
+            path: ROUTES.CART,
+            element: <Cart />,
+            loader: getAllCartItems,
+            action: storeActions,
+          },
+        ],
+      },
+    ]);
+
     ReactDOM.createRoot(document.getElementById("root")!).render(
       <React.StrictMode>
         <SnackbarProvider>

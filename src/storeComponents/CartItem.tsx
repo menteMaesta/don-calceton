@@ -50,7 +50,8 @@ export default function CartItem({ item, onRemove }: Props) {
               "font-normal my-2 " +
               "sm:absolute -top-9 " +
               "right-0 " +
-              "flex items-center"
+              "flex items-center " +
+              "sm:text-sm"
             }
             onClick={onAddPersonalization}
           >

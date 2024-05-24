@@ -29,7 +29,7 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
 const handleRemoveFromCart = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   await db.delete("orderItems", itemId);
   return true;
 };
@@ -39,7 +39,7 @@ export const handleAddVariant = async (form: FormData) => {
   const itemId = Number(formData.id);
   const productPrice = Number(formData.productPrice);
   const productWholesalePrice = Number(formData.productWholesalePrice);
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const transaction = db.transaction("orderItems", "readwrite");
 
   await Promise.all([
@@ -58,7 +58,7 @@ export const handleAddVariant = async (form: FormData) => {
 export const handleAddVariantPersonalization = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
 
@@ -80,7 +80,7 @@ export const handleRemoveVariantPersonalization = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
   const personalizationId = Number(formData.personalizationId);
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
 
@@ -107,7 +107,7 @@ export const handleUpdateVariantItem = async (form: FormData) => {
   const field = formData.field as keyof Omit<PersonalizationType, "images">;
   const newValue = Number(formData.newValue);
 
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
 
@@ -129,7 +129,7 @@ export const handleUpdateVariantItemImages = async (form: FormData) => {
   const itemId = Number(formData.id);
   const personalizationId = Number(formData.personalizationId);
 
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
 
@@ -153,7 +153,7 @@ export const handleRemoveVariantItemImage = async (form: FormData) => {
   const personalizationId = Number(formData.personalizationId);
   const imageIndex = Number(formData.imageIndex);
 
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const oldOrderItem = await db.get("orderItems", itemId);
   const transaction = db.transaction("orderItems", "readwrite");
   const newImages = oldOrderItem.personalizations[

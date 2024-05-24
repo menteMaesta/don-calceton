@@ -58,7 +58,7 @@ const getProductPrice = (cart: CartItemType[]) => {
 };
 
 export const getCartItems = async () => {
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const all = await db.getAll("orderItems");
 
   const totalItems = await getTotalCartItems(all);
@@ -66,7 +66,7 @@ export const getCartItems = async () => {
 };
 
 export const getAllCartItems = async () => {
-  const db = await openDB("don-calceton-cart", 1);
+  const db = await openDB("don-calceton-cart");
   const cart = await db.getAll("orderItems");
   const cartIds = cart.map((item) => `${item.id}`);
   const { status, data } = await getAllCartVariants({ variantIds: cartIds });
