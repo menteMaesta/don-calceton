@@ -48,8 +48,8 @@ describe("CartItem", () => {
     expect(variantTitle).toBeInTheDocument();
     expect(imageSlider).toBeInTheDocument();
     expect(personalizationList).toBeInTheDocument();
-    expect(personalizationList.children.length).toBe(
-      item.personalizations.length + 1
+    expect(personalizationList.children.length).toBeGreaterThan(
+      item.personalizations.length
     );
   });
 

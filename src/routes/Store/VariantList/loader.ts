@@ -2,7 +2,11 @@ import { openDB } from "idb";
 import { getAllCartVariants } from "routes/Variants/api";
 import { getProducts } from "routes/Products/loader";
 import { fetchAllVariants } from "routes/Variants/loader";
-import { Product, CartItemType, OrderItem } from "helpers/customTypes";
+import {
+  Product,
+  CartItemType,
+  PersonalizationType,
+} from "helpers/customTypes";
 
 export const fetchStorefrontData = async () => {
   const variants = await fetchAllVariants();
@@ -20,13 +24,37 @@ export const fetchStorefrontData = async () => {
 const getTotalCartItems = async (cart: CartItemType[]) => {
   const totalItems = cart.reduce((acc: number, item: CartItemType) => {
     acc +=
-      item.personalizations?.reduce((total: number, element: OrderItem) => {
-        total += element.quantity || 0;
-        return total;
-      }, 0) || 0;
+      item.personalizations?.reduce(
+        (total: number, element: PersonalizationType) => {
+          total += element.quantity || 0;
+          return total;
+        },
+        0
+      ) || 0;
     return acc;
   }, 0);
   return totalItems;
+};
+
+const getProductPrice = (cart: CartItemType[]) => {
+  const totalPrice = cart.reduce((acc: number, item: CartItemType) => {
+    const totalItems =
+      item.personalizations?.reduce(
+        (total: number, element: PersonalizationType) => {
+          total += element.quantity || 0;
+          return total;
+        },
+        0
+      ) || 0;
+    if (totalItems >= 12) {
+      acc +=
+        totalItems * (item.productWholesalePrice || item.productPrice || 0);
+    } else {
+      acc += totalItems * (item.productPrice || 0);
+    }
+    return acc;
+  }, 0);
+  return totalPrice || 0;
 };
 
 export const getCartItems = async () => {
@@ -42,6 +70,7 @@ export const getAllCartItems = async () => {
   const cart = await db.getAll("orderItems");
   const cartIds = cart.map((item) => `${item.id}`);
   const { status, data } = await getAllCartVariants({ variantIds: cartIds });
+  const totalPrice = getProductPrice(cart);
 
   if (status !== 200) {
     throw data.errors[0];
@@ -50,5 +79,5 @@ export const getAllCartItems = async () => {
     ...item,
     ...cart.find((cartItem) => cartItem.id === item.id),
   }));
-  return cartItems || [];
+  return { cart: cartItems || [], totalPrice };
 };

@@ -45,7 +45,6 @@ export interface VariantListItem extends VariantBase {
   productName: string;
   productPrice: number;
   productWholesalePrice: number;
-  orderQuantity?: number;
 }
 export interface Image {
   id: number;
@@ -60,8 +59,10 @@ export type SliderImage = { id: number; name: string };
 export type Option = { value: number; label: string };
 export type CartItemType = {
   id: number;
+  images: Image[];
+  customizations?: Customization[];
   personalizations?: PersonalizationType[];
-} & Partial<Variant>;
+} & Partial<Omit<VariantListItem, "images">>;
 
 export type PersonalizationType = {
   quantity: number;

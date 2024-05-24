@@ -4,7 +4,10 @@ import { CartItemType } from "helpers/customTypes";
 import CartItem from "src/storeComponents/CartItem";
 
 export default function Cart() {
-  const cart = useLoaderData() as CartItemType[];
+  const { cart, totalPrice } = useLoaderData() as {
+    cart: CartItemType[];
+    totalPrice: number;
+  };
   const submit = useSubmit();
 
   const onRemoveFromCart = (
@@ -20,9 +23,9 @@ export default function Cart() {
 
   return (
     <div className="mt-11 flex flex-col w-full px-4" data-testid="cart_page">
-      <p className="mt-4 font-bold" data-testid="product_counter">
-        <i className={"fa-solid fa-cart-shopping " + "text-xl " + "ml-2"} />
-        Productos <span>{cart.length}</span>
+      <p className="mt-4 font-bold" data-testid="total-product_price">
+        <i className={"fa-solid fa-cart-shopping " + "text-xl " + "mr-2"} />
+        Precio total $<span>{totalPrice}</span>
       </p>
       <div
         data-testid="cart_list"

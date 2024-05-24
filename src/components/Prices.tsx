@@ -4,15 +4,16 @@ type Props = {
   id: number;
   price: number;
   wholesalePrice: number;
+  className?: string;
 };
-export default function ProductCard({ id, price, wholesalePrice }: Props) {
+export default function ProductCard({
+  id,
+  price,
+  wholesalePrice,
+  className,
+}: Props) {
   return (
-    <div
-      className={classnames(
-        "absolute bottom-0 right-0",
-        "flex flex-col items-end"
-      )}
-    >
+    <div className={classnames("flex flex-col", className)}>
       <p
         className={classnames(
           "bg-slate-950 text-white",

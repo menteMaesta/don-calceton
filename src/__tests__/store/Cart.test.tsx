@@ -42,12 +42,13 @@ describe("Cart component", () => {
         ],
       },
     ];
+    const loaderData = { cart: mockCartItems, totalPrice: 5 };
 
     const routes = [
       {
         path: ROUTES.CART,
         element: <Cart />,
-        loader: () => mockCartItems,
+        loader: () => loaderData,
       },
     ];
     const router = createMemoryRouter(routes, {
@@ -63,11 +64,14 @@ describe("Cart component", () => {
     );
 
     const cartPage = await waitFor(() => getByTestId("cart_page"));
-    const productCounter = getByTestId("product_counter");
+    const totalPrice = getByTestId("total-product_price");
     const cartList = getByTestId("cart_list");
 
     expect(cartPage).toBeInTheDocument();
-    expect(productCounter).toBeInTheDocument();
+    expect(totalPrice).toBeInTheDocument();
+    expect(totalPrice.textContent).toBe(
+      `Precio total $${loaderData.totalPrice}`
+    );
     expect(cartList).toBeInTheDocument();
     expect(cartList.children.length).toBe(mockCartItems.length);
   });

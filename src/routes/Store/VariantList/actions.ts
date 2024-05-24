@@ -37,12 +37,16 @@ const handleRemoveFromCart = async (form: FormData) => {
 export const handleAddVariant = async (form: FormData) => {
   const formData = Object.fromEntries(form);
   const itemId = Number(formData.id);
+  const productPrice = Number(formData.productPrice);
+  const productWholesalePrice = Number(formData.productWholesalePrice);
   const db = await openDB("don-calceton-cart", 1);
   const transaction = db.transaction("orderItems", "readwrite");
 
   await Promise.all([
     transaction.store.put({
       id: itemId,
+      productPrice,
+      productWholesalePrice,
       personalizations: [{ ...EMPTY_ORDER_ITEM, quantity: 1 }],
     }),
     transaction.done,
@@ -60,7 +64,7 @@ export const handleAddVariantPersonalization = async (form: FormData) => {
 
   await Promise.all([
     transaction.store.put({
-      id: itemId,
+      ...oldOrderItem,
       personalizations: [
         ...oldOrderItem.personalizations,
         { ...EMPTY_ORDER_ITEM, quantity: 1 },
@@ -83,7 +87,7 @@ export const handleRemoveVariantPersonalization = async (form: FormData) => {
   if (oldOrderItem) {
     await Promise.all([
       transaction.store.put({
-        id: itemId,
+        ...oldOrderItem,
         personalizations: oldOrderItem.personalizations.filter(
           (_: PersonalizationType, index: number) => index !== personalizationId
         ),
@@ -111,7 +115,7 @@ export const handleUpdateVariantItem = async (form: FormData) => {
     oldOrderItem.personalizations[personalizationId][field] = newValue;
     await Promise.all([
       transaction.store.put({
-        id: itemId,
+        ...oldOrderItem,
         personalizations: oldOrderItem.personalizations,
       }),
       transaction.done,
@@ -134,7 +138,7 @@ export const handleUpdateVariantItemImages = async (form: FormData) => {
       form.getAll("images[]");
     await Promise.all([
       transaction.store.put({
-        id: itemId,
+        ...oldOrderItem,
         personalizations: oldOrderItem.personalizations,
       }),
       transaction.done,
@@ -160,7 +164,7 @@ export const handleRemoveVariantItemImage = async (form: FormData) => {
     oldOrderItem.personalizations[personalizationId].images = newImages;
     await Promise.all([
       transaction.store.put({
-        id: itemId,
+        ...oldOrderItem,
         personalizations: oldOrderItem.personalizations,
       }),
       transaction.done,

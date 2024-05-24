@@ -5,7 +5,7 @@ import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import Personalization from "storeComponents/Personalization/Personalization";
 
-describe("OrderItem", () => {
+describe("Personalization", () => {
   const item = {
     quantity: 2,
     customizationId: 1,

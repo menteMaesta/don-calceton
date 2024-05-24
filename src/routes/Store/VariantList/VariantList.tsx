@@ -31,6 +31,11 @@ export default function VariantList() {
     const formData = new FormData();
     formData.append("id", `${variant.id}`);
     formData.append("store", "addVariant");
+    formData.append("productPrice", `${variant.productPrice}`);
+    formData.append(
+      "productWholesalePrice",
+      `${variant.productWholesalePrice}`
+    );
     submit(formData, { method: "post" });
   };
 

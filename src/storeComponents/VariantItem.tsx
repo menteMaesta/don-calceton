@@ -45,6 +45,7 @@ export default function VariantItem({
           id={variant.id}
           price={variant.productPrice}
           wholesalePrice={variant.productWholesalePrice}
+          className="items-end absolute bottom-0 right-0"
         />
         <img
           data-testid={`store-item_${variant.images?.id || "default"}`}

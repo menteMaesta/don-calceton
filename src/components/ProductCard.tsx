@@ -31,6 +31,7 @@ export default function ProductCard({ product, onRemove }: Props) {
         id={product.id}
         price={product.price}
         wholesalePrice={product.wholesalePrice}
+        className="items-end absolute bottom-0 right-0"
       />
     </SliderImageCard>
   );

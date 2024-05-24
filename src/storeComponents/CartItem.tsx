@@ -4,6 +4,7 @@ import { Accordion, AccordionItem } from "@reach/accordion";
 import { CartItemType } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
 import Button from "components/Button";
+import Prices from "components/Prices";
 import Personalization from "storeComponents/Personalization/Personalization";
 
 type Props = {
@@ -38,10 +39,16 @@ export default function CartItem({ item, onRemove }: Props) {
           collapsible
           defaultIndex={0}
         >
+          <Prices
+            id={item.id}
+            price={item.productPrice || 0}
+            wholesalePrice={item.productWholesalePrice || 0}
+            className="items-start absolute -top-10 left-0"
+          />
           <Button
             className={
               "font-normal my-2 " +
-              "absolute -top-9 " +
+              "sm:absolute -top-9 " +
               "right-0 " +
               "flex items-center"
             }
