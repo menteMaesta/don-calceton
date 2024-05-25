@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 type Props = {
   to: string;
   title: string;
+  className?: string;
 };
-export default function SticyLink({ to, title }: Props) {
+export default function SticyLink({ to, title, className }: Props) {
   return (
     <Link
       to={to}
@@ -14,7 +15,8 @@ export default function SticyLink({ to, title }: Props) {
         "py-2 z-10 text-center",
         "bg-slate-700 text-white",
         "mr-2 sticky top-12",
-        "hover:bg-slate-800"
+        "hover:bg-slate-800",
+        className
       )}
     >
       {title}
