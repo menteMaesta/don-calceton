@@ -1,5 +1,6 @@
 import { TabPanel } from "@reach/tabs";
 import { Customization } from "helpers/customTypes";
+import CustomizationCard from "routes/Variants/Variant/components/CustomizationCard";
 import EmptyState from "src/components/EmptyState";
 import Button from "src/components/Button";
 
@@ -15,14 +16,10 @@ export default function Customizations({ customizations = [] }: Props) {
       </div>
       {customizations.length > 0 ? (
         customizations?.map((customization) => (
-          <div
+          <CustomizationCard
             key={customization.id}
-            className="bg-white px-2 py-1 mb-3 rounded"
-          >
-            <p className="font-bold">{customization.title}</p>
-            <p>Imagen min: {customization.minSize} cm</p>
-            <p>Imagen max: {customization.maxSize} cm</p>
-          </div>
+            customization={customization}
+          />
         ))
       ) : (
         <EmptyState name="personalizaciones" />
