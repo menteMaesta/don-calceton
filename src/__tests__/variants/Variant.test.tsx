@@ -3,7 +3,7 @@ import { render, waitFor } from "@testing-library/react";
 import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
-import Variant from "routes/Variants/Variant";
+import Variant from "routes/Variants/Variant/Variant";
 
 describe("VariantDetails", () => {
   const variant = {

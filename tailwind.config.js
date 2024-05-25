@@ -11,10 +11,14 @@ export default {
     },
   },
   plugins: [
-    function ({ addComponents }) {
+    function ({ addComponents, theme }) {
       addComponents({
         "[data-reach-accordion-button][aria-expanded=true] .accordion": {
           transform: "rotate(180deg)",
+        },
+        "[data-reach-tab][data-selected]": {
+          backgroundColor: theme("colors.white"),
+          borderWidth: "1px",
         },
       });
     },
