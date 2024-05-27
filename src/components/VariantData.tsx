@@ -19,7 +19,11 @@ export default function VariantData({ variant, onEditData }: Props) {
         ({ ...prev, [event.target.name]: event.target.value } as VariantBase)
     );
     if (event.target.name === "quantity") {
-      if (event.target.value.includes(".")) {
+      if (
+        event.target.value.includes(".") ||
+        event.target.value.includes("-") ||
+        event.target.value.length === 0
+      ) {
         setValid(false);
       } else {
         setValid(true);

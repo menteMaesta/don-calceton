@@ -49,7 +49,7 @@ export default function CartItem({ item, onRemove }: Props) {
             className={
               "font-normal my-2 " +
               "sm:absolute -top-9 " +
-              "right-0 " +
+              "right-0 text-white " +
               "flex items-center " +
               "sm:text-sm"
             }
