@@ -1,7 +1,8 @@
-import { useState, MouseEvent } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { TabPanel } from "@reach/tabs";
-import { useLoaderData, useSubmit } from "react-router-dom";
-import { Customization } from "helpers/customTypes";
+import { useSnackbar } from "react-simple-snackbar";
+import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
+import { Customization, ErrorType } from "helpers/customTypes";
 import { EMPTY_CUSTOMIZATION } from "helpers/constants";
 import CustomizationCard from "routes/Variants/Variant/components/CustomizationCard";
 import EmptyState from "src/components/EmptyState";
@@ -9,8 +10,17 @@ import Button from "src/components/Button";
 
 export default function Customizations() {
   const submit = useSubmit();
+  const [openSnackbar] = useSnackbar();
+  const actionData = useActionData() as ErrorType;
   const customizations = useLoaderData() as Customization[];
   const [newCustomization, setNewCustomization] = useState<Customization>();
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   const onNewCustomization = () => {
     setNewCustomization(EMPTY_CUSTOMIZATION as Customization);
@@ -62,7 +72,7 @@ export default function Customizations() {
           Nueva personalización
         </Button>
       </div>
-      {customizations?.length > 0 ? (
+      {customizations?.length > 0 || newCustomization !== undefined ? (
         <div className="grid lg:grid-cols-2 gap-3">
           {customizations?.map((customization) => (
             <CustomizationCard
