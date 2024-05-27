@@ -2,6 +2,7 @@ import { ActionFunctionArgs } from "react-router-dom";
 import {
   storeCustomization,
   putCustomization,
+  destroyCustomization,
 } from "routes/Variants/Variant/components/api";
 import { Customization } from "helpers/customTypes";
 
@@ -17,6 +18,8 @@ export const customizationActions = async ({
       return newCustomization(formData, variantId);
     case "update":
       return updateCustomization(formData, variantId);
+    case "destroy":
+      return deleteCustomization(formData, variantId);
     default:
       break;
   }
@@ -51,6 +54,21 @@ const updateCustomization = async (formData: FormData, variantId: string) => {
   const { data, status } = await putCustomization(
     variantId,
     updatedCustomization
+  );
+
+  if (status !== 200) {
+    return data.errors ? data.errors[0] : data;
+  } else {
+    return true;
+  }
+};
+
+const deleteCustomization = async (formData: FormData, variantId: string) => {
+  const customizationId = formData.get("id");
+
+  const { data, status } = await destroyCustomization(
+    variantId,
+    customizationId as string
   );
 
   if (status !== 200) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { TabPanel } from "@reach/tabs";
 import { useLoaderData, useSubmit } from "react-router-dom";
 import { Customization } from "helpers/customTypes";
@@ -36,6 +36,21 @@ export default function Customizations() {
     submit(formData, { method: "post" });
   };
 
+  const onRemoveCustomization = (
+    event: MouseEvent<HTMLElement>,
+    id: string
+  ) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("action", "destroy");
+    formData.append("id", id);
+    submit(formData, { method: "post" });
+  };
+
+  const onCancelNewCustomization = () => {
+    setNewCustomization(undefined);
+  };
+
   return (
     <TabPanel as="section" className="relative items-center w-full">
       <div className="w-full flex justify-center my-4">
@@ -54,6 +69,7 @@ export default function Customizations() {
               key={customization.id}
               customization={customization}
               onSaveData={onEditCustomization}
+              onRemove={onRemoveCustomization}
             />
           ))}
           {newCustomization && (
@@ -61,6 +77,7 @@ export default function Customizations() {
               customization={newCustomization}
               onSaveData={onSaveCustomization}
               isNew
+              onRemove={onCancelNewCustomization}
             />
           )}
         </div>

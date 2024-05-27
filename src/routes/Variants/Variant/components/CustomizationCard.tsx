@@ -5,12 +5,14 @@ import Input from "components/Input";
 type Props = {
   customization: Customization;
   onSaveData: (data: Customization) => void;
+  onRemove?: (event: MouseEvent<HTMLElement>, id: string) => void;
   isNew?: boolean;
 };
 
 export default function CustomizationCard({
   customization,
   onSaveData,
+  onRemove,
   isNew = false,
 }: Props) {
   const [edit, setEdit] = useState(false);
@@ -49,19 +51,27 @@ export default function CustomizationCard({
   };
 
   return (
-    <div className="bg-white px-2 py-1 pr-14 rounded relative shadow">
-      <i
-        data-testid="variant-data_edit"
-        role="button"
-        title="editar"
+    <div className="bg-white px-2 py-1 pr-24 rounded relative shadow">
+      <button
         onClick={onEdit}
         className={
-          "absolute right-2 top-2 " +
+          "absolute right-9 top-2 " +
           "fa-solid fa-pen " +
           "text-gray-300 " +
           "hover:text-gray-500 active:text-gray-500"
         }
       />
+      {onRemove && !edit && (
+        <button
+          onClick={(event) => onRemove(event, `${customization.id}`)}
+          className={
+            "absolute right-2 top-2 " +
+            "fa-solid fa-circle-xmark " +
+            "text-gray-300 z-[1] " +
+            "hover:text-gray-500 active:text-gray-500"
+          }
+        />
+      )}
       {!edit && (
         <Fragment>
           <p className="font-bold">{customization.title}</p>
@@ -73,7 +83,7 @@ export default function CustomizationCard({
         <Fragment>
           <button
             className={
-              "absolute right-9 top-2 " +
+              "absolute right-2 top-2 " +
               "fa-solid fa-check " +
               "text-green-600 text-md " +
               "hover:text-green-700 active:text-green-700 " +
