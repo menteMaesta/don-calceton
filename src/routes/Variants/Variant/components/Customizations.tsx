@@ -15,12 +15,16 @@ export default function Customizations({ customizations = [] }: Props) {
         <Button className="!p-2 bg-slate-700">Nueva personalización</Button>
       </div>
       {customizations.length > 0 ? (
-        customizations?.map((customization) => (
-          <CustomizationCard
-            key={customization.id}
-            customization={customization}
-          />
-        ))
+        <div className="grid lg:grid-cols-2 gap-3">
+          {customizations?.map((customization) => (
+            <CustomizationCard
+              key={customization.id}
+              customization={customization}
+              onEditData={() => {}}
+              onCreateData={() => {}}
+            />
+          ))}
+        </div>
       ) : (
         <EmptyState name="personalizaciones" />
       )}

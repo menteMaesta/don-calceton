@@ -77,7 +77,7 @@ export interface OrderImage {
 }
 
 export type Customization = {
-  id: number;
+  id?: number;
   title: string;
   maxSize: number;
   minSize: number;

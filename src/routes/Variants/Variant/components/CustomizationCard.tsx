@@ -1,19 +1,53 @@
-import { useState, Fragment, MouseEvent } from "react";
+import { useState, Fragment, MouseEvent, ChangeEvent } from "react";
 import { Customization } from "helpers/customTypes";
 import Input from "components/Input";
 
 type Props = {
   customization: Customization;
+  onEditData: (data: Customization) => void;
+  onCreateData: (data: Customization) => void;
 };
 
-export default function CustomizationCard({ customization }: Props) {
+export default function CustomizationCard({
+  customization,
+  onEditData,
+  onCreateData,
+}: Props) {
   const [edit, setEdit] = useState(false);
+  const [data, setData] = useState<Customization>(customization);
+  const [valid, setValid] = useState(true);
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setData(
+      (prev) =>
+        ({ ...prev, [event.target.name]: event.target.value } as Customization)
+    );
+    if (event.target.name === "minSize" || event.target.name === "maxSize") {
+      if (event.target.value.includes("-") || event.target.value.length === 0) {
+        setValid(false);
+      } else {
+        setValid(true);
+      }
+    }
+  };
+
   const onEdit = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     setEdit((prev) => !prev);
   };
+
+  const onSave = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    setEdit(false);
+    if (data.id) {
+      onEditData(data);
+    } else {
+      onCreateData(data);
+    }
+  };
+
   return (
-    <div className="bg-white px-2 py-1 pr-14 mb-3 rounded relative">
+    <div className="bg-white px-2 py-1 pr-14 rounded relative shadow">
       <i
         data-testid="variant-data_edit"
         role="button"
@@ -35,11 +69,22 @@ export default function CustomizationCard({ customization }: Props) {
       )}
       {edit && (
         <Fragment>
+          <button
+            className={
+              "absolute right-9 top-2 " +
+              "fa-solid fa-check " +
+              "text-green-600 text-md " +
+              "hover:text-green-700 active:text-green-700 " +
+              "disabled:text-gray-300 disabled:cursor-not-allowed"
+            }
+            onClick={onSave}
+            disabled={!valid || data.title.length === 0}
+          />
           <input
             name="title"
             placeholder={customization.title}
-            value={customization.title}
-            onChange={() => {}}
+            value={data.title}
+            onChange={onChange}
             className={
               "rounded " +
               "font-bold " +
@@ -58,8 +103,9 @@ export default function CustomizationCard({ customization }: Props) {
               "sm:ml-2 !w-fit mb-1 " +
               "pt-0 pb-0"
             }
-            value={customization.minSize}
-            onChange={() => {}}
+            value={data.minSize}
+            placeholder={`${customization.minSize}`}
+            onChange={onChange}
             labelClassName="flex flex-col sm:flex-row"
           />
           <Input
@@ -72,8 +118,9 @@ export default function CustomizationCard({ customization }: Props) {
               "sm:ml-2 !w-fit " +
               "pt-0 pb-0"
             }
-            value={customization.maxSize}
-            onChange={() => {}}
+            value={data.maxSize}
+            placeholder={`${customization.maxSize}`}
+            onChange={onChange}
             labelClassName="flex flex-col sm:flex-row"
           />
         </Fragment>
