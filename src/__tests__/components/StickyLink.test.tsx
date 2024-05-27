@@ -20,7 +20,6 @@ describe("StickyLink", () => {
       "w-36",
       "rounded",
       "mt-4",
-      "mr-2",
       "py-2",
       "z-10",
       "text-center",
