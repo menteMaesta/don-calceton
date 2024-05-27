@@ -1,21 +1,27 @@
-import { useState, Fragment, MouseEvent, ChangeEvent } from "react";
+import { useState, useEffect, Fragment, MouseEvent, ChangeEvent } from "react";
 import { Customization } from "helpers/customTypes";
 import Input from "components/Input";
 
 type Props = {
   customization: Customization;
-  onEditData: (data: Customization) => void;
-  onCreateData: (data: Customization) => void;
+  onSaveData: (data: Customization) => void;
+  isNew?: boolean;
 };
 
 export default function CustomizationCard({
   customization,
-  onEditData,
-  onCreateData,
+  onSaveData,
+  isNew = false,
 }: Props) {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState<Customization>(customization);
   const [valid, setValid] = useState(true);
+
+  useEffect(() => {
+    if (isNew) {
+      setEdit(true);
+    }
+  }, [isNew]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setData(
@@ -39,11 +45,7 @@ export default function CustomizationCard({
   const onSave = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     setEdit(false);
-    if (data.id) {
-      onEditData(data);
-    } else {
-      onCreateData(data);
-    }
+    onSaveData(data);
   };
 
   return (
@@ -82,7 +84,7 @@ export default function CustomizationCard({
           />
           <input
             name="title"
-            placeholder={customization.title}
+            placeholder={customization.title || "Esquina superior izquierda"}
             value={data.title}
             onChange={onChange}
             className={

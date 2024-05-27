@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import classnames from "classnames";
-import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
+import {
+  useLoaderData,
+  useActionData,
+  useSubmit,
+  Outlet,
+} from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import { Tabs, TabList, Tab, TabPanels } from "@reach/tabs";
 import { Variant, ErrorType, VariantBase } from "helpers/customTypes";
 import VariantData from "components/VariantData";
 import VariantImages from "routes/Variants/Variant/components/VaraintImages";
-import Customizations from "./components/Customizations";
 
 export default function VariantDetails() {
   const variant = useLoaderData() as Variant;
@@ -41,7 +45,7 @@ export default function VariantDetails() {
 
         <TabPanels>
           <VariantImages variant={variant} />
-          <Customizations customizations={variant.customizations} />
+          <Outlet />
         </TabPanels>
       </Tabs>
     </div>

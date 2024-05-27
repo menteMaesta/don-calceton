@@ -30,3 +30,9 @@ export const EMPTY_ORDER_ITEM = {
 } as const;
 
 export const KB = 1024;
+
+export const EMPTY_CUSTOMIZATION = {
+  title: "",
+  maxSize: 0,
+  minSize: 0,
+};

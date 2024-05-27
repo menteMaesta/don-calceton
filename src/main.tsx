@@ -33,6 +33,10 @@ import Varaint from "routes/Variants/Variant/Variant";
 import { variantActions } from "routes/Variants/actions";
 import { fetchVariant } from "routes/Variants/loader";
 
+import Customizations from "routes/Variants/Variant/components/Customizations";
+import { getCustomizations } from "routes/Variants/Variant/components/loader";
+import { customizationActions } from "routes/Variants/Variant/components/actions";
+
 import Store from "routes/Store/Store";
 import VariantList from "routes/Store/VariantList/VariantList";
 import Cart from "routes/Store/Cart/Cart";
@@ -86,6 +90,14 @@ openDatabase()
             element: <Varaint />,
             loader: fetchVariant,
             action: variantActions,
+            children: [
+              {
+                index: true,
+                element: <Customizations />,
+                loader: getCustomizations,
+                action: customizationActions,
+              },
+            ],
           },
         ],
       },
