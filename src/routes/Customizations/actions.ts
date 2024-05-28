@@ -3,7 +3,7 @@ import {
   storeCustomization,
   putCustomization,
   destroyCustomization,
-} from "routes/Variants/Variant/components/api";
+} from "src/routes/Customizations/api";
 import { Customization } from "helpers/customTypes";
 
 export const customizationActions = async ({

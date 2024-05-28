@@ -33,9 +33,9 @@ import Varaint from "routes/Variants/Variant/Variant";
 import { variantActions } from "routes/Variants/actions";
 import { fetchVariant } from "routes/Variants/loader";
 
-import Customizations from "routes/Variants/Variant/components/Customizations";
-import { getCustomizations } from "routes/Variants/Variant/components/loader";
-import { customizationActions } from "routes/Variants/Variant/components/actions";
+import Customizations from "routes/Customizations/Customizations";
+import { getCustomizations } from "routes/Customizations/loader";
+import { customizationActions } from "routes/Customizations/actions";
 
 import Store from "routes/Store/Store";
 import VariantList from "routes/Store/VariantList/VariantList";

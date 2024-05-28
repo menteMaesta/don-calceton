@@ -1,12 +1,11 @@
-import { useState, useEffect, MouseEvent } from "react";
-import { TabPanel } from "@reach/tabs";
+import { useState, useEffect, MouseEvent, Fragment } from "react";
 import { useSnackbar } from "react-simple-snackbar";
 import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
 import { Customization, ErrorType } from "helpers/customTypes";
 import { EMPTY_CUSTOMIZATION } from "helpers/constants";
-import CustomizationCard from "routes/Variants/Variant/components/CustomizationCard";
-import EmptyState from "src/components/EmptyState";
-import Button from "src/components/Button";
+import CustomizationCard from "routes/Customizations/CustomizationCard";
+import EmptyState from "components/EmptyState";
+import Button from "components/Button";
 
 export default function Customizations() {
   const submit = useSubmit();
@@ -62,7 +61,7 @@ export default function Customizations() {
   };
 
   return (
-    <TabPanel as="section" className="relative items-center w-full">
+    <Fragment>
       <div className="w-full flex justify-center my-4">
         <Button
           className="!p-2 bg-slate-700"
@@ -94,6 +93,6 @@ export default function Customizations() {
       ) : (
         <EmptyState name="personalizaciones" />
       )}
-    </TabPanel>
+    </Fragment>
   );
 }
