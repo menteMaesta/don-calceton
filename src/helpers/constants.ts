@@ -8,6 +8,7 @@ export const ROUTES = {
   EDIT_PRODUCT: "/admin/products/:productId/edit",
   NEW_VARIANT: "/admin/products/:productId/variant/new",
   VARIANT: "/variant/:variantId",
+  CUSTOMIZATIONS: "/customizations",
   FORGOT_PASSWORD: "/forgot_password",
   GO_TO_MAIL: "/to_mail",
   CHANGE_PASSWORD: "/:forgotToken/change_password",

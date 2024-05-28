@@ -7,6 +7,7 @@ import { TabPanel } from "@reach/tabs";
 import { Variant } from "helpers/customTypes";
 import DefaultPic from "assets/default-pic.png";
 import ImageCard from "src/components/ImageCard";
+import EmptyState from "src/components/EmptyState";
 import VariantImageUploader from "src/components/VariantImageUploader";
 
 type Props = {
@@ -61,31 +62,35 @@ export default function VariantImages({ variant }: Props) {
           labelProps={{ className: "sticky top-12 z-10 text-white" }}
         />
       </div>
-      <div
-        className={classnames(
-          "grid grid-cols-1 gap-4",
-          "sm:grid-cols-3 w-full",
-          "pt-7 px-4"
-        )}
-        data-testid="image-list"
-      >
-        {variant.images &&
-          variant.images.map((image) => (
-            <ImageCard
-              key={image.id}
-              onRemove={(event) => onRemove(event, `${image.id}`)}
-              image={{
-                id: image.id,
-                name: image.name,
-                src: image?.name
-                  ? `${import.meta.env.VITE_BASE_URL}/${image?.name}`
-                  : DefaultPic,
-              }}
-              className={classnames("max-h-64", "flex justify-center")}
-              imageClassName="object-contain max-h-64"
-            />
-          ))}
-      </div>
+      {variant.images.length > 0 ? (
+        <div
+          className={classnames(
+            "grid grid-cols-1 gap-4",
+            "sm:grid-cols-3 w-full",
+            "pt-7 px-4"
+          )}
+          data-testid="image-list"
+        >
+          {variant.images &&
+            variant.images.map((image) => (
+              <ImageCard
+                key={image.id}
+                onRemove={(event) => onRemove(event, `${image.id}`)}
+                image={{
+                  id: image.id,
+                  name: image.name,
+                  src: image?.name
+                    ? `${import.meta.env.VITE_BASE_URL}/${image?.name}`
+                    : DefaultPic,
+                }}
+                className={classnames("max-h-64", "flex justify-center")}
+                imageClassName="object-contain max-h-64"
+              />
+            ))}
+        </div>
+      ) : (
+        <EmptyState name="imagenes" />
+      )}
     </TabPanel>
   );
 }

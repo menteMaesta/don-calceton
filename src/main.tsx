@@ -92,7 +92,7 @@ openDatabase()
             action: variantActions,
             children: [
               {
-                index: true,
+                path: `${ROUTES.PRODUCT}${ROUTES.VARIANT}${ROUTES.CUSTOMIZATIONS}`,
                 element: <Customizations />,
                 loader: getCustomizations,
                 action: customizationActions,
