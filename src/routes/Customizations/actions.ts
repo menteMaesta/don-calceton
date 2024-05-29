@@ -11,21 +11,21 @@ export const customizationActions = async ({
   request,
 }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const variantId = params.variantId || "";
+  const productId = params.productId || "";
   const action = formData.get("action");
   switch (action) {
     case "store":
-      return newCustomization(formData, variantId);
+      return newCustomization(formData, productId);
     case "update":
-      return updateCustomization(formData, variantId);
+      return updateCustomization(formData, productId);
     case "destroy":
-      return deleteCustomization(formData, variantId);
+      return deleteCustomization(formData, productId);
     default:
       break;
   }
 };
 
-const newCustomization = async (formData: FormData, variantId: string) => {
+const newCustomization = async (formData: FormData, productId: string) => {
   const newCustomization = {
     title: formData.get("title"),
     minSize: Number(formData.get("minSize")),
@@ -33,7 +33,7 @@ const newCustomization = async (formData: FormData, variantId: string) => {
   } as Customization;
 
   const { data, status } = await storeCustomization(
-    variantId,
+    productId,
     newCustomization
   );
   if (status !== 200) {
@@ -43,7 +43,7 @@ const newCustomization = async (formData: FormData, variantId: string) => {
   }
 };
 
-const updateCustomization = async (formData: FormData, variantId: string) => {
+const updateCustomization = async (formData: FormData, productId: string) => {
   const updatedCustomization = {
     id: Number(formData.get("id")),
     title: formData.get("title"),
@@ -52,7 +52,7 @@ const updateCustomization = async (formData: FormData, variantId: string) => {
   } as Customization;
 
   const { data, status } = await putCustomization(
-    variantId,
+    productId,
     updatedCustomization
   );
 
@@ -63,11 +63,11 @@ const updateCustomization = async (formData: FormData, variantId: string) => {
   }
 };
 
-const deleteCustomization = async (formData: FormData, variantId: string) => {
+const deleteCustomization = async (formData: FormData, productId: string) => {
   const customizationId = formData.get("id");
 
   const { data, status } = await destroyCustomization(
-    variantId,
+    productId,
     customizationId as string
   );
 

@@ -1,22 +1,36 @@
-import { MouseEvent, ChangeEvent } from "react";
+import { useEffect, MouseEvent, ChangeEvent } from "react";
 import classnames from "classnames";
 import imageCompression from "browser-image-compression";
-import { useSubmit } from "react-router-dom";
+import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
-import { TabPanel } from "@reach/tabs";
-import { Variant } from "helpers/customTypes";
+import { Variant, ErrorType, VariantBase } from "helpers/customTypes";
 import DefaultPic from "assets/default-pic.png";
-import ImageCard from "src/components/ImageCard";
-import EmptyState from "src/components/EmptyState";
-import VariantImageUploader from "src/components/VariantImageUploader";
+import VariantData from "components/VariantData";
+import VariantImageUploader from "components/VariantImageUploader";
+import ImageCard from "components/ImageCard";
+import EmptyState from "components/EmptyState";
 
-type Props = {
-  variant: Variant;
-};
-
-export default function VariantImages({ variant }: Props) {
+export default function VariantDetails() {
+  const variant = useLoaderData() as Variant;
   const submit = useSubmit();
   const [openSnackbar] = useSnackbar();
+  const actionData = useActionData() as ErrorType;
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
+
+  const onEdit = (data: VariantBase) => {
+    const formData = new FormData();
+    formData.append("variant", "editVariant");
+    formData.append("productId", `${variant.productId}`);
+    formData.append("variantId", `${variant.id}`);
+    formData.append("data", JSON.stringify(data));
+    submit(formData, { method: "post" });
+  };
 
   const onRemove = (event: MouseEvent<HTMLElement>, imageId: string) => {
     event.preventDefault();
@@ -54,7 +68,8 @@ export default function VariantImages({ variant }: Props) {
   };
 
   return (
-    <TabPanel as="section">
+    <div className={classnames("w-full mt-14 px-4")} data-testid="variant-page">
+      <VariantData variant={variant} onEditData={onEdit} />
       <div className="w-full flex items-center justify-center">
         <VariantImageUploader
           onFileSelect={onFileSelect}
@@ -91,6 +106,6 @@ export default function VariantImages({ variant }: Props) {
       ) : (
         <EmptyState name="imagenes" />
       )}
-    </TabPanel>
+    </div>
   );
 }

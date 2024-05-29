@@ -29,7 +29,7 @@ import { productsActions } from "routes/Products/actions";
 import ProductDetails from "routes/Products/Product";
 
 import NewVariant from "routes/Variants/NewVariant";
-import Varaint from "routes/Variants/Variant/Variant";
+import Varaint from "routes/Variants/Variant";
 import { variantActions } from "routes/Variants/actions";
 import { fetchVariant } from "routes/Variants/loader";
 
@@ -73,6 +73,14 @@ openDatabase()
             loader: getProduct,
             action: productsActions,
             element: <ProductDetails />,
+            children: [
+              {
+                path: `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`,
+                element: <Customizations />,
+                loader: getCustomizations,
+                action: customizationActions,
+              },
+            ],
           },
           {
             path: ROUTES.EDIT_PRODUCT,
@@ -90,14 +98,6 @@ openDatabase()
             element: <Varaint />,
             loader: fetchVariant,
             action: variantActions,
-            children: [
-              {
-                path: `${ROUTES.PRODUCT}${ROUTES.VARIANT}${ROUTES.CUSTOMIZATIONS}`,
-                element: <Customizations />,
-                loader: getCustomizations,
-                action: customizationActions,
-              },
-            ],
           },
         ],
       },

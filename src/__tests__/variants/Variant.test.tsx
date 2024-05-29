@@ -3,9 +3,9 @@ import { render, waitFor } from "@testing-library/react";
 import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
-import Variant from "routes/Variants/Variant/Variant";
+import Variant from "routes/Variants/Variant";
 
-describe("VariantDetails", () => {
+describe("Variant", () => {
   const variant = {
     id: 2,
     name: "Playera roja",
@@ -41,7 +41,7 @@ describe("VariantDetails", () => {
       ],
     });
 
-    const { getByTestId, getByText, getByLabelText } = render(
+    const { getByTestId, getByLabelText } = render(
       <React.StrictMode>
         <SnackbarProvider>
           <RouterProvider router={router} />
@@ -51,14 +51,12 @@ describe("VariantDetails", () => {
 
     const variantPage = await waitFor(() => getByTestId("variant-page"));
     const variantDetails = getByTestId(`variant-data_${variant.id}`);
-    const sectionImages = getByText("Imagenes");
     const newImageButton = getByLabelText("Imagenes (PNG, JPG)");
     const imageList = getByTestId("image-list");
     const imageCard = getByTestId(`image-card_${variant.images[0].id}`);
 
     expect(variantPage).toBeInTheDocument();
     expect(variantDetails).toBeInTheDocument();
-    expect(sectionImages).toBeInTheDocument();
     expect(newImageButton).toBeInTheDocument();
 
     expect(imageList).toBeInTheDocument();

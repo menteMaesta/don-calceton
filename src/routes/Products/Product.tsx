@@ -1,11 +1,18 @@
 import { useEffect, useState, MouseEvent } from "react";
 import classnames from "classnames";
-import { useLoaderData, useSubmit, useActionData } from "react-router-dom";
+import {
+  useLoaderData,
+  useSubmit,
+  useActionData,
+  useNavigate,
+  useMatch,
+  Outlet,
+} from "react-router-dom";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
 import { Product, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import VariantCard from "components/VariantCard";
-import SectionDivider from "components/SectionDivider";
 import SearchBar from "components/SearchBar";
 import SticyLink from "components/StickyLink";
 import ProductData from "components/ProductData";
@@ -15,8 +22,14 @@ export default function ProductDetails() {
   const product = useLoaderData() as Product;
   const actionData = useActionData() as ErrorType & { id: string };
   const submit = useSubmit();
+  const navigate = useNavigate();
+  const variantsTab = useMatch(ROUTES.PRODUCT);
+  const customizationTab = useMatch(
+    `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`
+  );
   const [openSnackbar] = useSnackbar();
   const [variants, setVariants] = useState(product?.variants);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const onSearch = (search: string) => {
     if (search) {
@@ -38,6 +51,22 @@ export default function ProductDetails() {
     submit(formData, { method: "post" });
   };
 
+  const handleTabChange = (index: number) => {
+    setTabIndex(index);
+    switch (index) {
+      case 0:
+        navigate(ROUTES.PRODUCT.replace(":productId", `${product.id}`));
+        break;
+      case 1:
+        navigate(
+          `${ROUTES.PRODUCT.replace(":productId", `${product.id}`)}${
+            ROUTES.CUSTOMIZATIONS
+          }`
+        );
+        break;
+    }
+  };
+
   useEffect(() => {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
@@ -53,38 +82,57 @@ export default function ProductDetails() {
     }
   }, [actionData]);
 
+  useEffect(() => {
+    if (variantsTab) {
+      setTabIndex(0);
+    } else if (customizationTab) {
+      setTabIndex(1);
+    }
+  }, [customizationTab, variantsTab]);
+
   return (
     <div className={classnames("w-full mt-14 px-4")} data-testid="product-page">
       <ProductData product={product} />
 
-      <section className="relative flex flex-col items-center w-full">
-        <SectionDivider section="Variantes" />
-        <SearchBar onSearch={onSearch} placeholder="Buscar variantes" />
-        <SticyLink
-          to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
-          title="Nueva variante"
-        />
-        {variants && (
-          <div
-            className={classnames(
-              "grid grid-cols-1 gap-4",
-              "sm:grid-cols-2 md:grid-cols-3",
-              "lg:grid-cols-5 w-full",
-              "mt-7 px-4"
-            )}
-            data-testid="variant-list"
-          >
-            {variants.map((variant) => (
-              <VariantCard
-                key={variant.id}
-                variant={variant}
-                onRemove={handleRemove}
+      <Tabs className="w-full pt-4" index={tabIndex} onChange={handleTabChange}>
+        <TabList className="flex w-full border-b">
+          <Tab className="px-2 py-1 rounded-t">Variantes</Tab>
+          <Tab className="px-2 py-1 rounded-t">Opciones de personalización</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel as="section">
+            <div className="relative flex flex-col items-center w-full">
+              <SearchBar onSearch={onSearch} placeholder="Buscar variantes" />
+              <SticyLink
+                to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
+                title="Nueva variante"
               />
-            ))}
-          </div>
-        )}
-        {variants.length === 0 && <EmptyState name="variantes" />}
-      </section>
+              {variants && (
+                <div
+                  className={classnames(
+                    "grid grid-cols-1 gap-4",
+                    "sm:grid-cols-2 md:grid-cols-3",
+                    "lg:grid-cols-5 w-full",
+                    "mt-7 px-4"
+                  )}
+                  data-testid="variant-list"
+                >
+                  {variants.map((variant) => (
+                    <VariantCard
+                      key={variant.id}
+                      variant={variant}
+                      onRemove={handleRemove}
+                    />
+                  ))}
+                </div>
+              )}
+              {variants.length === 0 && <EmptyState name="variantes" />}
+            </div>
+          </TabPanel>
+          <Outlet />
+        </TabPanels>
+      </Tabs>
     </div>
   );
 }

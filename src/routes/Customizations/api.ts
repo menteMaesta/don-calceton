@@ -1,8 +1,8 @@
 import { Customization } from "helpers/customTypes";
-export async function fetchCustomizations(variantId: string) {
+export async function fetchCustomizations(productId: string) {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/variants/${variantId}/customizations`,
+    `${import.meta.env.VITE_BACKEND_URL}/products/${productId}/customizations`,
     {
       method: "GET",
       headers: {
@@ -16,12 +16,12 @@ export async function fetchCustomizations(variantId: string) {
 }
 
 export async function storeCustomization(
-  variantId: string,
+  productId: string,
   newCustomization: Customization
 ) {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/variants/${variantId}/customizations`,
+    `${import.meta.env.VITE_BACKEND_URL}/products/${productId}/customizations`,
     {
       method: "POST",
       headers: {
@@ -36,12 +36,12 @@ export async function storeCustomization(
 }
 
 export async function putCustomization(
-  variantId: string,
+  productId: string,
   updatedCustomization: Customization
 ) {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(
-    `${import.meta.env.VITE_BACKEND_URL}/variants/${variantId}/customizations/${
+    `${import.meta.env.VITE_BACKEND_URL}/products/${productId}/customizations/${
       updatedCustomization.id
     }`,
     {
@@ -58,14 +58,14 @@ export async function putCustomization(
 }
 
 export async function destroyCustomization(
-  variantId: string,
+  productId: string,
   customizationId: string
 ) {
   const token = localStorage.getItem("accessToken");
   const response = await fetch(
     `${
       import.meta.env.VITE_BACKEND_URL
-    }/variants/${variantId}/customizations/${customizationId}`,
+    }/products/${productId}/customizations/${customizationId}`,
     {
       method: "DELETE",
       headers: {
