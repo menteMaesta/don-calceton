@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import SnackbarProvider from "react-simple-snackbar";
 import "tailwindcss/tailwind.css";
 import ReactDOM from "react-dom/client";
@@ -7,76 +7,96 @@ import { ROUTES } from "helpers/constants";
 import { openDatabase } from "helpers/db";
 
 import { loginActions } from "routes/Login/actions";
-import Login from "routes/Login/Login";
-// import Register from "routes/Login/Register";
-// import RegisterAdmin from "routes/Login/RegisterAdmin";
-import ChangePassword from "routes/Login/ChangePassword";
-import ForgotPassword from "routes/Login/ForgotPassword";
-import GotoMail from "routes/Login/GoToMail";
-import MainGuest from "routes/Login/MainGuest";
-
 import { hasToken } from "routes/Dashboard/loader";
-import Dashboard from "routes/Dashboard/Dashboard";
-
 import ErrorPage from "./Error/Error";
-
-import Products from "routes/Products/Products";
-import EditProduct from "routes/Products/EditProduct";
 import { getProducts, getProduct } from "routes/Products/loader";
-
-import NewProduct from "routes/Products/NewProduct";
 import { productsActions } from "routes/Products/actions";
-import ProductDetails from "routes/Products/Product";
-
-import NewVariant from "routes/Variants/NewVariant";
-import Varaint from "routes/Variants/Variant";
 import { variantActions } from "routes/Variants/actions";
 import { fetchVariant } from "routes/Variants/loader";
-
-import Customizations from "routes/Customizations/Customizations";
 import { getCustomizations } from "routes/Customizations/loader";
 import { customizationActions } from "routes/Customizations/actions";
-
-import Store from "routes/Store/Store";
-import VariantList from "routes/Store/VariantList/VariantList";
-import Cart from "routes/Store/Cart/Cart";
-
 import {
   fetchStorefrontData,
   getCartItems,
   getAllCartItems,
 } from "routes/Store/VariantList/loader";
 import { storeActions } from "routes/Store/VariantList/actions";
+import SuspenseWrapper from "components/SuspenseWapper";
 
 openDatabase()
   .then(() => {
+    const Dashboard = lazy(() => import("routes/Dashboard/Dashboard"));
+    const Products = lazy(() => import("routes/Products/Products"));
+    const NewProduct = lazy(() => import("routes/Products/NewProduct"));
+    const ProductDetails = lazy(() => import("routes/Products/Product"));
+    const Customizations = lazy(
+      () => import("routes/Customizations/Customizations")
+    );
+    const EditProduct = lazy(() => import("routes/Products/EditProduct"));
+    const NewVariant = lazy(() => import("routes/Variants/NewVariant"));
+    const Varaint = lazy(() => import("routes/Variants/Variant"));
+
+    const MainGuest = lazy(() => import("routes/Login/MainGuest"));
+    const Login = lazy(() => import("routes/Login/Login"));
+    // const Register = lazy(() => import("routes/Login/Register"));
+    // const RegisterAdmin = lazy(() => import("routes/Login/RegisterAdmin"));
+    const ChangePassword = lazy(() => import("routes/Login/ChangePassword"));
+    const ForgotPassword = lazy(() => import("routes/Login/ForgotPassword"));
+    const GotoMail = lazy(() => import("routes/Login/GoToMail"));
+
+    const Store = lazy(() => import("routes/Store/Store"));
+    const VariantList = lazy(
+      () => import("routes/Store/VariantList/VariantList")
+    );
+    const Cart = lazy(() => import("routes/Store/Cart/Cart"));
+
     const router = createBrowserRouter([
       {
         path: ROUTES.DASHBOARD,
-        element: <Dashboard />,
+        element: (
+          <SuspenseWrapper>
+            <Dashboard />
+          </SuspenseWrapper>
+        ),
         errorElement: <ErrorPage />,
         loader: hasToken,
         children: [
           {
             index: true,
-            element: <Products />,
+            element: (
+              <SuspenseWrapper>
+                <Products />
+              </SuspenseWrapper>
+            ),
             loader: getProducts,
             action: productsActions,
           },
           {
             path: ROUTES.NEW_PRODUCT,
-            element: <NewProduct />,
+            element: (
+              <SuspenseWrapper>
+                <NewProduct />
+              </SuspenseWrapper>
+            ),
             action: productsActions,
           },
           {
             path: ROUTES.PRODUCT,
             loader: getProduct,
             action: productsActions,
-            element: <ProductDetails />,
+            element: (
+              <SuspenseWrapper>
+                <ProductDetails />
+              </SuspenseWrapper>
+            ),
             children: [
               {
                 path: `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`,
-                element: <Customizations />,
+                element: (
+                  <SuspenseWrapper loaderClassName="!h-64">
+                    <Customizations />
+                  </SuspenseWrapper>
+                ),
                 loader: getCustomizations,
                 action: customizationActions,
               },
@@ -86,78 +106,130 @@ openDatabase()
             path: ROUTES.EDIT_PRODUCT,
             loader: getProduct,
             action: productsActions,
-            element: <EditProduct />,
+            element: (
+              <SuspenseWrapper>
+                <EditProduct />
+              </SuspenseWrapper>
+            ),
           },
           {
             path: ROUTES.NEW_VARIANT,
-            element: <NewVariant />,
+            element: (
+              <SuspenseWrapper>
+                <NewVariant />
+              </SuspenseWrapper>
+            ),
             action: variantActions,
           },
           {
             path: `${ROUTES.PRODUCT}${ROUTES.VARIANT}`,
-            element: <Varaint />,
+            element: (
+              <SuspenseWrapper>
+                <Varaint />
+              </SuspenseWrapper>
+            ),
             loader: fetchVariant,
             action: variantActions,
           },
         ],
       },
       {
-        element: <MainGuest />,
+        element: (
+          <SuspenseWrapper>
+            <MainGuest />
+          </SuspenseWrapper>
+        ),
         errorElement: <ErrorPage />,
         children: [
           {
             path: ROUTES.LOGIN,
-            element: <Login />,
+            element: (
+              <SuspenseWrapper>
+                <Login />
+              </SuspenseWrapper>
+            ),
             errorElement: <ErrorPage />,
             action: loginActions,
             index: true,
           },
           // {
           //   path: ROUTES.REGISTER,
-          //   element: <Register />,
+          //   element: (
+          //     <SuspenseWrapper>
+          //       <Register />
+          //     </SuspenseWrapper>
+          //   ),
           //   errorElement: <ErrorPage />,
           //   action: loginActions,
           // },
           // {
           //   path: ROUTES.REGISTER_ADMIN,
-          //   element: <RegisterAdmin />,
+          //   element: (
+          //     <SuspenseWrapper>
+          //       <RegisterAdmin />
+          //     </SuspenseWrapper>
+          //   ),
           //   errorElement: <ErrorPage />,
           //   action: loginActions,
           // },
           {
             path: ROUTES.FORGOT_PASSWORD,
-            element: <ForgotPassword />,
+            element: (
+              <SuspenseWrapper>
+                <ForgotPassword />
+              </SuspenseWrapper>
+            ),
             errorElement: <ErrorPage />,
             action: loginActions,
           },
           {
             path: ROUTES.CHANGE_PASSWORD,
-            element: <ChangePassword />,
+            element: (
+              <SuspenseWrapper>
+                <ChangePassword />
+              </SuspenseWrapper>
+            ),
             errorElement: <ErrorPage />,
             action: loginActions,
           },
           {
             path: ROUTES.GO_TO_MAIL,
-            element: <GotoMail />,
+            element: (
+              <SuspenseWrapper>
+                <GotoMail />
+              </SuspenseWrapper>
+            ),
             errorElement: <ErrorPage />,
           },
         ],
       },
       {
         path: ROUTES.STORE,
-        element: <Store />,
+        element: (
+          <SuspenseWrapper>
+            <Store />
+          </SuspenseWrapper>
+        ),
         errorElement: <ErrorPage />,
         loader: getCartItems,
         children: [
           {
             index: true,
-            element: <VariantList />,
+            element: (
+              <SuspenseWrapper>
+                <VariantList />
+              </SuspenseWrapper>
+            ),
             loader: fetchStorefrontData,
             action: storeActions,
           },
           {
             path: ROUTES.CART,
-            element: <Cart />,
+            element: (
+              <SuspenseWrapper>
+                <Cart />
+              </SuspenseWrapper>
+            ),
             loader: getAllCartItems,
             action: storeActions,
           },
