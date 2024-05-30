@@ -5,13 +5,13 @@ import Customizations from "routes/Customizations/Customizations";
 import { ROUTES } from "helpers/constants";
 
 describe("Customizations", () => {
+  const customization = {
+    id: 1,
+    title: "Al frente",
+    maxSize: 20,
+    minSize: 0,
+  };
   test("renders Customizations component", async () => {
-    const customization = {
-      id: 1,
-      title: "Al frente",
-      maxSize: 20,
-      minSize: 0,
-    };
     const routes = [
       {
         path: `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`,
@@ -44,12 +44,6 @@ describe("Customizations", () => {
   });
 
   test("renders CustomizationCard component", async () => {
-    const customization = {
-      id: 1,
-      title: "Al frente",
-      maxSize: 20,
-      minSize: 0,
-    };
     const routes = [
       {
         path: `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`,
@@ -75,12 +69,6 @@ describe("Customizations", () => {
   });
 
   test("renders new CustomizationCard component", async () => {
-    const customization = {
-      id: 1,
-      title: "Al frente",
-      maxSize: 20,
-      minSize: 0,
-    };
     const routes = [
       {
         path: `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`,

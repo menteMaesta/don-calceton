@@ -94,14 +94,26 @@ export default function ProductDetails() {
     <div className={classnames("w-full mt-14 px-4")} data-testid="product-page">
       <ProductData product={product} />
 
-      <Tabs className="w-full pt-4" index={tabIndex} onChange={handleTabChange}>
+      <Tabs
+        className="w-full pt-4"
+        index={tabIndex}
+        onChange={handleTabChange}
+        data-testid="product_tabs"
+      >
         <TabList className="flex w-full border-b">
-          <Tab className="px-2 py-1 rounded-t">Variantes</Tab>
-          <Tab className="px-2 py-1 rounded-t">Opciones de personalización</Tab>
+          <Tab className="px-2 py-1 rounded-t" data-testid="variant_tab-header">
+            Variantes
+          </Tab>
+          <Tab
+            className="px-2 py-1 rounded-t"
+            data-testid="customization_tab-header"
+          >
+            Opciones de personalización
+          </Tab>
         </TabList>
 
         <TabPanels>
-          <TabPanel as="section">
+          <TabPanel as="section" data-testid="variant_tab-panel">
             <div className="relative flex flex-col items-center w-full">
               <SearchBar onSearch={onSearch} placeholder="Buscar variantes" />
               <SticyLink
@@ -130,7 +142,7 @@ export default function ProductDetails() {
               {variants.length === 0 && <EmptyState name="variantes" />}
             </div>
           </TabPanel>
-          <TabPanel as="section">
+          <TabPanel as="section" data-testid="customization_tab-panel">
             <Outlet />
           </TabPanel>
         </TabPanels>
