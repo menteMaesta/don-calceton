@@ -33,8 +33,10 @@ export default function CustomizationDataEdit({
         )}
         onClick={onSave}
         disabled={!valid || data.title.length === 0}
+        data-testid={`save-customization_${customization.id || ""}`}
       />
       <input
+        data-testid={`title-edit_${customization.id || ""}`}
         name="title"
         placeholder={customization.title || "Esquina superior izquierda"}
         value={data.title}
@@ -48,6 +50,7 @@ export default function CustomizationDataEdit({
         }
       />
       <Input
+        data-testid={`min-size-edit_${customization.id || ""}`}
         label="Imagen min:"
         type="number"
         name="minSize"
@@ -63,6 +66,7 @@ export default function CustomizationDataEdit({
         labelClassName="flex flex-col sm:flex-row"
       />
       <Input
+        data-testid={`max-size-edit_${customization.id || ""}`}
         label="Imagen max:"
         type="number"
         name="maxSize"

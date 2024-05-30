@@ -46,14 +46,24 @@ export default function CustomizationCard({
 
   const onSave = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
+    if (
+      data.title !== customization.title ||
+      data.minSize !== customization.minSize ||
+      data.maxSize !== customization.maxSize
+    ) {
+      onSaveData(data);
+    }
     setEdit(false);
-    onSaveData(data);
   };
 
   return (
-    <div className="bg-white px-2 py-1 pr-24 rounded relative shadow">
+    <div
+      className="bg-white px-2 py-1 pr-24 rounded relative shadow"
+      data-testid={`customization_card-${customization.id || ""}`}
+    >
       {!isNew && (
         <button
+          data-testid="edit-customization"
           onClick={onEdit}
           className={
             "absolute right-9 top-2 " +
@@ -65,6 +75,7 @@ export default function CustomizationCard({
       )}
       {onRemove && (!edit || isNew) && (
         <button
+          data-testid="remove-customization"
           onClick={(event) => onRemove(event, `${customization.id}`)}
           className={
             "absolute right-2 top-2 " +
@@ -76,9 +87,18 @@ export default function CustomizationCard({
       )}
       {!edit && (
         <Fragment>
-          <p className="font-bold">{customization.title}</p>
-          <p>Imagen min: {customization.minSize} cm</p>
-          <p>Imagen max: {customization.maxSize} cm</p>
+          <p
+            className="font-bold"
+            data-testid={`title-${customization.id || ""}`}
+          >
+            {customization.title}
+          </p>
+          <p data-testid={`min-size-${customization.id || ""}`}>
+            Imagen min: {customization.minSize} cm
+          </p>
+          <p data-testid={`max-size-${customization.id || ""}`}>
+            Imagen max: {customization.maxSize} cm
+          </p>
         </Fragment>
       )}
       {edit && (
