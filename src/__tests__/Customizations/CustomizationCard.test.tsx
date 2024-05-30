@@ -1,4 +1,4 @@
-import { render, fireEvent, within } from "@testing-library/react";
+import { render, fireEvent, within, act } from "@testing-library/react";
 import CustomizationCard from "routes/Customizations/CustomizationCard";
 
 describe("CustomizationCard", () => {
@@ -23,12 +23,14 @@ describe("CustomizationCard", () => {
 
     const card = getByTestId(`customization_card-${customization.id}`);
     const removeButton = within(card).getByTestId("remove-customization");
+    const editButton = within(card).getByTestId("edit-customization");
     const title = within(card).getByTestId(`title-${customization.id}`);
     const minSize = within(card).getByTestId(`min-size-${customization.id}`);
     const maxSize = within(card).getByTestId(`max-size-${customization.id}`);
 
     expect(card).toBeInTheDocument();
     expect(removeButton).toBeInTheDocument();
+    expect(editButton).toBeInTheDocument();
     expect(title).toHaveTextContent(customization.title);
     expect(minSize).toHaveTextContent(
       `Imagen min: ${customization.minSize} cm`
@@ -52,9 +54,35 @@ describe("CustomizationCard", () => {
     const editTitle = within(card).getByTestId(
       `title-edit_${customization.id}`
     );
+    const removeButton = within(card).getByTestId("remove-customization");
+    const editButton = within(card).queryByTestId("edit-customization");
 
     expect(card).toBeInTheDocument();
     expect(editTitle).toBeInTheDocument();
+    expect(removeButton).toBeInTheDocument();
+    expect(editButton).not.toBeInTheDocument();
+  });
+
+  test("renders edit mode correctly", () => {
+    const { getByTestId, queryByTestId } = render(
+      <CustomizationCard
+        customization={customization}
+        onSaveData={onSaveData}
+        onRemove={onRemove}
+      />
+    );
+
+    const card = getByTestId(`customization_card-${customization.id}`);
+    const editButton = within(card).getByTestId("edit-customization");
+
+    expect(
+      queryByTestId(`save-customization_${customization.id}`)
+    ).not.toBeInTheDocument();
+    expect(card).toBeInTheDocument();
+    act(() => fireEvent.click(editButton));
+    expect(
+      getByTestId(`save-customization_${customization.id}`)
+    ).toBeInTheDocument();
   });
 
   test("calls onSaveData when data is saved", () => {
