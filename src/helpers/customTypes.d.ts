@@ -76,11 +76,11 @@ export interface OrderImage {
   size: number;
 }
 
-export type Customization = {
-  id?: number;
+export interface Customization {
+  id: number;
   title: string;
   maxSize: number;
   minSize: number;
   updatedAt?: string;
   createdAt?: string;
-};
+}
