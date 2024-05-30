@@ -62,8 +62,12 @@ export default function Customizations() {
 
   return (
     <Fragment>
-      <div className="w-full flex justify-center my-4">
+      <div
+        className="w-full flex justify-center my-4"
+        data-testid="customizations_tab-content"
+      >
         <Button
+          data-testid="new-customization"
           className="!p-2 bg-slate-700"
           onClick={onNewCustomization}
           disabled={newCustomization !== undefined}
@@ -72,7 +76,10 @@ export default function Customizations() {
         </Button>
       </div>
       {customizations?.length > 0 || newCustomization !== undefined ? (
-        <div className="grid lg:grid-cols-2 gap-3">
+        <div
+          className="grid lg:grid-cols-2 gap-3"
+          data-testid="customizations_grid"
+        >
           {customizations?.map((customization) => (
             <CustomizationCard
               key={customization.id}
