@@ -1,4 +1,4 @@
-import { useEffect, useState, MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useState, MouseEvent } from "react";
 import classnames from "classnames";
 import {
   useLoaderData,
@@ -82,7 +82,7 @@ export default function ProductDetails() {
     }
   }, [actionData]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (variantsTab) {
       setTabIndex(0);
     } else if (customizationTab) {
@@ -130,7 +130,9 @@ export default function ProductDetails() {
               {variants.length === 0 && <EmptyState name="variantes" />}
             </div>
           </TabPanel>
-          <Outlet />
+          <TabPanel as="section">
+            <Outlet />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </div>
