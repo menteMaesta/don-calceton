@@ -1,7 +1,8 @@
 import { MouseEvent } from "react";
 import { useLoaderData, useSubmit } from "react-router-dom";
 import { CartItemType } from "helpers/customTypes";
-import CartItem from "src/storeComponents/CartItem";
+import CartItem from "storeComponents/CartItem";
+import EmptyState from "components/EmptyState";
 
 export default function Cart() {
   const { cart, totalPrice } = useLoaderData() as {
@@ -27,19 +28,23 @@ export default function Cart() {
         <i className={"fa-solid fa-cart-shopping " + "text-xl " + "mr-2"} />
         Precio total $<span>{totalPrice}</span>
       </p>
-      <div
-        data-testid="cart_list"
-        className={
-          "mt-8 " +
-          "grid grid-cols-1 gap-4 " +
-          "sm:grid-cols-1 md:grid-cols-2 " +
-          "lg:grid-cols-3 w-full"
-        }
-      >
-        {cart.map((item) => (
-          <CartItem key={item.id} item={item} onRemove={onRemoveFromCart} />
-        ))}
-      </div>
+      {cart.length > 0 ? (
+        <div
+          data-testid="cart_list"
+          className={
+            "mt-8 " +
+            "grid grid-cols-1 gap-4 " +
+            "sm:grid-cols-1 md:grid-cols-2 " +
+            "lg:grid-cols-3 w-full"
+          }
+        >
+          {cart.map((item) => (
+            <CartItem key={item.id} item={item} onRemove={onRemoveFromCart} />
+          ))}
+        </div>
+      ) : (
+        <EmptyState name="productos" />
+      )}
     </div>
   );
 }
