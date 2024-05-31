@@ -69,4 +69,5 @@ export const es = {
   search: "Buscar",
   stock: "stock:",
   imagesPngJpg: "Imagenes (PNG, JPG)",
+  filterByProduct: "Filtrar por producto",
 };

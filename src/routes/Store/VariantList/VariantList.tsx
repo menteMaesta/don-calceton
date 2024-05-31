@@ -5,6 +5,7 @@ import classnames from "classnames";
 import EmptyState from "components/EmptyState";
 import VariantItem from "storeComponents/VariantItem";
 import { VariantListItem, Option } from "helpers/customTypes";
+import { es } from "helpers/strings";
 
 export default function VariantList() {
   const submit = useSubmit();
@@ -60,7 +61,8 @@ export default function VariantList() {
             minWidth: "20rem",
           }),
         }}
-        placeholder="Filtrar por producto"
+        placeholder={es.filterByProduct}
+        aria-label={es.filterByProduct}
       />
       {filteredVariants && filteredVariants.length > 0 ? (
         <div
@@ -84,7 +86,7 @@ export default function VariantList() {
             ))}
         </div>
       ) : (
-        <EmptyState name="variantes" />
+        <EmptyState name={es.variants.name} />
       )}
     </div>
   );

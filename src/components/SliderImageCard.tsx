@@ -42,6 +42,7 @@ export default function SliderImageCard({
             "hover:text-slate-900 hover:text-lg"
           }
           data-testid="prev-image_button"
+          aria-label="imagen anterior"
         >
           <i className="fa-solid fa-angle-left" />
         </button>
@@ -73,6 +74,7 @@ export default function SliderImageCard({
             "hover:text-slate-900 hover:text-lg"
           }
           data-testid="next-image_button"
+          aria-label="imagen siguiente"
         >
           <i className="fa-solid fa-angle-right" />
         </button>

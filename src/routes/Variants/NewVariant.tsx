@@ -65,6 +65,7 @@ export default function NewVariant() {
       maxSizeMB: 1,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
+      fileType: "image/webp",
     };
 
     formData.append("data", JSON.stringify(data));
