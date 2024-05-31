@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { Product } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 
 type Props = {
   product: Product;
@@ -49,7 +50,7 @@ export default function ProductData({ product }: Props) {
             "rounded-full px-2"
           )}
         >
-          Precio base: ${product.price}
+          {`${es.products.basePrice}${product.price}`}
         </p>
         <p
           data-testid="product-data_wholesale-price"
@@ -59,7 +60,7 @@ export default function ProductData({ product }: Props) {
             "rounded-full px-2"
           )}
         >
-          Mayoreo: ${product.wholesalePrice}
+          {`${es.products.wholesalePrice}${product.wholesalePrice}`}
         </p>
       </div>
       <p
@@ -78,7 +79,7 @@ export default function ProductData({ product }: Props) {
         )}
         onClick={onShowHide}
       >
-        mas...
+        {es.products.more}
       </button>
     </main>
   );

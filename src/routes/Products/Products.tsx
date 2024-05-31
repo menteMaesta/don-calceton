@@ -8,6 +8,7 @@ import SticyLink from "components/StickyLink";
 import EmptyState from "components/EmptyState";
 import { ProductListItem, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 
 export default function Products() {
   const data = useLoaderData() as ProductListItem[];
@@ -52,8 +53,8 @@ export default function Products() {
 
   return (
     <div className="mt-11 flex flex-col items-center w-full">
-      <SearchBar onSearch={onSearch} placeholder="Buscar productos" />
-      <SticyLink to={ROUTES.NEW_PRODUCT} title="Nuevo producto" />
+      <SearchBar onSearch={onSearch} placeholder={es.products.search} />
+      <SticyLink to={ROUTES.NEW_PRODUCT} title={es.products.new} />
       <div
         className={classnames(
           "grid grid-cols-1 gap-4",
@@ -72,7 +73,7 @@ export default function Products() {
             />
           ))}
       </div>
-      {products.length === 0 && <EmptyState name="productos" />}
+      {products.length === 0 && <EmptyState name={es.products.name} />}
     </div>
   );
 }

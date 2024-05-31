@@ -12,6 +12,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
 import { Product, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 import VariantCard from "components/VariantCard";
 import SearchBar from "components/SearchBar";
 import SticyLink from "components/StickyLink";
@@ -102,13 +103,13 @@ export default function ProductDetails() {
       >
         <TabList className="flex w-full border-b">
           <Tab className="px-2 py-1 rounded-t" data-testid="variant_tab-header">
-            Variantes
+            {es.variants.name}
           </Tab>
           <Tab
             className="px-2 py-1 rounded-t"
             data-testid="customization_tab-header"
           >
-            Opciones de personalización
+            {es.variants.personalizationOptions}
           </Tab>
         </TabList>
 
@@ -118,7 +119,7 @@ export default function ProductDetails() {
               <SearchBar onSearch={onSearch} placeholder="Buscar variantes" />
               <SticyLink
                 to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
-                title="Nueva variante"
+                title={es.variants.new}
               />
               {variants && (
                 <div
@@ -139,7 +140,7 @@ export default function ProductDetails() {
                   ))}
                 </div>
               )}
-              {variants.length === 0 && <EmptyState name="variantes" />}
+              {variants.length === 0 && <EmptyState name={es.variants.name} />}
             </div>
           </TabPanel>
           <TabPanel as="section" data-testid="customization_tab-panel">

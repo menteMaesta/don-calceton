@@ -5,6 +5,7 @@ import classnames from "classnames";
 import Button from "components/Button";
 import PasswordInput from "components/PasswordInput";
 import { ErrorType } from "helpers/customTypes";
+import { es } from "helpers/strings";
 
 export default function ChangePassword() {
   const { forgotToken = "" } = useParams();
@@ -50,16 +51,16 @@ export default function ChangePassword() {
         className="text-3xl font-bold text-slate-600"
         data-testid="change-password_title"
       >
-        Cambio de contraseña
+        {es.changePassword.name}
       </p>
 
       <div className="flex flex-col mt-16 space-y-6">
         <PasswordInput
-          label="Nueva contraseña"
+          label={es.changePassword.newPassword}
           name="password"
           value={data.password}
           onChange={onChange}
-          placeholder="tu contraseña"
+          placeholder={es.login.passwordPlaceholder}
           data-testid="change-password_input"
         />
 
@@ -68,7 +69,7 @@ export default function ChangePassword() {
           name="confirm_password"
           value={data.confirm_password}
           onChange={onChange}
-          placeholder="tu contraseña"
+          placeholder={es.login.passwordPlaceholder}
           data-testid="change-password_confirm_input"
         />
 
@@ -82,7 +83,7 @@ export default function ChangePassword() {
           onClick={onSave}
           data-testid="change-password_submit"
         >
-          Guardar
+          {es.save}
         </Button>
       </div>
     </Fragment>

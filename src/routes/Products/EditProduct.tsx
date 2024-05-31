@@ -4,6 +4,7 @@ import { useSnackbar } from "react-simple-snackbar";
 import { Product, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import ProductForm from "components/ProductForm";
+import { es } from "helpers/strings";
 
 export default function EditProduct() {
   const actionData = useActionData() as ErrorType;
@@ -44,7 +45,9 @@ export default function EditProduct() {
 
   return (
     <div className="mt-11 w-full px-4" data-testid="edit-product_page">
-      <p className="mt-9 font-semibold text-center text-lg">Editar producto</p>
+      <p className="mt-9 font-semibold text-center text-lg">
+        {es.products.edit}
+      </p>
       <ProductForm
         data={data}
         onChange={onChange}

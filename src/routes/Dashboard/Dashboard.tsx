@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 
 export default function Dashboard() {
   return (
@@ -31,7 +32,7 @@ export default function Dashboard() {
               "ml-2"
             )}
           />
-          <p className="font-medium text-slate-700">Don Calcetón</p>
+          <p className="font-medium text-slate-700">{es.donCalceton}</p>
         </Link>
         <Link
           to={ROUTES.STORE}
@@ -44,7 +45,7 @@ export default function Dashboard() {
               "ml-2"
             )}
           />
-          <p className="font-medium text-slate-700">Tienda</p>
+          <p className="font-medium text-slate-700">{es.store}</p>
         </Link>
       </div>
 

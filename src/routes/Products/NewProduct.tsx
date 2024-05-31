@@ -4,6 +4,7 @@ import { useSnackbar } from "react-simple-snackbar";
 import { ProductBase, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import ProductForm from "components/ProductForm";
+import { es } from "helpers/strings";
 
 export default function NewProduct() {
   const actionData = useActionData() as ErrorType;
@@ -46,7 +47,7 @@ export default function NewProduct() {
         className="mt-9 font-semibold text-center text-lg"
         data-testid="product-form-title"
       >
-        Nuevo producto
+        {es.products.new}
       </p>
       <ProductForm
         data={data}

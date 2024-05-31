@@ -5,6 +5,7 @@ import classnames from "classnames";
 import imageCompression from "browser-image-compression";
 import { VariantBase, Blob, ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 import ImageCard from "components/ImageCard";
 import Button from "components/Button";
 import Input from "components/Input";
@@ -89,12 +90,14 @@ export default function NewVariant() {
 
   return (
     <div className="mt-11 w-full px-4" data-testid="new-variant_page">
-      <p className="mt-9 font-semibold text-center text-lg">Nueva variante</p>
+      <p className="mt-9 font-semibold text-center text-lg">
+        {es.variants.new}
+      </p>
       <div className="flex flex-col mt-14 space-y-6 items-center">
         <Input
-          label="Nombre"
+          label={es.name}
           name="name"
-          placeholder="Playera rosa"
+          placeholder={es.variants.namePlaceholder}
           value={data?.name || ""}
           onChange={onChange}
           labelClassName="w-full sm:w-3/6"
@@ -102,18 +105,18 @@ export default function NewVariant() {
         />
 
         <Input
-          label="Stock"
+          label={es.variants.stock}
           type="number"
           name="quantity"
           step="1"
-          placeholder="50"
+          placeholder={es.variants.stockPlaceholder}
           value={data?.quantity || ""}
           onChange={onChange}
           labelClassName="w-full sm:w-3/6"
           otherElements={
             valid ? undefined : (
               <p className={classnames("text-red-900", "text-sm pl-2")}>
-                "Solo se pueden guardar valores enteros"
+                {es.variants.onlyIntegers}
               </p>
             )
           }
@@ -148,11 +151,10 @@ export default function NewVariant() {
             }
             type="submit"
             name="variant"
-            value="create"
             onClick={onSave}
             data-testid="new-variant-submit_button"
           >
-            Guardar
+            {es.save}
           </Button>
           <Link
             to={`${ROUTES.PRODUCT.replace(":productId", productId)}`}
@@ -165,7 +167,7 @@ export default function NewVariant() {
             )}
             data-testid="new-variant-cancel_button"
           >
-            Cancelar
+            {es.cancel}
           </Link>
         </div>
       </div>

@@ -9,6 +9,7 @@ import VariantData from "components/VariantData";
 import VariantImageUploader from "components/VariantImageUploader";
 import ImageCard from "components/ImageCard";
 import EmptyState from "components/EmptyState";
+import { es } from "helpers/strings";
 
 export default function VariantDetails() {
   const variant = useLoaderData() as Variant;
@@ -104,7 +105,7 @@ export default function VariantDetails() {
             ))}
         </div>
       ) : (
-        <EmptyState name="imagenes" />
+        <EmptyState name={es.variants.images} />
       )}
     </div>
   );

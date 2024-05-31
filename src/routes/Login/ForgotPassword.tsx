@@ -5,6 +5,7 @@ import classnames from "classnames";
 import Button from "components/Button";
 import Input from "components/Input";
 import { ErrorType } from "helpers/customTypes";
+import { es } from "helpers/strings";
 
 export default function ForgotPassword() {
   const [data, setData] = useState({ email: "" });
@@ -36,7 +37,7 @@ export default function ForgotPassword() {
         className="text-2xl font-bold text-slate-600"
         data-testid="forgot-password_title"
       >
-        Olvidaste tu contraseña?
+        {es.changePassword.forgotPassword}
       </p>
       <p
         className={classnames(
@@ -46,17 +47,17 @@ export default function ForgotPassword() {
         )}
         data-testid="forgot-password_description"
       >
-        Escribe aquí tu correo y enviaremos un mensaje de actualización
+        {es.changePassword.writeEmail}
       </p>
 
       <Form className="flex flex-col mt-12 space-y-6" method="post">
         <Input
-          label="Correo"
+          label={es.login.email}
           type="email"
           name="email"
           value={data.email}
           onChange={onChangeEmail}
-          placeholder="calcetas@mail.com"
+          placeholder={es.login.emailPlaceholder}
         />
 
         <Button
@@ -66,7 +67,7 @@ export default function ForgotPassword() {
           value="forgot_password"
           data-testid="forgot-password_submit"
         >
-          Enviar
+          {es.send}
         </Button>
       </Form>
     </Fragment>

@@ -3,7 +3,7 @@ import EmptyState from "components/EmptyState";
 
 describe("EmptyState", () => {
   it("renders the empty state component with the provided name", () => {
-    const name = "Productos";
+    const name = "productos";
 
     const { container } = render(<EmptyState name={name} />);
 

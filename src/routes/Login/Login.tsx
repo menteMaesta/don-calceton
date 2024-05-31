@@ -7,6 +7,7 @@ import PasswordInput from "components/PasswordInput";
 import Input from "components/Input";
 import { ROUTES } from "helpers/constants";
 import { ErrorType } from "helpers/customTypes";
+import { es } from "helpers/strings";
 
 export default function Login() {
   const actionData = useActionData() as ErrorType;
@@ -40,24 +41,24 @@ export default function Login() {
           "mb-4 mt-24"
         )}
       />
-      <p className="text-3xl font-bold text-slate-600">Don Calcetón</p>
+      <p className="text-3xl font-bold text-slate-600">{es.donCalceton}</p>
 
       <Form className="flex flex-col mt-16 space-y-6" method="post">
         <Input
-          label="Correo"
+          label={es.login.email}
           type="email"
           name="email"
           value={data.email}
           onChange={onChangeEmail}
-          placeholder="calcetas@mail.com"
+          placeholder={es.login.emailPlaceholder}
         />
 
         <PasswordInput
-          label="Contraseña"
+          label={es.login.password}
           name="password"
           value={data.password}
           onChange={onChangePassword}
-          placeholder="tu contraseña"
+          placeholder={es.login.passwordPlaceholder}
         />
 
         <Link
@@ -68,7 +69,7 @@ export default function Login() {
             "hover:text-slate-800 active:text-slate-800"
           )}
         >
-          olvidaste tu contraseña?
+          {es.login.forgotPassword}
         </Link>
         <Button
           disabled={!data.email || !data.password}
@@ -76,7 +77,7 @@ export default function Login() {
           name="user"
           value="login"
         >
-          Entrar
+          {es.login.login}
         </Button>
       </Form>
     </Fragment>

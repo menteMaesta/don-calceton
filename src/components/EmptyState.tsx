@@ -14,7 +14,7 @@ export default function EmptyState({ name }: props) {
       data-testid="empty-state"
     >
       <i className="fa-solid fa-couch text-4xl" />
-      No hay {name}
+      No hay {name.toLowerCase()}
     </div>
   );
 }

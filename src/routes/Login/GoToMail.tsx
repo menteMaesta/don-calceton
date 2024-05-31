@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 
 export default function GotoMail() {
   return (
@@ -17,7 +18,7 @@ export default function GotoMail() {
         className="text-2xl font-bold text-slate-600"
         data-testid="to-mail_title"
       >
-        Listo!
+        {es.goToMail.title}
       </p>
       <p
         className={classnames(
@@ -27,8 +28,7 @@ export default function GotoMail() {
         )}
         data-testid="to-mail_description"
       >
-        En tu bandeja de correo te dejamos las instrucciones para restablecer tu
-        contraseña
+        {es.goToMail.description}
       </p>
       <Link
         to={ROUTES.LOGIN}
@@ -39,7 +39,7 @@ export default function GotoMail() {
         )}
         data-testid="to-mail_link"
       >
-        Ir al inicio
+        {es.goToMail.toBegining}
       </Link>
     </Fragment>
   );
