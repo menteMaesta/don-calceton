@@ -1,14 +1,22 @@
 export const es = {
   donCalceton: "Don Calcetón",
   store: "Tienda",
+  cart: "Carrito",
   products: {
     name: "productos",
     search: "Buscar productos",
     new: "Nuevo producto",
     edit: "Editar producto",
-    basePrice: "Precio base: $",
+    basePrice: "Precio base: ",
+    base: "Base: $",
     wholesalePrice: "Mayoreo: $",
+    wholesalePriceLabel: "Precio a mayoreo",
     more: "mas...",
+    namePlaceholder: "Playera",
+    pricePlaceholder: "150.30",
+    wholesalePricePlaceholder: "130",
+    description: "Descripción",
+    descriptionPlaceholder: "Playera de algodón",
   },
   variants: {
     name: "Variantes",
@@ -20,6 +28,14 @@ export const es = {
     stockPlaceholder: "50",
     onlyIntegers: "Solo se pueden guardar valores enteros",
   },
+  customizations: {
+    new: "Nueva personalización",
+    name: "personalizaciones",
+    imageMin: "Imagen min:",
+    imageMax: "Imagen max:",
+    cm: "cm",
+    titlePlaceholder: "Esquina superior izquierda",
+  },
   login: {
     email: "Correo",
     emailPlaceholder: "calcetas@mail.com",
@@ -27,6 +43,8 @@ export const es = {
     passwordPlaceholder: "tu contraseña",
     forgotPassword: "olvidaste tu contraseña?",
     login: "Entrar",
+    hidePassword: "Ocultar contraseña",
+    showPassword: "Mostrar contraseña",
   },
   changePassword: {
     name: "Cambio de contraseña",
@@ -46,4 +64,9 @@ export const es = {
   cancel: "Cancelar",
   save: "Guardar",
   send: "Enviar",
+  priceSymbol: "$",
+  mxn: "MXN",
+  search: "Buscar",
+  stock: "stock:",
+  imagesPngJpg: "Imágenes (PNG, JPG)",
 };

@@ -1,6 +1,7 @@
 import { Fragment, MouseEvent, ChangeEvent } from "react";
 import classnames from "classnames";
 import { Customization } from "helpers/customTypes";
+import { es } from "helpers/strings";
 import Input from "components/Input";
 
 type Props = {
@@ -38,7 +39,7 @@ export default function CustomizationDataEdit({
       <input
         data-testid={`title-edit_${customization.id || ""}`}
         name="title"
-        placeholder={customization.title || "Esquina superior izquierda"}
+        placeholder={customization.title || es.customizations.titlePlaceholder}
         value={data.title}
         onChange={onChange}
         className={
@@ -51,7 +52,7 @@ export default function CustomizationDataEdit({
       />
       <Input
         data-testid={`min-size-edit_${customization.id || ""}`}
-        label="Imagen min:"
+        label={es.customizations.imageMin}
         type="number"
         name="minSize"
         className={
@@ -67,7 +68,7 @@ export default function CustomizationDataEdit({
       />
       <Input
         data-testid={`max-size-edit_${customization.id || ""}`}
-        label="Imagen max:"
+        label={es.customizations.imageMax}
         type="number"
         name="maxSize"
         className={

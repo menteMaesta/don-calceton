@@ -1,6 +1,7 @@
 import { useState, MouseEvent, Fragment } from "react";
 import classnames from "classnames";
 import Input, { props as InputProps } from "components/Input";
+import { es } from "helpers/strings";
 
 export default function PasswordInput({
   className,
@@ -36,7 +37,7 @@ export default function PasswordInput({
                 "fa-eye-slash": show,
               }
             )}
-            title={show ? "Ocultar contraseña" : "Mostrar contraseña"}
+            title={show ? es.login.hidePassword : es.login.showPassword}
             onClick={handleShow}
           />
           {otherElements && otherElements}

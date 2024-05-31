@@ -1,11 +1,15 @@
 import { ChangeEvent } from "react";
 import classnames from "classnames";
+import { es } from "helpers/strings";
 
 type Props = {
   onSearch: (search: string) => void;
   placeholder?: string;
 };
-export default function SearchBar({ onSearch, placeholder = "Buscar" }: Props) {
+export default function SearchBar({
+  onSearch,
+  placeholder = es.search,
+}: Props) {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     onSearch(event.target.value);
   };

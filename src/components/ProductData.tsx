@@ -50,7 +50,7 @@ export default function ProductData({ product }: Props) {
             "rounded-full px-2"
           )}
         >
-          {`${es.products.basePrice}${product.price}`}
+          {`${es.products.basePrice}${es.priceSymbol}${product.price}`}
         </p>
         <p
           data-testid="product-data_wholesale-price"

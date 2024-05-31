@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { ProductBase } from "helpers/customTypes";
+import { es } from "helpers/strings";
 import Button from "components/Button";
 import Input from "components/Input";
 
@@ -27,42 +28,42 @@ export default function ProductForm({
       data-testid="product-form"
     >
       <Input
-        label="Nombre"
+        label={es.name}
         data-testid="name_input"
         name="name"
-        placeholder="Playera"
+        placeholder={es.products.namePlaceholder}
         value={data?.name || ""}
         onChange={onChange}
         labelClassName="w-full sm:w-3/6"
       />
 
       <Input
-        label="Precio base"
+        label={es.products.basePrice}
         type="number"
         name="price"
         step="0.01"
-        placeholder="150.30"
+        placeholder={es.products.pricePlaceholder}
         value={data?.price || ""}
         onChange={onChange}
         labelClassName="w-full sm:w-3/6"
       />
 
       <Input
-        label="Precio a mayoreo"
+        label={es.products.wholesalePriceLabel}
         type="number"
         name="wholesalePrice"
         step="0.01"
-        placeholder="130"
+        placeholder={es.products.wholesalePricePlaceholder}
         value={data?.wholesalePrice || ""}
         onChange={onChange}
         labelClassName="w-full sm:w-3/6"
       />
 
       <label className="w-full sm:w-3/6">
-        <p>Descripción</p>
+        <p>{es.products.description}</p>
         <textarea
           name="description"
-          placeholder="de algodón cuello redondo holgada"
+          placeholder={es.products.descriptionPlaceholder}
           value={data?.description || ""}
           onChange={onChange}
           className={classnames(
@@ -83,7 +84,7 @@ export default function ProductForm({
           type="submit"
           name="products"
         >
-          Guardar
+          {es.save}
         </Button>
         <Link
           to={cancelLink}
@@ -95,7 +96,7 @@ export default function ProductForm({
             "disabled:text-slate-300 cursor-pointer"
           )}
         >
-          Cancelar
+          {es.cancel}
         </Link>
       </div>
     </form>

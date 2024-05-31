@@ -1,5 +1,6 @@
 import { useState, useEffect, Fragment, MouseEvent, ChangeEvent } from "react";
 import { Customization } from "helpers/customTypes";
+import { es } from "helpers/strings";
 import CustomizationDataEdit from "routes/Customizations/CustomizationDataEdit";
 
 type Props = {
@@ -94,10 +95,10 @@ export default function CustomizationCard({
             {customization.title}
           </p>
           <p data-testid={`min-size-${customization.id || ""}`}>
-            Imagen min: {customization.minSize} cm
+            {`${es.customizations.imageMin} ${customization.minSize} ${es.customizations.cm}`}
           </p>
           <p data-testid={`max-size-${customization.id || ""}`}>
-            Imagen max: {customization.maxSize} cm
+            {`${es.customizations.imageMax} ${customization.maxSize} ${es.customizations.cm}`}
           </p>
         </Fragment>
       )}

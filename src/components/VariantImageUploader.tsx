@@ -1,6 +1,6 @@
-import { ChangeEvent } from "react";
-import { LabelHTMLAttributes, InputHTMLAttributes } from "react";
+import { ChangeEvent, LabelHTMLAttributes, InputHTMLAttributes } from "react";
 import classnames from "classnames";
+import { es } from "helpers/strings";
 
 type props = {
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -44,7 +44,7 @@ export default function VariantImageUploader({
         {isLoading && (
           <i className={"fa-solid fa-spinner " + "animate-spin mr-2 "} />
         )}
-        <span>Imagenes (PNG, JPG)</span>
+        <span>{es.imagesPngJpg}</span>
       </p>
       <input
         className={classnames(

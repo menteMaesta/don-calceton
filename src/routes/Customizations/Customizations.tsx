@@ -3,6 +3,7 @@ import { useSnackbar } from "react-simple-snackbar";
 import { useLoaderData, useActionData, useSubmit } from "react-router-dom";
 import { Customization, ErrorType } from "helpers/customTypes";
 import { EMPTY_CUSTOMIZATION } from "helpers/constants";
+import { es } from "helpers/strings";
 import CustomizationCard from "routes/Customizations/CustomizationCard";
 import EmptyState from "components/EmptyState";
 import Button from "components/Button";
@@ -72,7 +73,7 @@ export default function Customizations() {
           onClick={onNewCustomization}
           disabled={newCustomization !== undefined}
         >
-          Nueva personalización
+          {es.customizations.new}
         </Button>
       </div>
       {customizations?.length > 0 || newCustomization !== undefined ? (
@@ -98,7 +99,7 @@ export default function Customizations() {
           )}
         </div>
       ) : (
-        <EmptyState name="personalizaciones" />
+        <EmptyState name={es.customizations.name} />
       )}
     </Fragment>
   );

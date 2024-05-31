@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, MouseEvent, Fragment } from "react";
 import classnames from "classnames";
 import { Variant, VariantBase } from "helpers/customTypes";
+import { es } from "helpers/strings";
 import Input from "components/Input";
 
 type Props = {
@@ -102,7 +103,7 @@ export default function VariantData({ variant, onEditData }: Props) {
 
           <Input
             data-testid="variant-data_quantity-input"
-            label="stock:"
+            label={es.stock}
             type="number"
             name="quantity"
             placeholder={`${variant.quantity}`}
@@ -131,7 +132,7 @@ export default function VariantData({ variant, onEditData }: Props) {
             {variant.name}
           </p>
           <p data-testid="variant-data_quantity" className="cursor-default">
-            stock: {variant.quantity}
+            {es.stock} {variant.quantity}
           </p>
         </Fragment>
       )}

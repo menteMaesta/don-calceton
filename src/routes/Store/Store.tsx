@@ -1,6 +1,7 @@
 import { Outlet, Link, NavLink, useLoaderData } from "react-router-dom";
 import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
+import { es } from "helpers/strings";
 import { VariantListItem } from "helpers/customTypes";
 
 export default function Store() {
@@ -37,7 +38,9 @@ export default function Store() {
               "ml-2"
             )}
           />
-          <p className="font-medium text-slate-700">Tienda Don Calcetón</p>
+          <p className="font-medium text-slate-700">
+            {es.store} {es.donCalceton}
+          </p>
         </Link>
         <NavLink
           to={ROUTES.CART}
@@ -73,7 +76,7 @@ export default function Store() {
               {totalItems}
             </span>
           )}
-          <p className="font-medium">Carrito</p>
+          <p className="font-medium">{es.cart}</p>
         </NavLink>
       </div>
 

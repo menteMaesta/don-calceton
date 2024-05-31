@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { es } from "helpers/strings";
 
 type Props = {
   id: number;
@@ -22,9 +23,9 @@ export default function ProductCard({
         )}
         data-testid={`price_${id}`}
       >
-        <span>Base $</span>
+        <span>{es.products.base}</span>
         {price}
-        <span> MXN</span>
+        <span> {es.mxn}</span>
       </p>
       <p
         className={classnames(
@@ -34,9 +35,9 @@ export default function ProductCard({
         )}
         data-testid={`wholesale-price_${id}`}
       >
-        <span>Mayoreo $</span>
+        <span>{es.products.wholesalePrice}</span>
         {wholesalePrice}
-        <span> MXN</span>
+        <span> {es.mxn}</span>
       </p>
     </div>
   );
