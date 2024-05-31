@@ -36,7 +36,7 @@ describe("VariantItem", () => {
     );
     const price = getByTestId("price_1");
     expect(price).toBeInTheDocument();
-    expect(price).toHaveTextContent(`Base $${variant.productPrice} MXN`);
+    expect(price).toHaveTextContent(`Base: $${variant.productPrice} MXN`);
   });
 
   it("renders variant wholesale price", () => {
@@ -50,7 +50,7 @@ describe("VariantItem", () => {
     const wholesale = getByTestId("wholesale-price_1");
     expect(wholesale).toBeInTheDocument();
     expect(wholesale).toHaveTextContent(
-      `Mayoreo $${variant.productWholesalePrice} MXN`
+      `Mayoreo: $${variant.productWholesalePrice} MXN`
     );
   });
 

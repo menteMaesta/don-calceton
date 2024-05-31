@@ -16,7 +16,7 @@ export const es = {
     pricePlaceholder: "150.30",
     wholesalePricePlaceholder: "130",
     description: "Descripción",
-    descriptionPlaceholder: "Playera de algodón",
+    descriptionPlaceholder: "de algodón cuello redondo holgada",
   },
   variants: {
     name: "Variantes",
@@ -68,5 +68,5 @@ export const es = {
   mxn: "MXN",
   search: "Buscar",
   stock: "stock:",
-  imagesPngJpg: "Imágenes (PNG, JPG)",
+  imagesPngJpg: "Imagenes (PNG, JPG)",
 };

@@ -38,7 +38,7 @@ export default function ProductForm({
       />
 
       <Input
-        label={es.products.basePrice}
+        label={es.products.basePrice.replace(":", "")}
         type="number"
         name="price"
         step="0.01"
