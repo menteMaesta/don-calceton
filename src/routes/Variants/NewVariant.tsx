@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, MouseEvent, useEffect } from "react";
-import { useSubmit, useParams, Link, useActionData } from "react-router-dom";
+import { useSubmit, useParams, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import classnames from "classnames";
 import imageCompression from "browser-image-compression";
@@ -10,6 +10,7 @@ import ImageCard from "components/ImageCard";
 import Button from "components/Button";
 import Input from "components/Input";
 import VariantImageUploader from "components/VariantImageUploader";
+import CancelButton from "components/CancelButton";
 
 export default function NewVariant() {
   const { productId = "" } = useParams();
@@ -91,7 +92,7 @@ export default function NewVariant() {
 
   return (
     <div className="mt-11 w-full px-4" data-testid="new-variant_page">
-      <p className="mt-9 font-semibold text-center text-lg">
+      <p className="mt-9 font-semibold text-center text-lg dark:text-slate-200">
         {es.variants.new}
       </p>
       <div className="flex flex-col mt-14 space-y-6 items-center">
@@ -157,19 +158,10 @@ export default function NewVariant() {
           >
             {es.save}
           </Button>
-          <Link
+          <CancelButton
             to={`${ROUTES.PRODUCT.replace(":productId", productId)}`}
-            type="button"
-            className={classnames(
-              "bg-white text-black font-medium",
-              "rounded py-1 px-4 shadow",
-              "disabled:bg-slate-100 disabled:cursor-not-allowed",
-              "disabled:text-slate-300 cursor-pointer"
-            )}
             data-testid="new-variant-cancel_button"
-          >
-            {es.cancel}
-          </Link>
+          />
         </div>
       </div>
     </div>

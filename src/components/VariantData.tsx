@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, MouseEvent, Fragment } from "react";
-import classnames from "classnames";
 import { Variant, VariantBase } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import Input from "components/Input";
@@ -48,13 +47,13 @@ export default function VariantData({ variant, onEditData }: Props) {
 
   return (
     <main
-      className={classnames(
-        "flex flex-wrap",
-        "items-center justify-between",
-        "bg-white rounded-md shadow",
-        "px-4 py-2",
-        "relative"
-      )}
+      className={
+        "flex flex-wrap " +
+        "items-center justify-between " +
+        "bg-white rounded-md shadow " +
+        "px-4 py-2 " +
+        "relative dark:bg-slate-700 dark:text-slate-200 "
+      }
       data-testid={`variant-data_${variant.id}`}
     >
       <i
@@ -62,24 +61,24 @@ export default function VariantData({ variant, onEditData }: Props) {
         role="button"
         title="editar"
         onClick={onEdit}
-        className={classnames(
-          "absolute right-2 top-2",
-          "fa-solid fa-pen",
-          "text-gray-300",
+        className={
+          "absolute right-2 top-2 " +
+          "fa-solid fa-pen " +
+          "text-gray-300 " +
           "hover:text-gray-500 active:text-gray-500"
-        )}
+        }
       />
       {edit && (
         <Fragment>
           <button
             data-testid="variant-data_save"
-            className={classnames(
-              "absolute right-9 top-2",
-              "fa-solid fa-check",
-              "text-green-600 text-md",
-              "hover:text-green-700 active:text-green-700",
+            className={
+              "absolute right-9 top-2 " +
+              "fa-solid fa-check " +
+              "text-green-600 text-md " +
+              "hover:text-green-700 active:text-green-700 " +
               "disabled:text-gray-300 disabled:cursor-not-allowed"
-            )}
+            }
             onClick={onSave}
             disabled={
               data?.name === "" || data?.quantity === undefined || !valid
@@ -92,13 +91,13 @@ export default function VariantData({ variant, onEditData }: Props) {
             placeholder={variant.name}
             value={data.name}
             onChange={onChange}
-            className={classnames(
-              "rounded-lg",
-              "text-2xl font-bold",
-              "w-full mr-14 mb-2",
-              "px-1",
+            className={
+              "rounded-lg " +
+              "text-2xl font-bold " +
+              "w-full mr-14 mb-2 " +
+              "px-1 " +
               "border-slate-400 border"
-            )}
+            }
           />
 
           <Input
@@ -107,12 +106,9 @@ export default function VariantData({ variant, onEditData }: Props) {
             type="number"
             name="quantity"
             placeholder={`${variant.quantity}`}
-            className={classnames(
-              "rounded-b rounded-t",
-              "pr-1 pl-1",
-              "ml-2",
-              "pt-0 pb-0"
-            )}
+            className={
+              "rounded-b rounded-t " + "pr-1 pl-1 " + "ml-2 " + "pt-0 pb-0"
+            }
             value={data.quantity}
             onChange={onChange}
             labelClassName="flex flex-row"
@@ -123,11 +119,12 @@ export default function VariantData({ variant, onEditData }: Props) {
         <Fragment>
           <p
             data-testid="variant-data_name"
-            className={classnames(
-              "text-2xl font-bold",
-              "w-full mb-2",
-              "cursor-default"
-            )}
+            className={
+              "text-2xl font-bold " +
+              "w-full mb-2 " +
+              "cursor-default " +
+              "dark:text-slate-100"
+            }
           >
             {variant.name}
           </p>
