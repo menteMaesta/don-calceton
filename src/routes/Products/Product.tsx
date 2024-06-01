@@ -101,12 +101,15 @@ export default function ProductDetails() {
         onChange={handleTabChange}
         data-testid="product_tabs"
       >
-        <TabList className="flex w-full border-b">
-          <Tab className="px-2 py-1 rounded-t" data-testid="variant_tab-header">
+        <TabList className="flex w-full border-b dark:border-slate-600">
+          <Tab
+            className="px-2 py-1 rounded-t dark:text-slate-200"
+            data-testid="variant_tab-header"
+          >
             {es.variants.name}
           </Tab>
           <Tab
-            className="px-2 py-1 rounded-t"
+            className="px-2 py-1 rounded-t dark:text-slate-200"
             data-testid="customization_tab-header"
           >
             {es.variants.personalizationOptions}

@@ -47,7 +47,11 @@ export default function CustomizationDataEdit({
           "font-bold " +
           "w-full sm:mb-2 " +
           "px-1 " +
-          "border-slate-400 border"
+          "border-slate-400 border " +
+          "dark:border-slate-800 " +
+          "dark:bg-slate-800 " +
+          "dark:focus-visible:border-slate-400 " +
+          "focus-visible:outline-0"
         }
       />
       <Input

@@ -45,7 +45,7 @@ export default function EditProduct() {
 
   return (
     <div className="mt-11 w-full px-4" data-testid="edit-product_page">
-      <p className="mt-9 font-semibold text-center text-lg">
+      <p className="mt-9 font-semibold text-center text-lg dark:text-slate-200">
         {es.products.edit}
       </p>
       <ProductForm

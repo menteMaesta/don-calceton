@@ -19,6 +19,10 @@ export default {
         "[data-reach-tab][data-selected]": {
           backgroundColor: theme("colors.white"),
           borderWidth: "1px",
+          "@media (prefers-color-scheme: dark)": {
+            backgroundColor: theme("colors.slate.600"),
+            borderColor: theme("colors.slate.600"),
+          },
         },
       });
     },

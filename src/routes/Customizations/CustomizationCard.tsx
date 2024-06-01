@@ -59,7 +59,13 @@ export default function CustomizationCard({
 
   return (
     <div
-      className="bg-white px-2 py-1 pr-24 rounded relative shadow"
+      className={
+        "bg-white " +
+        "px-2 py-1 pr-24 " +
+        "rounded relative " +
+        "shadow dark:bg-slate-700 " +
+        "dark:text-slate-200"
+      }
       data-testid={`customization_card-${customization.id || ""}`}
     >
       {!isNew && (
@@ -69,8 +75,9 @@ export default function CustomizationCard({
           className={
             "absolute right-9 top-2 " +
             "fa-solid fa-pen " +
-            "text-gray-300 " +
-            "hover:text-gray-500 active:text-gray-500"
+            "text-slate-300 " +
+            "hover:text-slate-500 active:slate-gray-500 " +
+            "dark:hover:text-slate-100"
           }
         />
       )}
@@ -81,15 +88,16 @@ export default function CustomizationCard({
           className={
             "absolute right-2 top-2 " +
             "fa-solid fa-circle-xmark " +
-            "text-gray-300 z-[1] " +
-            "hover:text-gray-500 active:text-gray-500"
+            "text-slate-300 z-[1] " +
+            "hover:text-slate-500 active:text-slate-500 " +
+            "dark:hover:text-slate-100"
           }
         />
       )}
       {!edit && (
         <Fragment>
           <p
-            className="font-bold"
+            className="font-bold dark:text-slate-100"
             data-testid={`title-${customization.id || ""}`}
           >
             {customization.title}
