@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
 import { Link } from "react-router-dom";
-import classnames from "classnames";
 import { ProductBase } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import Button from "components/Button";
@@ -59,19 +58,21 @@ export default function ProductForm({
         labelClassName="w-full sm:w-3/6"
       />
 
-      <label className="w-full sm:w-3/6">
+      <label className="w-full sm:w-3/6 dark:text-slate-200">
         <p>{es.products.description}</p>
         <textarea
           name="description"
           placeholder={es.products.descriptionPlaceholder}
           value={data?.description || ""}
           onChange={onChange}
-          className={classnames(
-            "rounded-lg",
-            "border-slate-400 border",
-            "py-2 px-3 h-32",
-            "w-full"
-          )}
+          className={
+            "rounded-lg " +
+            "border-slate-400 border " +
+            "py-2 px-3 h-32 " +
+            "w-full " +
+            "dark:bg-slate-900 dark:border-slate-900 " +
+            "dark:placeholder:text-slate-500"
+          }
         />
       </label>
       <div className="flex flex-row space-x-5">
@@ -89,12 +90,15 @@ export default function ProductForm({
         <Link
           to={cancelLink}
           type="button"
-          className={classnames(
-            "bg-white text-black font-medium",
-            "rounded py-1 px-4 shadow",
-            "disabled:bg-slate-100 disabled:cursor-not-allowed",
-            "disabled:text-slate-300 cursor-pointer"
-          )}
+          className={
+            "bg-white text-black font-medium " +
+            "rounded py-1 px-4 shadow " +
+            "disabled:bg-slate-100 disabled:cursor-not-allowed " +
+            "disabled:text-slate-300 cursor-pointer " +
+            "dark:bg-slate-700 dark:text-slate-200 " +
+            "dark:hover:bg-slate-900 dark:active:bg-slate-900 " +
+            "dark:focus:bg-slate-900"
+          }
         >
           {es.cancel}
         </Link>

@@ -44,7 +44,9 @@ export default function NewProduct() {
   return (
     <div className="mt-11 w-full px-4">
       <p
-        className="mt-9 font-semibold text-center text-lg"
+        className={
+          "mt-9 font-semibold " + "text-center text-lg " + "dark:text-slate-200"
+        }
         data-testid="product-form-title"
       >
         {es.products.new}

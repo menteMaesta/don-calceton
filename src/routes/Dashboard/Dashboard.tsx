@@ -1,51 +1,54 @@
 import { Outlet, Link } from "react-router-dom";
-import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
 
 export default function Dashboard() {
   return (
     <div
-      className={classnames(
-        "w-screen h-screen",
-        "bg-slate-50 overflow-x-hidden",
-        "flex flex-col",
-        "items-center pb-4"
-      )}
+      className={
+        "w-screen h-screen " +
+        "bg-slate-50 overflow-x-hidden " +
+        "flex flex-col " +
+        "items-center pb-4 " +
+        "dark:bg-slate-800"
+      }
     >
       <div
-        className={classnames(
-          "w-screen h-11 justify-between",
-          "shadow shadow-slate-100 bg-white",
-          "flex items-center space-x-2",
-          "absolute top-0 z-10"
-        )}
+        className={
+          "w-screen h-11 justify-between " +
+          "shadow shadow-slate-100 bg-white " +
+          "flex items-center space-x-2 " +
+          "absolute top-0 z-10 " +
+          "dark:bg-slate-900 " +
+          "dark:shadow-slate-950"
+        }
       >
-        <Link
-          to={ROUTES.DASHBOARD}
-          className={classnames("flex items-center space-x-2")}
-        >
+        <Link to={ROUTES.DASHBOARD} className={"flex items-center space-x-2"}>
           <i
-            className={classnames(
-              "fa-solid fa-socks",
-              "text-xl text-slate-700",
-              "ml-2"
-            )}
+            className={
+              "fa-solid fa-socks " +
+              "text-xl text-slate-700 " +
+              "ml-2 dark:text-slate-300 "
+            }
           />
-          <p className="font-medium text-slate-700">{es.donCalceton}</p>
+          <p className="font-medium text-slate-700 dark:text-slate-200">
+            {es.donCalceton}
+          </p>
         </Link>
         <Link
           to={ROUTES.STORE}
-          className={classnames("flex items-center", "space-x-2 pr-2")}
+          className={"flex items-center " + "space-x-2 pr-2 "}
         >
           <i
-            className={classnames(
-              "fa-solid fa-store",
-              "text-xl text-slate-700",
-              "ml-2"
-            )}
+            className={
+              "fa-solid fa-store " +
+              "text-xl text-slate-700 " +
+              "ml-2 dark:text-slate-300"
+            }
           />
-          <p className="font-medium text-slate-700">{es.store}</p>
+          <p className="font-medium text-slate-700 dark:text-slate-200">
+            {es.store}
+          </p>
         </Link>
       </div>
 

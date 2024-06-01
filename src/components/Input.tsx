@@ -1,5 +1,4 @@
 import { InputHTMLAttributes } from "react";
-import classnames from "classnames";
 
 export type props = {
   label: string;
@@ -15,15 +14,17 @@ export default function Input({
   ...other
 }: props) {
   return (
-    <label className={labelClassName}>
+    <label className={"dark:text-slate-200 " + labelClassName}>
       <p>{label}</p>
       <input
-        className={classnames(
-          "rounded-lg border",
-          "border-slate-400",
-          "py-2 px-3 w-full",
+        className={
+          "rounded-lg border " +
+          "border-slate-400 " +
+          "py-2 px-3 w-full " +
+          "dark:bg-slate-900 dark:border-slate-900 " +
+          "dark:placeholder:text-slate-500 " +
           className
-        )}
+        }
         {...other}
       />
       {otherElements && otherElements}

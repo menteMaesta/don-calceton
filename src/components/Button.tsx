@@ -20,6 +20,8 @@ export default function Button({ disabled, children, ...props }: Props) {
           "font-medium": !className.includes("font-"),
         },
         "disabled:bg-slate-300 disabled:cursor-not-allowed",
+        "dark:hover:bg-slate-950 dark:text-slate-200",
+        "dark:disabled:bg-slate-700 dark:disabled:text-slate-600",
         className
       )}
       {...rest}
