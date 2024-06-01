@@ -53,7 +53,9 @@ export const handleEditProduct = async (form: FormData) => {
   if (status !== 200) {
     return response.errors ? response.errors[0] : response;
   } else {
-    return redirect(ROUTES.DASHBOARD);
+    return redirect(
+      ROUTES.PRODUCT.replace(":productId", `${formData.productId}`)
+    );
   }
 };
 

@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import { es } from "helpers/strings";
 
 type Props = {
@@ -14,13 +13,14 @@ export default function ProductCard({
   className,
 }: Props) {
   return (
-    <div className={classnames("flex flex-col", className)}>
+    <div className={"flex flex-col " + className}>
       <p
-        className={classnames(
-          "bg-slate-950 text-white",
-          "w-fit sm:text-sm",
-          "rounded-full px-2"
-        )}
+        className={
+          "bg-slate-950 text-white " +
+          "w-fit sm:text-sm " +
+          "rounded-full px-2 " +
+          "dark:bg-slate-500"
+        }
         data-testid={`price_${id}`}
       >
         <span>{es.products.base}</span>
@@ -28,11 +28,12 @@ export default function ProductCard({
         <span> {es.mxn}</span>
       </p>
       <p
-        className={classnames(
-          "bg-slate-950 text-white",
-          "w-fit mt-1 sm:text-sm",
-          "rounded-full px-2"
-        )}
+        className={
+          "bg-slate-950 text-white " +
+          "w-fit mt-1 sm:text-sm " +
+          "rounded-full px-2 " +
+          "dark:bg-slate-500"
+        }
         data-testid={`wholesale-price_${id}`}
       >
         <span>{es.products.wholesalePrice}</span>

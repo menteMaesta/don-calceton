@@ -1,6 +1,5 @@
 import { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import classnames from "classnames";
 
 type ElementCardWrapperProps = {
   route?: string;
@@ -40,13 +39,15 @@ export default function ElementCard({
   return (
     <ElementCardWrapper
       route={route}
-      className={classnames(
-        "flex flex-col",
-        "rounded p-2",
-        "bg-white shadow",
-        "relative",
+      className={
+        "flex flex-col " +
+        "rounded p-2 " +
+        "bg-white shadow " +
+        "relative " +
+        "dark:bg-slate-700 dark:shadow-slate-900 " +
+        "dark:text-slate-300 " +
         className
-      )}
+      }
       data-testid={`${type}-link_${elementId}`}
     >
       {onRemove && (
@@ -54,23 +55,25 @@ export default function ElementCard({
           data-testid={`${type}-remove_${elementId}`}
           role="button"
           onClick={(event) => onRemove(event, `${elementId}`)}
-          className={classnames(
-            "absolute right-2 top-2",
-            "fa-solid fa-circle-xmark",
-            "text-gray-300 z-[1]",
+          className={
+            "absolute right-2 top-2 " +
+            "fa-solid fa-circle-xmark " +
+            "text-gray-300 z-[1] " +
             "hover:text-gray-500 active:text-gray-500"
-          )}
+          }
         />
       )}
       {title && (
         <p
-          className="w-full font-semibold text-center"
+          className="w-full font-semibold text-center dark:text-slate-100"
           data-testid={`${type}-name_${elementId}`}
         >
           {title}
         </p>
       )}
-      <div className="relative h-64 flex items-center justify-center">
+      <div
+        className={"relative h-64 " + "flex items-center " + "justify-center "}
+      >
         {children}
       </div>
       {footer}

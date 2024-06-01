@@ -19,8 +19,9 @@ export default function Button({ disabled, children, ...props }: Props) {
           "text-white": !className.includes("text"),
           "font-medium": !className.includes("font-"),
         },
+        "dark:bg-slate-700 dark:text-white",
+        "dark:hover:bg-slate-900 dark:text-slate-200",
         "disabled:bg-slate-300 disabled:cursor-not-allowed",
-        "dark:hover:bg-slate-950 dark:text-slate-200",
         "dark:disabled:bg-slate-700 dark:disabled:text-slate-600",
         className
       )}

@@ -71,7 +71,7 @@ export default function SliderImageCard({
             "absolute right-2 " +
             "text-slate-500 " +
             "h-full w-5 " +
-            "hover:text-slate-900 hover:text-lg"
+            "hover:text-slate-900 hover:text-lg "
           }
           data-testid="next-image_button"
           aria-label="imagen siguiente"
