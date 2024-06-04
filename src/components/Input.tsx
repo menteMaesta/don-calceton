@@ -22,7 +22,6 @@ export default function Input({
           "border-slate-400 " +
           "py-2 px-3 w-full " +
           "dark:bg-slate-900 dark:border-slate-900 " +
-          "dark:placeholder:text-slate-500 " +
           "dark:focus-visible:border-slate-400 " +
           "focus-visible:outline-0 " +
           className

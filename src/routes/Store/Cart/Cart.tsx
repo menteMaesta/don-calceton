@@ -24,8 +24,17 @@ export default function Cart() {
 
   return (
     <div className="mt-11 flex flex-col w-full px-4" data-testid="cart_page">
-      <p className="mt-4 font-bold" data-testid="total-product_price">
-        <i className={"fa-solid fa-cart-shopping " + "text-xl " + "mr-2"} />
+      <p
+        className="mt-4 font-bold dark:text-slate-200"
+        data-testid="total-product_price"
+      >
+        <i
+          className={
+            "fa-solid fa-cart-shopping " +
+            "text-xl " +
+            "mr-2 dark:text-slate-300"
+          }
+        />
         Precio total $<span>{totalPrice}</span>
       </p>
       {cart.length > 0 ? (

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useLoaderData, useSubmit } from "react-router-dom";
-import Select from "react-select";
 import classnames from "classnames";
 import EmptyState from "components/EmptyState";
+import Select from "components/Select";
 import VariantItem from "storeComponents/VariantItem";
 import { VariantListItem, Option } from "helpers/customTypes";
 import { es } from "helpers/strings";

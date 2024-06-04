@@ -1,5 +1,4 @@
 import { Outlet, Link, NavLink, useLoaderData } from "react-router-dom";
-import classnames from "classnames";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
 import { VariantListItem } from "helpers/customTypes";
@@ -12,33 +11,33 @@ export default function Store() {
 
   return (
     <div
-      className={classnames(
-        "w-screen h-screen",
-        "bg-slate-50 overflow-x-hidden",
-        "flex flex-col",
-        "items-center pb-4"
-      )}
+      className={
+        "w-screen h-screen " +
+        "bg-slate-50 overflow-x-hidden " +
+        "flex flex-col " +
+        "items-center pb-4 " +
+        "dark:bg-slate-800 "
+      }
     >
       <div
-        className={classnames(
-          "w-screen h-11 justify-between",
-          "shadow shadow-slate-100 bg-white",
-          "flex items-center space-x-2",
-          "absolute top-0 z-10"
-        )}
+        className={
+          "w-screen h-11 justify-between " +
+          "shadow shadow-slate-100 bg-white " +
+          "flex items-center space-x-2 " +
+          "absolute top-0 z-10 " +
+          "dark:bg-slate-900 " +
+          "dark:shadow-slate-950"
+        }
       >
-        <Link
-          to={ROUTES.STORE}
-          className={classnames("flex items-center space-x-2")}
-        >
+        <Link to={ROUTES.STORE} className={"flex items-center space-x-2"}>
           <i
-            className={classnames(
-              "fa-solid fa-socks",
-              "text-xl text-slate-700",
-              "ml-2"
-            )}
+            className={
+              "fa-solid fa-socks " +
+              "text-xl text-slate-700 " +
+              "ml-2 dark:text-slate-300 "
+            }
           />
-          <p className="font-medium text-slate-700">
+          <p className="font-medium text-slate-700 dark:text-slate-200">
             {es.store} {es.donCalceton}
           </p>
         </Link>
@@ -49,19 +48,20 @@ export default function Store() {
               "text-slate-700",
               "border-b-2 border-slate-700/0",
               isPending ? "text-slate-200" : "",
-              isActive ? "border-slate-700/100" : "",
+              isActive ? "border-slate-700/100 dark:border-slate-400/100" : "",
               isTransitioning ? "text-slate-200" : "",
               "flex items-center self-end pb-1",
               "space-x-2 pr-4 relative",
+              "dark:hover:border-slate-600/100",
             ].join(" ")
           }
         >
           <i
-            className={classnames(
-              "fa-solid fa-cart-shopping",
-              "text-xl",
-              "ml-2"
-            )}
+            className={
+              "fa-solid fa-cart-shopping " +
+              "text-xl " +
+              "ml-2 dark:text-slate-300"
+            }
           />
           {totalItems > 0 && (
             <span
@@ -76,7 +76,7 @@ export default function Store() {
               {totalItems}
             </span>
           )}
-          <p className="font-medium">{es.cart}</p>
+          <p className="font-medium dark:text-slate-200">{es.cart}</p>
         </NavLink>
       </div>
 

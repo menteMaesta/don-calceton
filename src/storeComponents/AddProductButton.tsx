@@ -18,11 +18,19 @@ export default function AddProductButton({
       data-testid="add-products_button"
     >
       {!inCart ? (
-        <Button onClick={onAddToCart} data-testid="add-to-cart">
+        <Button
+          onClick={onAddToCart}
+          data-testid="add-to-cart"
+          className="dark:!bg-slate-500 dark:hover:!bg-slate-600"
+        >
           Agregar
         </Button>
       ) : (
-        <Button onClick={onRemoveFromCart} data-testid="remove-from-cart">
+        <Button
+          onClick={onRemoveFromCart}
+          data-testid="remove-from-cart"
+          className="dark:!bg-slate-500 dark:hover:!bg-slate-600"
+        >
           Quitar
         </Button>
       )}

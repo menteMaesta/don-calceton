@@ -1,7 +1,8 @@
-import Select, { OnChangeValue } from "react-select";
+import { OnChangeValue } from "react-select";
 import { Option } from "helpers/customTypes";
 import { ORDER_ITEM_FIELDS } from "helpers/constants";
 import FormItem from "storeComponents/FormItem";
+import Select from "components/Select";
 
 type Props = {
   quantity: number;

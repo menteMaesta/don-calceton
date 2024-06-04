@@ -71,7 +71,11 @@ export default function ImageSelector({
             "active:bg-neutral-100 " +
             "focus:bg-neutral-100 " +
             "focus-within:bg-neutral-100 " +
-            "cursor-pointer",
+            "cursor-pointer " +
+            "dark:bg-slate-800 dark:border-0 " +
+            "dark:text-slate-300 " +
+            "dark:hover:bg-slate-950 " +
+            "dark:active:bg-slate-950",
         }}
         onFileSelect={onChangeImages}
         isLoading={loading}
