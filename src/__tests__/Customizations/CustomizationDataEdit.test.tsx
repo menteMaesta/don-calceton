@@ -28,7 +28,7 @@ describe("CustomizationDataEdit", () => {
     const maxSize = getByTestId(`max-size-edit_${customization.id}`);
 
     expect(saveButton).toBeInTheDocument();
-    expect(saveButton).toHaveClass("right-2");
+    expect(saveButton).toHaveClass("!right-2");
     expect(title).toBeInTheDocument();
     expect(minSize).toBeInTheDocument();
     expect(maxSize).toBeInTheDocument();

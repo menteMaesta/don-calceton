@@ -71,7 +71,7 @@ export default function Personalization({
   return (
     <Fragment>
       <DeleteButton
-        onRemove={onRemovePersonalization}
+        onClick={onRemovePersonalization}
         className="!left-0 !top-1 !right-auto"
       />
       <AccordionButton

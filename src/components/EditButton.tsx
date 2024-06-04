@@ -1,14 +1,12 @@
-import { MouseEvent, ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from "react";
 
 type Props = {
-  onEdit: (event: MouseEvent<HTMLElement>) => void;
   "data-testid"?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function EditButton({ onEdit, className, ...other }: Props) {
+export default function EditButton({ className, ...other }: Props) {
   return (
     <button
-      onClick={onEdit}
       className={
         "absolute right-9 top-2 " +
         "fa-solid fa-pen " +

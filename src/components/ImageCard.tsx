@@ -32,7 +32,7 @@ export default function ImageCard({
       <DeleteButton
         data-testid={`remove-button_${image.src}`}
         title="eliminar"
-        onRemove={(event) => onRemove(event)}
+        onClick={(event) => onRemove(event)}
       />
       <div className={imageContainerClassName}>
         <img className={imageClassName} src={image.src} alt={image.name} />

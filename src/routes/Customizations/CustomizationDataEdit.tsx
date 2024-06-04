@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { Customization } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import Input from "components/Input";
+import SaveButton from "components/SaveButton";
 
 type Props = {
   onSave: (event: MouseEvent<HTMLElement>) => void;
@@ -23,18 +24,11 @@ export default function CustomizationDataEdit({
 }: Props) {
   return (
     <Fragment>
-      <button
-        className={classnames(
-          "absolute top-2",
-          "fa-solid fa-check",
-          "text-green-600 text-md",
-          "hover:text-green-700 active:text-green-700",
-          "disabled:text-gray-300 disabled:cursor-not-allowed",
-          { "right-2": !isNew, "right-9": isNew }
-        )}
+      <SaveButton
         onClick={onSave}
         disabled={!valid || data.title.length === 0}
         data-testid={`save-customization_${customization.id || ""}`}
+        className={classnames({ "!right-2": !isNew, "!right-9": isNew })}
       />
       <input
         data-testid={`title-edit_${customization.id || ""}`}

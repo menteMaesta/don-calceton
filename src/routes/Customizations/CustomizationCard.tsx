@@ -71,12 +71,12 @@ export default function CustomizationCard({
       data-testid={`customization_card-${customization.id || ""}`}
     >
       {!isNew && (
-        <EditButton data-testid="edit-customization" onEdit={onEdit} />
+        <EditButton data-testid="edit-customization" onClick={onEdit} />
       )}
       {onRemove && (!edit || isNew) && (
         <DeleteButton
           data-testid="remove-customization"
-          onRemove={(event) => onRemove(event, `${customization.id}`)}
+          onClick={(event) => onRemove(event, `${customization.id}`)}
         />
       )}
       {!edit && (

@@ -54,7 +54,7 @@ export default function ElementCard({
       {onRemove && (
         <DeleteButton
           data-testid={`${type}-remove_${elementId}`}
-          onRemove={(event) => onRemove(event, `${elementId}`)}
+          onClick={(event) => onRemove(event, `${elementId}`)}
         />
       )}
       {title && (

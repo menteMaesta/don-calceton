@@ -3,6 +3,7 @@ import { Variant, VariantBase } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import Input from "components/Input";
 import EditButton from "components/EditButton";
+import SaveButton from "components/SaveButton";
 
 type Props = {
   variant: Variant;
@@ -59,20 +60,13 @@ export default function VariantData({ variant, onEditData }: Props) {
     >
       <EditButton
         data-testid="variant-data_edit"
-        onEdit={onEdit}
+        onClick={onEdit}
         className="!right-2"
       />
       {edit && (
         <Fragment>
-          <button
+          <SaveButton
             data-testid="variant-data_save"
-            className={
-              "absolute right-9 top-2 " +
-              "fa-solid fa-check " +
-              "text-green-600 text-md " +
-              "hover:text-green-700 active:text-green-700 " +
-              "disabled:text-gray-300 disabled:cursor-not-allowed"
-            }
             onClick={onSave}
             disabled={
               data?.name === "" || data?.quantity === undefined || !valid

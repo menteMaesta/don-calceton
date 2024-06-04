@@ -29,7 +29,7 @@ export default function FileChip({ image, onRemove }: Props) {
       <span className="pr-5 text-xs" data-testid="filechip_size">
         {(image.size / KB).toFixed(2)} KB
       </span>
-      <DeleteButton data-testid="filechip_remove-button" onRemove={onRemove} />
+      <DeleteButton data-testid="filechip_remove-button" onClick={onRemove} />
     </div>
   );
 }
