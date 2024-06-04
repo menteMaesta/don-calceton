@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ElementCard from "components/ElementCard";
 import { BrowserRouter } from "react-router-dom";
+import ElementCard from "components/ElementCard";
+import { ELEMENT_CARD } from "helpers/test";
 
 describe("ElementCard", () => {
   const mockElementId = "elementId";
@@ -26,11 +27,21 @@ describe("ElementCard", () => {
       </BrowserRouter>
     );
 
-    const card = screen.getByTestId(`${mockType}-link_${mockElementId}`);
-    const removeButton = screen.getByTestId(
-      `${mockType}-remove_${mockElementId}`
+    const card = screen.getByTestId(
+      ELEMENT_CARD.elementCard
+        .replace("{type}", mockType)
+        .replace("{id}", mockElementId)
     );
-    const title = screen.getByTestId(`${mockType}-name_${mockElementId}`);
+    const removeButton = screen.getByTestId(
+      ELEMENT_CARD.remove
+        .replace("{type}", mockType)
+        .replace("{id}", mockElementId)
+    );
+    const title = screen.getByTestId(
+      ELEMENT_CARD.cardName
+        .replace("{type}", mockType)
+        .replace("{id}", mockElementId)
+    );
 
     expect(card).toBeInTheDocument();
     expect(card).toHaveAttribute("href", mockRoute);
@@ -57,7 +68,9 @@ describe("ElementCard", () => {
     );
 
     const removeButton = screen.getByTestId(
-      `${mockType}-remove_${mockElementId}`
+      ELEMENT_CARD.remove
+        .replace("{type}", mockType)
+        .replace("{id}", mockElementId)
     );
 
     fireEvent.click(removeButton);

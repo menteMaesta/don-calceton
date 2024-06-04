@@ -1,22 +1,20 @@
 import { render, fireEvent } from "@testing-library/react";
 import ImageCard from "components/ImageCard";
+import { IMAGE, IMAGE_CARD } from "helpers/test";
 
 describe("ImageCard", () => {
-  const mockImage = {
-    name: "Test Image",
-    src: "test-image.jpg",
-  };
-
   it("renders the image card correctly", () => {
     const { getByAltText, getByTestId } = render(
-      <ImageCard onRemove={vi.fn()} image={mockImage} />
+      <ImageCard onRemove={vi.fn()} image={IMAGE} />
     );
 
-    const imageElement = getByAltText(mockImage.name);
-    const removeButton = getByTestId(`remove-button_${mockImage.src}`);
+    const imageElement = getByAltText(IMAGE.name);
+    const removeButton = getByTestId(
+      IMAGE_CARD.remove.replace("{id}", IMAGE.src)
+    );
 
     expect(imageElement).toBeInTheDocument();
-    expect(imageElement.getAttribute("src")).toBe(mockImage.src);
+    expect(imageElement.getAttribute("src")).toBe(IMAGE.src);
     expect(imageElement.parentElement?.parentElement).toHaveClass(
       "flex flex-col",
       "items-center bg-white",
@@ -35,10 +33,12 @@ describe("ImageCard", () => {
   it("calls the onRemove function when remove button is clicked", () => {
     const mockOnRemove = vi.fn();
     const { getByTestId } = render(
-      <ImageCard onRemove={mockOnRemove} image={mockImage} />
+      <ImageCard onRemove={mockOnRemove} image={IMAGE} />
     );
 
-    const removeButton = getByTestId(`remove-button_${mockImage.src}`);
+    const removeButton = getByTestId(
+      IMAGE_CARD.remove.replace("{id}", IMAGE.src)
+    );
     fireEvent.click(removeButton);
 
     expect(mockOnRemove).toHaveBeenCalledTimes(1);

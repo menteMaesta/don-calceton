@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import SectionDivider from "components/SectionDivider";
+import { SELECTORS } from "helpers/test";
 
 describe("SectionDivider", () => {
   it("renders the section name correctly", () => {
@@ -7,7 +8,7 @@ describe("SectionDivider", () => {
     const { getByText, getByTestId } = render(
       <SectionDivider section={section} />
     );
-    const sectionDivider = getByTestId("section-divider");
+    const sectionDivider = getByTestId(SELECTORS.sectionDivider);
     const sectionName = getByText(section);
 
     expect(sectionDivider).toBeInTheDocument();

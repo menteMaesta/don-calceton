@@ -1,22 +1,18 @@
-import { render, waitFor, act } from "@testing-library/react";
+import { act } from "react";
+import { render, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import SliderImageCard from "components/SliderImageCard";
 import { ROUTES } from "helpers/constants";
+import { IMAGES, ELEMENT_CARD, SLIDER_IMAGE_CARD } from "helpers/test";
 
 describe("SliderImageCard", () => {
-  const images = [
-    { name: "image1.jpg", id: 1 },
-    { name: "image2.jpg", id: 2 },
-    { name: "image3.jpg", id: 3 },
-  ];
-
   it("renders the SliderImageCard component with images", () => {
     const onRemove = vi.fn();
     const { getByTestId } = render(
       <BrowserRouter>
         <SliderImageCard
           elementId="1"
-          images={images}
+          images={IMAGES}
           title="Slider Card"
           onRemove={onRemove}
           type="product"
@@ -26,10 +22,14 @@ describe("SliderImageCard", () => {
       </BrowserRouter>
     );
 
-    const card = getByTestId("product-link_1");
-    const prevButton = getByTestId("prev-image_button");
-    const nextButton = getByTestId("next-image_button");
-    const firstImage = getByTestId("slider-image_1");
+    const card = getByTestId(
+      ELEMENT_CARD.elementCard.replace("{type}", "product").replace("{id}", "1")
+    );
+    const prevButton = getByTestId(SLIDER_IMAGE_CARD.prevImage);
+    const nextButton = getByTestId(SLIDER_IMAGE_CARD.nextImage);
+    const firstImage = getByTestId(
+      SLIDER_IMAGE_CARD.image.replace("{id}", `${IMAGES[0].id}`)
+    );
 
     expect(card).toBeInTheDocument();
     expect(prevButton).toBeInTheDocument();
@@ -52,7 +52,9 @@ describe("SliderImageCard", () => {
         />
       </BrowserRouter>
     );
-    const defaultImage = getByTestId("slider-image_default");
+    const defaultImage = getByTestId(
+      SLIDER_IMAGE_CARD.image.replace("{id}", "default")
+    );
 
     expect(defaultImage).toBeInTheDocument();
   });
@@ -63,7 +65,7 @@ describe("SliderImageCard", () => {
       <BrowserRouter>
         <SliderImageCard
           elementId="1"
-          images={images}
+          images={IMAGES}
           title="Slider Card"
           onRemove={onRemove}
           type="product"
@@ -73,21 +75,34 @@ describe("SliderImageCard", () => {
       </BrowserRouter>
     );
 
-    const prevButton = getByTestId("prev-image_button");
-    const nextButton = getByTestId("next-image_button");
+    const prevButton = getByTestId(SLIDER_IMAGE_CARD.prevImage);
+    const nextButton = getByTestId(SLIDER_IMAGE_CARD.nextImage);
 
-    expect(getByTestId("slider-image_1")).toBeInTheDocument();
+    expect(
+      getByTestId(SLIDER_IMAGE_CARD.image.replace("{id}", `${IMAGES[0].id}`))
+    ).toBeInTheDocument();
     act(() => prevButton.click());
     await waitFor(() =>
-      expect(getByTestId("slider-image_3")).toBeInTheDocument()
+      expect(
+        getByTestId(
+          SLIDER_IMAGE_CARD.image.replace(
+            "{id}",
+            `${IMAGES[IMAGES.length - 1].id}`
+          )
+        )
+      ).toBeInTheDocument()
     );
     act(() => nextButton.click());
     await waitFor(() =>
-      expect(getByTestId("slider-image_1")).toBeInTheDocument()
+      expect(
+        getByTestId(SLIDER_IMAGE_CARD.image.replace("{id}", `${IMAGES[0].id}`))
+      ).toBeInTheDocument()
     );
     act(() => nextButton.click());
     await waitFor(() =>
-      expect(getByTestId("slider-image_2")).toBeInTheDocument()
+      expect(
+        getByTestId(SLIDER_IMAGE_CARD.image.replace("{id}", `${IMAGES[1].id}`))
+      ).toBeInTheDocument()
     );
   });
 });

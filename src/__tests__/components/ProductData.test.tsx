@@ -1,5 +1,5 @@
-import { StrictMode } from "react";
-import { render, screen, waitFor, act } from "@testing-library/react";
+import { StrictMode, act } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   MemoryRouter,
@@ -11,26 +11,11 @@ import Product from "routes/Products/Product";
 import EditProduct from "routes/Products/EditProduct";
 import ProductData from "components/ProductData";
 import { ROUTES } from "helpers/constants";
+import { PRODUCT, VARIANT, PRODUCT_DATA } from "helpers/test";
 
 const mockProduct = {
-  id: 4,
-  name: "Playera",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-  price: 100,
-  wholesalePrice: 80,
-  createdAt: "2024-03-25T20:58:31.805+00:00",
-  updatedAt: "2024-03-25T20:58:31.805+00:00",
-  variants: [
-    {
-      id: 2,
-      name: "Playera roja",
-      productId: 4,
-      quantity: 20,
-      createdAt: "2024-03-25T21:02:00.452+00:00",
-      updatedAt: "2024-03-25T21:02:00.452+00:00",
-      images: [],
-    },
-  ],
+  ...PRODUCT,
+  variants: [VARIANT],
 };
 
 describe("ProductData", () => {
@@ -41,13 +26,13 @@ describe("ProductData", () => {
       </MemoryRouter>
     );
 
-    const productName = screen.getByTestId("product-data_name");
-    const productPrice = screen.getByTestId("product-data_price");
+    const productName = screen.getByTestId(PRODUCT_DATA.name);
+    const productPrice = screen.getByTestId(PRODUCT_DATA.price);
     const productWholesalePrice = screen.getByTestId(
-      "product-data_wholesale-price"
+      PRODUCT_DATA.wholesalePrice
     );
-    const productDescription = screen.getByTestId("product-data_description");
-    const productShowHide = screen.getByTestId("product-data_show-hide");
+    const productDescription = screen.getByTestId(PRODUCT_DATA.description);
+    const productShowHide = screen.getByTestId(PRODUCT_DATA.showHide);
 
     expect(productName).toBeInTheDocument();
     expect(productPrice).toBeInTheDocument();
@@ -72,8 +57,8 @@ describe("ProductData", () => {
       </MemoryRouter>
     );
 
-    const productDescription = screen.getByTestId("product-data_description");
-    const productShowHide = screen.getByTestId("product-data_show-hide");
+    const productDescription = screen.getByTestId(PRODUCT_DATA.description);
+    const productShowHide = screen.getByTestId(PRODUCT_DATA.showHide);
 
     expect(productDescription).toHaveClass("line-clamp-2");
 
@@ -110,7 +95,7 @@ describe("ProductData", () => {
     );
 
     const editProduct = await waitFor(() =>
-      screen.getByTestId("product-data_edit")
+      screen.getByTestId(PRODUCT_DATA.edit)
     );
 
     expect(editProduct).toBeInTheDocument();
@@ -121,6 +106,6 @@ describe("ProductData", () => {
     await userEvent.click(editProduct);
 
     await waitFor(() => screen.getByTestId("edit-product_page"));
-    expect(screen.getByTestId("product-form")).toBeInTheDocument();
+    expect(screen.getByTestId(PRODUCT_DATA.form)).toBeInTheDocument();
   });
 });

@@ -3,20 +3,15 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import ProductForm from "components/ProductForm";
 import { ProductBase } from "helpers/customTypes";
+import { PRODUCT, PRODUCT_DATA } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("ProductForm", () => {
   test("renders the form with initial data", () => {
-    const data = {
-      name: "Product 1",
-      price: 10,
-      wholesalePrice: 9,
-      description: "Description",
-    } as ProductBase;
-
     render(
       <BrowserRouter>
         <ProductForm
-          data={data}
+          data={PRODUCT}
           onChange={vi.fn()}
           onSubmit={vi.fn()}
           cancelLink="/"
@@ -24,10 +19,16 @@ describe("ProductForm", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByLabelText("Nombre")).toHaveValue("Product 1");
-    expect(screen.getByLabelText("Precio base")).toHaveValue(10);
-    expect(screen.getByLabelText("Precio a mayoreo")).toHaveValue(9);
-    expect(screen.getByLabelText("Descripción")).toHaveValue("Description");
+    expect(screen.getByLabelText(es.name)).toHaveValue(PRODUCT.name);
+    expect(
+      screen.getByLabelText(es.products.basePrice.replace(": ", ""))
+    ).toHaveValue(PRODUCT.price);
+    expect(screen.getByLabelText(es.products.wholesalePriceLabel)).toHaveValue(
+      PRODUCT.wholesalePrice
+    );
+    expect(screen.getByLabelText(es.products.description)).toHaveValue(
+      PRODUCT.description
+    );
   });
 
   test("calls onChange when input values change", async () => {
@@ -69,7 +70,7 @@ describe("ProductForm", () => {
       </BrowserRouter>
     );
 
-    fireEvent.change(screen.getByTestId("name_input"), {
+    fireEvent.change(screen.getByTestId(PRODUCT_DATA.nameInput), {
       target: { name: "name", value: "New Product" },
     });
 
@@ -92,7 +93,7 @@ describe("ProductForm", () => {
       </BrowserRouter>
     );
 
-    fireEvent.submit(screen.getByTestId("product-form"));
+    fireEvent.submit(screen.getByTestId(PRODUCT_DATA.form));
 
     expect(onSubmit).toHaveBeenCalled();
   });
@@ -109,21 +110,19 @@ describe("ProductForm", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByLabelText("Nombre")).toHaveAttribute(
+    expect(screen.getByLabelText(es.name)).toHaveAttribute(
       "placeholder",
-      "Playera"
+      es.products.namePlaceholder
     );
-    expect(screen.getByLabelText("Precio base")).toHaveAttribute(
+    expect(
+      screen.getByLabelText(es.products.basePrice.replace(": ", ""))
+    ).toHaveAttribute("placeholder", es.products.pricePlaceholder);
+    expect(
+      screen.getByLabelText(es.products.wholesalePriceLabel)
+    ).toHaveAttribute("placeholder", es.products.wholesalePricePlaceholder);
+    expect(screen.getByLabelText(es.products.description)).toHaveAttribute(
       "placeholder",
-      "150.30"
-    );
-    expect(screen.getByLabelText("Precio a mayoreo")).toHaveAttribute(
-      "placeholder",
-      "130"
-    );
-    expect(screen.getByLabelText("Descripción")).toHaveAttribute(
-      "placeholder",
-      "de algodón cuello redondo holgada"
+      es.products.descriptionPlaceholder
     );
   });
 });
