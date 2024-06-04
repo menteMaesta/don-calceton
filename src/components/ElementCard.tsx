@@ -1,5 +1,6 @@
 import { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
+import DeleteButton from "components/DeleteButton";
 
 type ElementCardWrapperProps = {
   route?: string;
@@ -51,16 +52,9 @@ export default function ElementCard({
       data-testid={`${type}-link_${elementId}`}
     >
       {onRemove && (
-        <i
+        <DeleteButton
           data-testid={`${type}-remove_${elementId}`}
-          role="button"
-          onClick={(event) => onRemove(event, `${elementId}`)}
-          className={
-            "absolute right-2 top-2 " +
-            "fa-solid fa-circle-xmark " +
-            "text-gray-300 z-[1] " +
-            "hover:text-gray-500 active:text-gray-500"
-          }
+          onRemove={(event) => onRemove(event, `${elementId}`)}
         />
       )}
       {title && (

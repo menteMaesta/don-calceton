@@ -24,8 +24,8 @@ describe("FileChip", () => {
     expect(remove).toHaveClass(
       "absolute right-2 top-2",
       "fa-solid fa-circle-xmark",
-      "text-gray-300",
-      "hover:text-gray-500 active:text-gray-500"
+      "text-slate-300",
+      "hover:text-slate-500 active:text-slate-500"
     );
   });
 

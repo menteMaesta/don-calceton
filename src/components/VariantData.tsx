@@ -2,6 +2,7 @@ import { useState, ChangeEvent, MouseEvent, Fragment } from "react";
 import { Variant, VariantBase } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import Input from "components/Input";
+import EditButton from "components/EditButton";
 
 type Props = {
   variant: Variant;
@@ -56,17 +57,10 @@ export default function VariantData({ variant, onEditData }: Props) {
       }
       data-testid={`variant-data_${variant.id}`}
     >
-      <i
+      <EditButton
         data-testid="variant-data_edit"
-        role="button"
-        title="editar"
-        onClick={onEdit}
-        className={
-          "absolute right-2 top-2 " +
-          "fa-solid fa-pen " +
-          "text-gray-300 " +
-          "hover:text-gray-500 active:text-gray-500"
-        }
+        onEdit={onEdit}
+        className="!right-2"
       />
       {edit && (
         <Fragment>

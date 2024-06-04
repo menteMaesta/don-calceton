@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 import classnames from "classnames";
+import DeleteButton from "components/DeleteButton";
 
 type Props = {
   onRemove: (event: MouseEvent<HTMLElement>) => void;
@@ -28,17 +29,10 @@ export default function ImageCard({
       )}
       data-testid={`image-card_${image.id || image.src}`}
     >
-      <i
+      <DeleteButton
         data-testid={`remove-button_${image.src}`}
-        role="button"
         title="eliminar"
-        onClick={(event) => onRemove(event)}
-        className={classnames(
-          "absolute right-2 top-2",
-          "fa-solid fa-circle-xmark",
-          "text-gray-300",
-          "hover:text-gray-500 active:text-gray-500"
-        )}
+        onRemove={(event) => onRemove(event)}
       />
       <div className={imageContainerClassName}>
         <img className={imageClassName} src={image.src} alt={image.name} />

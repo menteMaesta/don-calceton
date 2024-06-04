@@ -2,6 +2,8 @@ import { useState, useEffect, Fragment, MouseEvent, ChangeEvent } from "react";
 import { Customization } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import CustomizationDataEdit from "routes/Customizations/CustomizationDataEdit";
+import EditButton from "components/EditButton";
+import DeleteButton from "components/DeleteButton";
 
 type Props = {
   customization: Customization;
@@ -69,29 +71,12 @@ export default function CustomizationCard({
       data-testid={`customization_card-${customization.id || ""}`}
     >
       {!isNew && (
-        <button
-          data-testid="edit-customization"
-          onClick={onEdit}
-          className={
-            "absolute right-9 top-2 " +
-            "fa-solid fa-pen " +
-            "text-slate-300 " +
-            "hover:text-slate-500 active:slate-gray-500 " +
-            "dark:hover:text-slate-100"
-          }
-        />
+        <EditButton data-testid="edit-customization" onEdit={onEdit} />
       )}
       {onRemove && (!edit || isNew) && (
-        <button
+        <DeleteButton
           data-testid="remove-customization"
-          onClick={(event) => onRemove(event, `${customization.id}`)}
-          className={
-            "absolute right-2 top-2 " +
-            "fa-solid fa-circle-xmark " +
-            "text-slate-300 z-[1] " +
-            "hover:text-slate-500 active:text-slate-500 " +
-            "dark:hover:text-slate-100"
-          }
+          onRemove={(event) => onRemove(event, `${customization.id}`)}
         />
       )}
       {!edit && (

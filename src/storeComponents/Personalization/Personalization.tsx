@@ -6,6 +6,7 @@ import QuantitySelector from "./components/QuantitySelector";
 import ImageSelector from "./components/ImageSelector";
 import RangeInput from "./components/RangeInput";
 import CustomizationSelector from "./components/CustomizationSelector";
+import DeleteButton from "components/DeleteButton";
 
 type Props = {
   personalization: PersonalizationType;
@@ -69,15 +70,9 @@ export default function Personalization({
 
   return (
     <Fragment>
-      <i
-        role="button"
-        onClick={onRemovePersonalization}
-        className={
-          "absolute left-0 top-1 " +
-          "fa-solid fa-circle-xmark " +
-          "text-gray-300 z-[1] " +
-          "hover:text-gray-500 active:text-gray-500"
-        }
+      <DeleteButton
+        onRemove={onRemovePersonalization}
+        className="!left-0 !top-1 !right-auto"
       />
       <AccordionButton
         className={
