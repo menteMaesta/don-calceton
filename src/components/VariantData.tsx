@@ -4,6 +4,7 @@ import { es } from "helpers/strings";
 import Input from "components/Input";
 import EditButton from "components/EditButton";
 import SaveButton from "components/SaveButton";
+import TitleInput from "components/TitleInput";
 
 type Props = {
   variant: Variant;
@@ -73,19 +74,13 @@ export default function VariantData({ variant, onEditData }: Props) {
             }
           />
 
-          <input
+          <TitleInput
             data-testid="variant-data_name-input"
             name="name"
             placeholder={variant.name}
             value={data.name}
             onChange={onChange}
-            className={
-              "rounded-lg " +
-              "text-2xl font-bold " +
-              "w-full mr-14 mb-2 " +
-              "px-1 " +
-              "border-slate-400 border"
-            }
+            className="rounded-lg text-2xl mr-14 mb-2"
           />
 
           <Input

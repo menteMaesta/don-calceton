@@ -4,6 +4,7 @@ import { Customization } from "helpers/customTypes";
 import { es } from "helpers/strings";
 import Input from "components/Input";
 import SaveButton from "components/SaveButton";
+import TitleInput from "components/TitleInput";
 
 type Props = {
   onSave: (event: MouseEvent<HTMLElement>) => void;
@@ -30,23 +31,12 @@ export default function CustomizationDataEdit({
         data-testid={`save-customization_${customization.id || ""}`}
         className={classnames({ "!right-2": !isNew, "!right-9": isNew })}
       />
-      <input
+      <TitleInput
         data-testid={`title-edit_${customization.id || ""}`}
         name="title"
         placeholder={customization.title || es.customizations.titlePlaceholder}
         value={data.title}
         onChange={onChange}
-        className={
-          "rounded " +
-          "font-bold " +
-          "w-full sm:mb-2 " +
-          "px-1 " +
-          "border-slate-400 border " +
-          "dark:border-slate-800 " +
-          "dark:bg-slate-800 " +
-          "dark:focus-visible:border-slate-400 " +
-          "focus-visible:outline-0"
-        }
       />
       <Input
         data-testid={`min-size-edit_${customization.id || ""}`}
