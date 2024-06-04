@@ -4,6 +4,8 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 import ForgotPassword from "routes/Login/ForgotPassword";
 import { ROUTES } from "helpers/constants";
+import { AUTH_SELECTORS } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("ForgotPassword", () => {
   test.only("renders the ForgotPassword component", async () => {
@@ -28,18 +30,20 @@ describe("ForgotPassword", () => {
     );
 
     const forgotPasswordComponent = await waitFor(() =>
-      getByTestId("forgot-password-component")
+      getByTestId(AUTH_SELECTORS.forgotPassword)
     );
-    const forgotPasswordTitle = getByTestId("forgot-password_title");
+    const forgotPasswordTitle = getByTestId(AUTH_SELECTORS.forgotTitle);
     const forgotPasswordDescription = getByTestId(
-      "forgot-password_description"
+      AUTH_SELECTORS.forgotDescription
     );
-    const emailInput = getByLabelText("Correo");
-    const sendButton = getByTestId("forgot-password_submit");
+    const emailInput = getByLabelText(es.login.email);
+    const sendButton = getByTestId(AUTH_SELECTORS.forgotSubmit);
 
     expect(forgotPasswordComponent).toBeInTheDocument();
     expect(forgotPasswordTitle).toBeInTheDocument();
-    expect(forgotPasswordTitle).toHaveTextContent("Olvidaste tu contraseña?");
+    expect(forgotPasswordTitle).toHaveTextContent(
+      es.changePassword.forgotPassword
+    );
     expect(forgotPasswordTitle).toHaveClass(
       "text-2xl",
       "font-bold",
@@ -47,7 +51,7 @@ describe("ForgotPassword", () => {
     );
     expect(forgotPasswordDescription).toBeInTheDocument();
     expect(forgotPasswordDescription).toHaveTextContent(
-      "Escribe aquí tu correo y enviaremos un mensaje de actualización"
+      es.changePassword.writeEmail
     );
     expect(forgotPasswordDescription).toHaveClass(
       "text-sm text-slate-600",

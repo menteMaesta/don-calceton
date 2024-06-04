@@ -2,11 +2,13 @@ import { render, screen } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 import NewProduct from "routes/Products/NewProduct";
+import { PRODUCT_DATA } from "helpers/test";
+import { es } from "helpers/strings";
 
 import { ROUTES } from "helpers/constants";
 
 describe("NewProduct", () => {
-  test.only("renders the product form", () => {
+  test("renders the product form", () => {
     const routes = [
       {
         path: ROUTES.NEW_PRODUCT,
@@ -25,10 +27,10 @@ describe("NewProduct", () => {
       </SnackbarProvider>
     );
 
-    const productFormElement = screen.getByTestId("product-form");
+    const productFormElement = screen.getByTestId(PRODUCT_DATA.form);
     expect(productFormElement).toBeInTheDocument();
-    expect(screen.getByTestId("product-form-title").innerHTML).toEqual(
-      "Nuevo producto"
+    expect(screen.getByTestId(PRODUCT_DATA.formTitle).innerHTML).toEqual(
+      es.products.new
     );
   });
 });

@@ -5,35 +5,16 @@ import SnackbarProvider from "react-simple-snackbar";
 import { ROUTES } from "helpers/constants";
 import ProductDetails from "routes/Products/Product";
 import Customizations from "routes/Customizations/Customizations";
+import { PRODUCT, VARIANT, IMAGE, CUSTOMIZATION } from "helpers/test";
 
 describe("ProductDetails", () => {
-  const customization = {
-    id: 1,
-    title: "Al frente",
-    maxSize: 20,
-    minSize: 0,
-  };
   const product = {
-    id: 4,
-    name: "Playera",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-    price: 100,
-    wholesalePrice: 80,
+    ...PRODUCT,
     variants: [
       {
-        id: 3,
-        name: "Playera azul",
-        productId: 4,
-        quantity: 20,
-        images: [
-          {
-            id: 3,
-            name: "znmjcbhhrote59v2jnivy7gu.png",
-            variantId: 3,
-          },
-        ],
-        customizations: [customization],
+        ...VARIANT,
+        images: [IMAGE],
+        customizations: [CUSTOMIZATION],
       },
     ],
   };
@@ -139,7 +120,7 @@ describe("ProductDetails", () => {
           {
             path: `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`,
             element: <Customizations />,
-            loader: () => [customization],
+            loader: () => [CUSTOMIZATION],
             action: () => true,
           },
         ],

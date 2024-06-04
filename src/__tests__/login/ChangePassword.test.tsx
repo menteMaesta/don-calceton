@@ -4,6 +4,8 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 import ChangePassword from "routes/Login/ChangePassword";
 import { ROUTES } from "helpers/constants";
+import { AUTH_SELECTORS } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("ChangePassword", () => {
   test("renders without error", async () => {
@@ -30,16 +32,16 @@ describe("ChangePassword", () => {
     const changePasswordComponent = await waitFor(() =>
       getByTestId("change-password_component")
     );
-    const changePasswordTitle = getByTestId("change-password_title");
-    const changePasswordInput = getByTestId("change-password_input");
+    const changePasswordTitle = getByTestId(AUTH_SELECTORS.changeTitle);
+    const changePasswordInput = getByTestId(AUTH_SELECTORS.passwordInput);
     const changePasswordConfirmInput = getByTestId(
-      "change-password_confirm_input"
+      AUTH_SELECTORS.passwordConfirmInput
     );
-    const changePasswordButton = getByTestId("change-password_submit");
+    const changePasswordButton = getByTestId(AUTH_SELECTORS.changeSubmit);
 
     expect(changePasswordComponent).toBeInTheDocument();
     expect(changePasswordTitle).toBeInTheDocument();
-    expect(changePasswordTitle).toHaveTextContent("Cambio de contraseña");
+    expect(changePasswordTitle).toHaveTextContent(es.changePassword.name);
     expect(changePasswordTitle).toHaveClass(
       "text-3xl font-bold text-slate-600"
     );

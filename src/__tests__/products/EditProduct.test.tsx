@@ -4,28 +4,13 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 import { ROUTES } from "helpers/constants";
 import EditProduct from "routes/Products/EditProduct";
+import { PRODUCT, VARIANT, IMAGE, PRODUCT_DATA } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("EditProduct", () => {
   const product = {
-    id: 4,
-    name: "Playera",
-    description: "Lorem ipsum dolor sit amet",
-    price: 100,
-    variants: [
-      {
-        id: 3,
-        name: "Playera azul",
-        productId: 4,
-        quantity: 20,
-        images: [
-          {
-            id: 3,
-            name: "image.png",
-            variantId: 3,
-          },
-        ],
-      },
-    ],
+    ...PRODUCT,
+    variants: [{ ...VARIANT, images: [IMAGE] }],
   };
   test("renders the EditProduct component", async () => {
     const routes = [
@@ -51,10 +36,10 @@ describe("EditProduct", () => {
     );
 
     const editProductPage = await waitFor(() =>
-      getByTestId("edit-product_page")
+      getByTestId(PRODUCT_DATA.editProduct)
     );
-    const editProductTitle = getByText("Editar producto");
-    const productForm = getByTestId("product-form");
+    const editProductTitle = getByText(es.products.edit);
+    const productForm = getByTestId(PRODUCT_DATA.form);
 
     expect(editProductPage).toBeInTheDocument();
     expect(editProductTitle).toBeInTheDocument();

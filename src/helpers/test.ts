@@ -76,6 +76,8 @@ export const PRODUCT_DATA = {
   edit: "product-data_edit",
   form: "product-form",
   nameInput: "name_input",
+  editProduct: "edit-product_page",
+  formTitle: "product-form-title",
 };
 
 export const SELECTORS = {
@@ -111,4 +113,19 @@ export const CUSTOMIZATION_SELECTORS = {
   tabContent: "customizations_tab-content",
   new: "new-customization",
   grid: "customizations_grid",
+};
+
+export const AUTH_SELECTORS = {
+  changePassword: "change-password_component",
+  changeTitle: "change-password_title",
+  passwordInput: "change-password_input",
+  passwordConfirmInput: "change-password_confirm_input",
+  changeSubmit: "change-password_submit",
+  forgotPassword: "forgot-password-component",
+  forgotTitle: "forgot-password_title",
+  forgotDescription: "forgot-password_description",
+  forgotSubmit: "forgot-password_submit",
+  toMailTitle: "to-mail_title",
+  toMailDescription: "to-mail_description",
+  toMailLink: "to-mail_link",
 };
