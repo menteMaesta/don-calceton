@@ -1,61 +1,70 @@
-import { render, fireEvent, within, act } from "@testing-library/react";
+import { act } from "react";
+import { render, fireEvent, within } from "@testing-library/react";
 import CustomizationCard from "routes/Customizations/CustomizationCard";
+import { CUSTOMIZATION, CUSTOMIZATION_SELECTORS } from "helpers/test";
 
 describe("CustomizationCard", () => {
-  const customization = {
-    id: 1,
-    title: "Al frente",
-    maxSize: 20,
-    minSize: 0,
-  };
-
   const onSaveData = vi.fn();
   const onRemove = vi.fn();
 
   test("renders customization card correctly", () => {
     const { getByTestId } = render(
       <CustomizationCard
-        customization={customization}
+        customization={CUSTOMIZATION}
         onSaveData={onSaveData}
         onRemove={onRemove}
       />
     );
 
-    const card = getByTestId(`customization_card-${customization.id}`);
-    const removeButton = within(card).getByTestId("remove-customization");
-    const editButton = within(card).getByTestId("edit-customization");
-    const title = within(card).getByTestId(`title-${customization.id}`);
-    const minSize = within(card).getByTestId(`min-size-${customization.id}`);
-    const maxSize = within(card).getByTestId(`max-size-${customization.id}`);
+    const card = getByTestId(
+      CUSTOMIZATION_SELECTORS.card.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const removeButton = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.remove
+    );
+    const editButton = within(card).getByTestId(CUSTOMIZATION_SELECTORS.edit);
+    const title = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.title.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const minSize = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.minSize.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const maxSize = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.maxSize.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
 
     expect(card).toBeInTheDocument();
     expect(removeButton).toBeInTheDocument();
     expect(editButton).toBeInTheDocument();
-    expect(title).toHaveTextContent(customization.title);
+    expect(title).toHaveTextContent(CUSTOMIZATION.title);
     expect(minSize).toHaveTextContent(
-      `Imagen min: ${customization.minSize} cm`
+      `Imagen min: ${CUSTOMIZATION.minSize} cm`
     );
     expect(maxSize).toHaveTextContent(
-      `Imagen max: ${customization.maxSize} cm`
+      `Imagen max: ${CUSTOMIZATION.maxSize} cm`
     );
   });
 
   test("renders isNew mode of customization card correctly", () => {
     const { getByTestId } = render(
       <CustomizationCard
-        customization={customization}
+        customization={CUSTOMIZATION}
         onSaveData={onSaveData}
         onRemove={onRemove}
         isNew
       />
     );
 
-    const card = getByTestId(`customization_card-${customization.id}`);
-    const editTitle = within(card).getByTestId(
-      `title-edit_${customization.id}`
+    const card = getByTestId(
+      CUSTOMIZATION_SELECTORS.card.replace("{id}", `${CUSTOMIZATION.id}`)
     );
-    const removeButton = within(card).getByTestId("remove-customization");
-    const editButton = within(card).queryByTestId("edit-customization");
+    const editTitle = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.editTitle.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const removeButton = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.remove
+    );
+    const editButton = within(card).queryByTestId(CUSTOMIZATION_SELECTORS.edit);
 
     expect(card).toBeInTheDocument();
     expect(editTitle).toBeInTheDocument();
@@ -66,29 +75,35 @@ describe("CustomizationCard", () => {
   test("renders edit mode correctly", () => {
     const { getByTestId, queryByTestId } = render(
       <CustomizationCard
-        customization={customization}
+        customization={CUSTOMIZATION}
         onSaveData={onSaveData}
         onRemove={onRemove}
       />
     );
 
-    const card = getByTestId(`customization_card-${customization.id}`);
-    const editButton = within(card).getByTestId("edit-customization");
+    const card = getByTestId(
+      CUSTOMIZATION_SELECTORS.card.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const editButton = within(card).getByTestId(CUSTOMIZATION_SELECTORS.edit);
 
     expect(
-      queryByTestId(`save-customization_${customization.id}`)
+      queryByTestId(
+        CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
+      )
     ).not.toBeInTheDocument();
     expect(card).toBeInTheDocument();
     act(() => fireEvent.click(editButton));
     expect(
-      getByTestId(`save-customization_${customization.id}`)
+      getByTestId(
+        CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
+      )
     ).toBeInTheDocument();
   });
 
   test("calls onSaveData when data is saved", () => {
     const { getByTestId } = render(
       <CustomizationCard
-        customization={customization}
+        customization={CUSTOMIZATION}
         onSaveData={onSaveData}
         onRemove={onRemove}
         isNew
@@ -96,12 +111,14 @@ describe("CustomizationCard", () => {
     );
 
     const newTitle = "New customization";
-    const card = getByTestId(`customization_card-${customization.id}`);
+    const card = getByTestId(
+      CUSTOMIZATION_SELECTORS.card.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
     const editTitle = within(card).getByTestId(
-      `title-edit_${customization.id}`
+      CUSTOMIZATION_SELECTORS.editTitle.replace("{id}", `${CUSTOMIZATION.id}`)
     );
     const saveButton = within(card).getByTestId(
-      `save-customization_${customization.id}`
+      CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
     );
 
     fireEvent.change(editTitle, {
@@ -111,7 +128,7 @@ describe("CustomizationCard", () => {
 
     // Assert that onSaveData is called with the correct data
     expect(onSaveData).toHaveBeenCalledWith({
-      ...customization,
+      ...CUSTOMIZATION,
       title: newTitle,
     });
   });
@@ -119,14 +136,18 @@ describe("CustomizationCard", () => {
   test("calls onRemove when remove button is clicked", () => {
     const { getByTestId } = render(
       <CustomizationCard
-        customization={customization}
+        customization={CUSTOMIZATION}
         onSaveData={onSaveData}
         onRemove={onRemove}
       />
     );
 
-    const card = getByTestId(`customization_card-${customization.id}`);
-    const removeButton = within(card).getByTestId("remove-customization");
+    const card = getByTestId(
+      CUSTOMIZATION_SELECTORS.card.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const removeButton = within(card).getByTestId(
+      CUSTOMIZATION_SELECTORS.remove
+    );
 
     fireEvent.click(removeButton);
     expect(onRemove).toHaveBeenCalledTimes(1);

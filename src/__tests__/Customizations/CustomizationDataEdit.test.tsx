@@ -1,31 +1,34 @@
 import { render, fireEvent } from "@testing-library/react";
 import CustomizationDataEdit from "routes/Customizations/CustomizationDataEdit";
+import { CUSTOMIZATION, CUSTOMIZATION_SELECTORS } from "helpers/test";
 
 describe("CustomizationDataEdit", () => {
   const onSaveMock = vi.fn();
   const onChangeMock = vi.fn();
 
-  const customization = {
-    id: 1,
-    title: "Al frente",
-    maxSize: 20,
-    minSize: 0,
-  };
   const defaultProps = {
     onSave: onSaveMock,
     onChange: onChangeMock,
-    data: customization,
-    customization: customization,
+    data: CUSTOMIZATION,
+    customization: CUSTOMIZATION,
     valid: true,
   };
 
   it("should render correctly", () => {
     const { getByTestId } = render(<CustomizationDataEdit {...defaultProps} />);
 
-    const saveButton = getByTestId(`save-customization_${customization.id}`);
-    const title = getByTestId(`title-edit_${customization.id}`);
-    const minSize = getByTestId(`min-size-edit_${customization.id}`);
-    const maxSize = getByTestId(`max-size-edit_${customization.id}`);
+    const saveButton = getByTestId(
+      CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const title = getByTestId(
+      CUSTOMIZATION_SELECTORS.editTitle.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const minSize = getByTestId(
+      CUSTOMIZATION_SELECTORS.editMinSize.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
+    const maxSize = getByTestId(
+      CUSTOMIZATION_SELECTORS.editMaxSize.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
 
     expect(saveButton).toBeInTheDocument();
     expect(saveButton).toHaveClass("!right-2");
@@ -39,7 +42,9 @@ describe("CustomizationDataEdit", () => {
       <CustomizationDataEdit {...{ ...defaultProps, valid: false }} />
     );
 
-    const saveButton = getByTestId(`save-customization_${customization.id}`);
+    const saveButton = getByTestId(
+      CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
 
     expect(saveButton).toBeInTheDocument();
     expect(saveButton).toBeDisabled();
@@ -50,7 +55,9 @@ describe("CustomizationDataEdit", () => {
       <CustomizationDataEdit {...{ ...defaultProps, isNew: true }} />
     );
 
-    const saveButton = getByTestId(`save-customization_${customization.id}`);
+    const saveButton = getByTestId(
+      CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
 
     expect(saveButton).toBeInTheDocument();
     expect(saveButton).toHaveClass("right-9");
@@ -59,7 +66,9 @@ describe("CustomizationDataEdit", () => {
   it("should call onSave when Save button is clicked", () => {
     const { getByTestId } = render(<CustomizationDataEdit {...defaultProps} />);
 
-    const saveButton = getByTestId(`save-customization_${customization.id}`);
+    const saveButton = getByTestId(
+      CUSTOMIZATION_SELECTORS.save.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
     fireEvent.click(saveButton);
     expect(onSaveMock).toHaveBeenCalled();
   });
@@ -68,7 +77,9 @@ describe("CustomizationDataEdit", () => {
     const { getByTestId } = render(<CustomizationDataEdit {...defaultProps} />);
 
     const newTitle = "new value";
-    const title = getByTestId(`title-edit_${customization.id}`);
+    const title = getByTestId(
+      CUSTOMIZATION_SELECTORS.editTitle.replace("{id}", `${CUSTOMIZATION.id}`)
+    );
 
     fireEvent.change(title, { target: { name: "title", value: newTitle } });
     expect(onChangeMock).toHaveBeenCalledTimes(1);

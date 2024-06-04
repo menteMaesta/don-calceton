@@ -1,24 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import VariantData from "components/VariantData";
+import { VARIANT, IMAGE, VARIANT_SELECTORS } from "helpers/test";
 
 describe("VariantData", () => {
   const variant = {
-    id: 2,
-    name: "Playera roja",
-    productId: 4,
-    quantity: 20,
-    createdAt: "2024-03-25T21:02:00.452+00:00",
-    updatedAt: "2024-03-25T21:02:00.452+00:00",
-    images: [
-      {
-        id: 2,
-        name: "image.png",
-        variantId: 2,
-        createdAt: "2024-03-25T21:02:00.478+00:00",
-        updatedAt: "2024-03-25T21:02:00.478+00:00",
-      },
-    ],
+    ...VARIANT,
+    images: [IMAGE],
   };
 
   const onEditDataMock = vi.fn();
@@ -30,13 +18,13 @@ describe("VariantData", () => {
       </BrowserRouter>
     );
 
-    const variantEdit = screen.getByTestId("variant-data_edit");
-    const variantName = screen.getByTestId("variant-data_name");
-    const variantQuantity = screen.getByTestId("variant-data_quantity");
+    const variantEdit = screen.getByTestId(VARIANT_SELECTORS.edit);
+    const variantName = screen.getByTestId(VARIANT_SELECTORS.dataName);
+    const variantQuantity = screen.getByTestId(VARIANT_SELECTORS.dataQuantity);
 
-    const variantNameEdit = screen.queryByTestId("variant-data_name-input");
+    const variantNameEdit = screen.queryByTestId(VARIANT_SELECTORS.nameInput);
     const variantQuantityEdit = screen.queryByTestId(
-      "variant-data_quantity-input"
+      VARIANT_SELECTORS.quantityInput
     );
 
     expect(variantEdit).toBeInTheDocument();
@@ -53,14 +41,16 @@ describe("VariantData", () => {
       </BrowserRouter>
     );
 
-    fireEvent.click(screen.getByTestId("variant-data_edit"));
+    fireEvent.click(screen.getByTestId(VARIANT_SELECTORS.edit));
 
-    const variantNameEdit = screen.queryByTestId("variant-data_name-input");
+    const variantNameEdit = screen.queryByTestId(VARIANT_SELECTORS.nameInput);
     const variantQuantityEdit = screen.queryByTestId(
-      "variant-data_quantity-input"
+      VARIANT_SELECTORS.quantityInput
     );
-    const variantName = screen.queryByTestId("variant-data_name");
-    const variantQuantity = screen.queryByTestId("variant-data_quantity");
+    const variantName = screen.queryByTestId(VARIANT_SELECTORS.dataName);
+    const variantQuantity = screen.queryByTestId(
+      VARIANT_SELECTORS.dataQuantity
+    );
 
     expect(variantNameEdit).toBeInTheDocument();
     expect(variantQuantityEdit).toBeInTheDocument();
@@ -75,8 +65,8 @@ describe("VariantData", () => {
       </BrowserRouter>
     );
 
-    fireEvent.click(screen.getByTestId("variant-data_edit"));
-    const variantSave = screen.getByTestId("variant-data_save");
+    fireEvent.click(screen.getByTestId(VARIANT_SELECTORS.edit));
+    const variantSave = screen.getByTestId(VARIANT_SELECTORS.save);
 
     expect(variantSave).toBeInTheDocument();
     fireEvent.click(variantSave);

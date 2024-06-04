@@ -1,24 +1,18 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import VariantCard from "components/VariantCard";
 import { BrowserRouter } from "react-router-dom";
+import {
+  VARIANT,
+  IMAGE,
+  VARIANT_SELECTORS,
+  SLIDER_IMAGE_CARD,
+  ELEMENT_CARD,
+} from "src/helpers/test";
 
 describe("VariantCard", () => {
   const variant = {
-    id: 2,
-    name: "Playera roja",
-    productId: 4,
-    quantity: 20,
-    createdAt: "2024-03-25T21:02:00.452+00:00",
-    updatedAt: "2024-03-25T21:02:00.452+00:00",
-    images: [
-      {
-        id: 2,
-        name: "first.png",
-        variantId: 2,
-        createdAt: "2024-03-25T21:02:00.478+00:00",
-        updatedAt: "2024-03-25T21:02:00.478+00:00",
-      },
-    ],
+    ...VARIANT,
+    images: [IMAGE],
   };
 
   const onRemoveMock = vi.fn();
@@ -30,16 +24,22 @@ describe("VariantCard", () => {
       </BrowserRouter>
     );
 
-    const variantName = screen.getByTestId(`variant-card-name_${variant.id}`);
+    const variantName = screen.getByTestId(
+      VARIANT_SELECTORS.name.replace("{id}", `${variant.id}`)
+    );
     const variantQuantity = screen.getByTestId(
-      `variant-quantity_${variant.id}`
+      VARIANT_SELECTORS.quantity.replace("{id}", `${variant.id}`)
     );
     const variantImage = screen.getByTestId(
-      `slider-image_${variant.images[0].id}`
+      SLIDER_IMAGE_CARD.image.replace("{id}", `${variant.images[0].id}`)
     );
 
     expect(
-      screen.queryByTestId(`variant-name_${variant.id}`)
+      screen.queryByTestId(
+        ELEMENT_CARD.cardName
+          .replace("{type}", "variant")
+          .replace("{id}", `${variant.id}`)
+      )
     ).not.toBeInTheDocument();
     expect(variantName).toBeInTheDocument();
     expect(variantName).toHaveTextContent(variant.name);
@@ -57,7 +57,9 @@ describe("VariantCard", () => {
         />
       </BrowserRouter>
     );
-    const variantImage = screen.getByTestId("slider-image_default");
+    const variantImage = screen.getByTestId(
+      SLIDER_IMAGE_CARD.image.replace("{id}", "default")
+    );
 
     expect(variantImage).toBeInTheDocument();
     expect(variantImage).toHaveAttribute("src", "/src/assets/default-pic.png");
@@ -78,10 +80,10 @@ describe("VariantCard", () => {
     );
 
     const variantImage = screen.getByTestId(
-      `slider-image_${currentVariant.images[0].id}`
+      SLIDER_IMAGE_CARD.image.replace("{id}", `${variant.images[0].id}`)
     );
-    const prevButton = screen.getByTestId("prev-image_button");
-    const nextButton = screen.getByTestId("next-image_button");
+    const prevButton = screen.getByTestId(SLIDER_IMAGE_CARD.prevImage);
+    const nextButton = screen.getByTestId(SLIDER_IMAGE_CARD.nextImage);
 
     expect(variantImage).toBeInTheDocument();
     expect(prevButton).toBeInTheDocument();
@@ -114,7 +116,11 @@ describe("VariantCard", () => {
       </BrowserRouter>
     );
 
-    const removeButton = screen.getByTestId(`variant-remove_${variant.id}`);
+    const removeButton = screen.getByTestId(
+      ELEMENT_CARD.remove
+        .replace("{type}", "variant")
+        .replace("{id}", `${variant.id}`)
+    );
     fireEvent.click(removeButton);
     expect(onRemoveMock).toHaveBeenCalledTimes(1);
   });

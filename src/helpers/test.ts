@@ -19,12 +19,29 @@ export const VARIANT = {
   images: [],
 };
 
-export const IMAGE = { id: 1, name: "Test Image", src: "test-image.jpg" };
+export const IMAGE = {
+  id: 1,
+  name: "Test Image",
+  src: "test-image.jpg",
+  variantId: 2,
+};
+
 export const IMAGES = [
   { name: "image1.jpg", id: 1 },
   { name: "image2.jpg", id: 2 },
   { name: "image3.jpg", id: 3 },
 ];
+
+export const FILE = new File(["dummy content"], "test.png", {
+  type: "image/png",
+});
+
+export const CUSTOMIZATION = {
+  id: 1,
+  title: "Al frente",
+  maxSize: 20,
+  minSize: 0,
+};
 
 export const ELEMENT_CARD = {
   elementCard: `{type}-link_{id}`,
@@ -65,4 +82,33 @@ export const SELECTORS = {
   loader: "loader",
   searchBar: "search-bar",
   sectionDivider: "section-divider",
+  emptyState: "empty-state",
+};
+
+export const VARIANT_SELECTORS = {
+  quantity: "variant-quantity_{id}",
+  name: "variant-card-name_{id}",
+  edit: "variant-data_edit",
+  save: "variant-data_save",
+  dataName: "variant-data_name",
+  dataQuantity: "variant-data_quantity",
+  nameInput: "variant-data_name-input",
+  quantityInput: "variant-data_quantity-input",
+  imageUploader: "variant-image-uploader",
+};
+
+export const CUSTOMIZATION_SELECTORS = {
+  card: "customization_card-{id}",
+  remove: "remove-customization",
+  edit: "edit-customization",
+  save: "save-customization_{id}",
+  title: "title-{id}",
+  minSize: "min-size-{id}",
+  maxSize: "max-size-{id}",
+  editTitle: "title-edit_{id}",
+  editMinSize: "min-size-edit_{id}",
+  editMaxSize: "max-size-edit_{id}",
+  tabContent: "customizations_tab-content",
+  new: "new-customization",
+  grid: "customizations_grid",
 };
