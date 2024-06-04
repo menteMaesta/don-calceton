@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, Fragment, useEffect } from "react";
 import { Form, Link, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
-import classnames from "classnames";
 import Button from "components/Button";
 import PasswordInput from "components/PasswordInput";
 import Input from "components/Input";
@@ -35,13 +34,20 @@ export default function Login() {
   return (
     <Fragment>
       <i
-        className={classnames(
-          "fa-solid fa-socks",
-          "text-9xl text-slate-700",
-          "mb-4 mt-24"
-        )}
+        className={
+          "fa-solid fa-socks " +
+          "text-9xl text-slate-700 " +
+          "mb-4 mt-24 " +
+          "dark:text-slate-300"
+        }
       />
-      <p className="text-3xl font-bold text-slate-600">{es.donCalceton}</p>
+      <p
+        className={
+          "text-3xl font-bold " + "text-slate-600 " + "dark:text-slate-200"
+        }
+      >
+        {es.donCalceton}
+      </p>
 
       <Form className="flex flex-col mt-16 space-y-6" method="post">
         <Input
@@ -63,11 +69,15 @@ export default function Login() {
 
         <Link
           to={ROUTES.FORGOT_PASSWORD}
-          className={classnames(
-            "text-right font-semibold",
-            "text-slate-600",
-            "hover:text-slate-800 active:text-slate-800"
-          )}
+          className={
+            "text-right font-semibold " +
+            "text-slate-600 " +
+            "hover:text-slate-800 " +
+            "active:text-slate-800 " +
+            "dark:text-slate-400 " +
+            "dark:hover:text-slate-300 " +
+            "dark:active:text-slate-300"
+          }
         >
           {es.login.forgotPassword}
         </Link>

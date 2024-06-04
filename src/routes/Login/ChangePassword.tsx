@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, MouseEvent, Fragment, useEffect } from "react";
 import { useSubmit, useParams, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
-import classnames from "classnames";
 import Button from "components/Button";
 import PasswordInput from "components/PasswordInput";
 import { ErrorType } from "helpers/customTypes";
@@ -41,14 +40,15 @@ export default function ChangePassword() {
     <Fragment>
       <i
         data-testid="change-password_component"
-        className={classnames(
-          "fa-solid fa-socks",
-          "text-9xl text-slate-700",
-          "mb-4 mt-24"
-        )}
+        className={
+          "fa-solid fa-socks " +
+          "text-9xl text-slate-700 " +
+          "mb-4 mt-24 " +
+          "dark:text-slate-300"
+        }
       />
       <p
-        className="text-3xl font-bold text-slate-600"
+        className="text-3xl font-bold text-slate-600 dark:text-slate-200"
         data-testid="change-password_title"
       >
         {es.changePassword.name}

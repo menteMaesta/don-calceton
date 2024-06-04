@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, Fragment, useEffect } from "react";
 import { Form, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
-import classnames from "classnames";
 import Button from "components/Button";
 import Input from "components/Input";
 import { ErrorType } from "helpers/customTypes";
@@ -27,24 +26,26 @@ export default function ForgotPassword() {
     <Fragment>
       <i
         data-testid="forgot-password-component"
-        className={classnames(
-          "fa-solid fa-socks",
-          "text-9xl text-slate-700",
-          "mb-4 mt-24"
-        )}
+        className={
+          "fa-solid fa-socks " +
+          "text-9xl text-slate-700 " +
+          "mb-4 mt-24 " +
+          "dark:text-slate-300"
+        }
       />
       <p
-        className="text-2xl font-bold text-slate-600"
+        className="text-2xl font-bold text-slate-600 dark:text-slate-200"
         data-testid="forgot-password_title"
       >
         {es.changePassword.forgotPassword}
       </p>
       <p
-        className={classnames(
-          "text-sm text-slate-600",
-          "w-4/5 sm:w-full",
-          "sm:text-center pt-2"
-        )}
+        className={
+          "text-sm text-slate-600 " +
+          "w-4/5 sm:w-full " +
+          "sm:text-center pt-2 " +
+          "dark:text-slate-200"
+        }
         data-testid="forgot-password_description"
       >
         {es.changePassword.writeEmail}
