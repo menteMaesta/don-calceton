@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 import Button from "components/Button";
+import { es } from "helpers/strings";
 
 type props = {
   onAddToCart: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -23,7 +24,7 @@ export default function AddProductButton({
           data-testid="add-to-cart"
           className="dark:!bg-slate-500 dark:hover:!bg-slate-600"
         >
-          Agregar
+          {es.add}
         </Button>
       ) : (
         <Button

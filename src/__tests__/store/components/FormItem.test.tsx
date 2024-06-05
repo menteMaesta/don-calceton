@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import FormItem from "storeComponents/FormItem";
+import { SELECTORS } from "helpers/test";
 
 describe("FormItem", () => {
   it("renders the title and children correctly", () => {
@@ -11,9 +12,9 @@ describe("FormItem", () => {
         {children}
       </FormItem>
     );
-    const formTitle = getByTestId("form-item_label-title");
+    const formTitle = getByTestId(SELECTORS.formItemTitle);
     const formChildren = getByText("Test Children");
-    const wrapper = getByTestId("label_wrapper");
+    const wrapper = getByTestId(SELECTORS.labelWrapper);
 
     expect(formTitle).toBeInTheDocument();
     expect(formChildren).toBeInTheDocument();
@@ -28,8 +29,8 @@ describe("FormItem", () => {
     const { getByTestId, queryByTestId } = render(
       <FormItem title="Test Title" />
     );
-    const title = getByTestId("form-item_label-title");
-    const children = queryByTestId("form-item_label-children");
+    const title = getByTestId(SELECTORS.formItemTitle);
+    const children = queryByTestId(SELECTORS.formItemChildren);
 
     expect(title).toBeInTheDocument();
     expect(children).toBeNull();

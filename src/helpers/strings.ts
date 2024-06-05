@@ -71,4 +71,5 @@ export const es = {
   stock: "stock:",
   imagesPngJpg: "Imagenes (PNG, JPG)",
   filterByProduct: "Filtrar por producto",
+  add: "Agregar",
 };

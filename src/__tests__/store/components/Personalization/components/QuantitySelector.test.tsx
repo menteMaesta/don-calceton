@@ -1,6 +1,7 @@
 import { render, fireEvent, within, act } from "@testing-library/react";
 import { ORDER_ITEM_FIELDS } from "helpers/constants";
 import QuantitySelector from "storeComponents/Personalization/components/QuantitySelector";
+import { PERSONALIZATION_SELECTORS, SELECTORS } from "helpers/test";
 
 describe("QuantitySelector", () => {
   test("should render the quantity selector with the correct initial value", () => {
@@ -16,9 +17,9 @@ describe("QuantitySelector", () => {
       />
     );
 
-    const quantityWrapp = getByTestId("order-item_quantity");
+    const quantityWrapp = getByTestId(PERSONALIZATION_SELECTORS.quantity);
     const quantitySelector = within(quantityWrapp).getByTestId(
-      "form-item_label-children"
+      SELECTORS.formItemChildren
     ).children[0];
     expect(quantitySelector.textContent).toBe(quantity.toString());
   });
@@ -36,9 +37,9 @@ describe("QuantitySelector", () => {
       />
     );
 
-    const quantityWrapp = getByTestId("order-item_quantity");
+    const quantityWrapp = getByTestId(PERSONALIZATION_SELECTORS.quantity);
     const quantitySelector = within(quantityWrapp).getByTestId(
-      "form-item_label-children"
+      SELECTORS.formItemChildren
     ).children[0];
 
     act(() => fireEvent.keyDown(quantitySelector, { key: "ArrowDown" }));

@@ -38,6 +38,7 @@ export const IMAGE = {
   name: "Test Image",
   src: "test-image.jpg",
   variantId: 2,
+  size: 365615,
 };
 
 export const IMAGES = [
@@ -56,6 +57,12 @@ export const CUSTOMIZATION = {
   maxSize: 20,
   minSize: 0,
 };
+
+export const CUSTOMIZATIONS = [
+  { id: 1, title: "Option 1", maxSize: 10, minSize: 5 },
+  { id: 2, title: "Option 2", maxSize: 20, minSize: 15 },
+  { id: 3, title: "Option 3", maxSize: 30, minSize: 25 },
+];
 
 export const PERSONALIZATION = {
   quantity: 3,
@@ -129,6 +136,9 @@ export const SELECTORS = {
   searchBar: "search-bar",
   sectionDivider: "section-divider",
   emptyState: "empty-state",
+  labelWrapper: "label_wrapper",
+  formItemTitle: "form-item_label-title",
+  formItemChildren: "form-item_label-children",
 };
 
 export const VARIANT_SELECTORS = {
@@ -144,6 +154,7 @@ export const VARIANT_SELECTORS = {
   variantList: "variant-item_list",
   addProduct: "add-products_button",
   removeProduct: "remove-products_button",
+  itemImage: "store-item_{id}",
 };
 
 export const CUSTOMIZATION_SELECTORS = {
@@ -185,4 +196,19 @@ export const CART_SELECTORS = {
   add: "add-to-cart",
   remove: "remove-from-cart",
   cartTag: "cart-total_badge",
+};
+
+export const FILE_CHIP_SELECTORS = {
+  name: "filechip_name",
+  size: "filechip_size",
+  remove: "filechip_remove-button",
+};
+
+export const PERSONALIZATION_SELECTORS = {
+  quantity: "order-item_quantity",
+  images: "order-item_images",
+  size: "order-item_size",
+  sizeInput: "order-item_size-input",
+  imageUploader: "variant-image-uploader",
+  customization: "order-item_customization",
 };

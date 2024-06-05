@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 import ImageSelector from "storeComponents/Personalization/components/ImageSelector";
+import { PERSONALIZATION_SELECTORS, FILE_CHIP_SELECTORS } from "helpers/test";
 
 describe("ImageSelector", () => {
   const mockImages = [
@@ -37,9 +38,11 @@ describe("ImageSelector", () => {
   });
 
   it("renders the component with images", () => {
-    const wrapper = screen.getByTestId("order-item_images");
-    const fileUploader = screen.getByTestId("variant-image-uploader");
-    const imageChips = screen.getAllByTestId("filechip_name");
+    const wrapper = screen.getByTestId(PERSONALIZATION_SELECTORS.images);
+    const fileUploader = screen.getByTestId(
+      PERSONALIZATION_SELECTORS.imageUploader
+    );
+    const imageChips = screen.getAllByTestId(FILE_CHIP_SELECTORS.name);
 
     expect(wrapper).toBeInTheDocument();
     expect(wrapper).toHaveTextContent("Imagenes");
@@ -51,7 +54,7 @@ describe("ImageSelector", () => {
   });
 
   it("calls onDeleteOrderItemImages when the delete button is clicked", () => {
-    const deleteButton = screen.getAllByTestId("filechip_remove-button")[0];
+    const deleteButton = screen.getAllByTestId(FILE_CHIP_SELECTORS.remove)[0];
     fireEvent.click(deleteButton);
 
     expect(mockOnDeleteOrderItemImages).toHaveBeenCalledTimes(1);

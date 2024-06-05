@@ -4,23 +4,15 @@ import { Accordion, AccordionItem } from "@reach/accordion";
 import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import Personalization from "storeComponents/Personalization/Personalization";
+import {
+  CUSTOMIZATION,
+  PERSONALIZATION,
+  PERSONALIZATION_SELECTORS,
+  SELECTORS,
+} from "helpers/test";
 
 describe("Personalization", () => {
-  const item = {
-    quantity: 2,
-    customizationId: 1,
-    images: [],
-    imageSize: 20,
-  };
-
-  const customizations = [
-    {
-      id: 1,
-      title: "Al frente",
-      maxSize: 20,
-      minSize: 0,
-    },
-  ];
+  const customizations = [CUSTOMIZATION];
 
   const maxQuantity = 10;
   const cartItemId = 1;
@@ -32,7 +24,7 @@ describe("Personalization", () => {
           <AccordionItem className="relative">
             <Personalization
               id={1}
-              personalization={item}
+              personalization={PERSONALIZATION}
               cartItemId={cartItemId}
               customizations={customizations}
               maxQuantity={maxQuantity}
@@ -52,18 +44,18 @@ describe("Personalization", () => {
       </React.StrictMode>
     );
 
-    const quantity = getByTestId("order-item_quantity");
+    const quantity = getByTestId(PERSONALIZATION_SELECTORS.quantity);
     const quantitySelector = within(quantity).getByTestId(
-      "form-item_label-children"
+      SELECTORS.formItemChildren
     ).children[0];
-    const images = getByTestId("order-item_images");
-    const imageUploader = getByTestId("variant-image-uploader");
-    const customization = getByTestId("order-item_customization");
+    const images = getByTestId(PERSONALIZATION_SELECTORS.images);
+    const imageUploader = getByTestId(PERSONALIZATION_SELECTORS.imageUploader);
+    const customization = getByTestId(PERSONALIZATION_SELECTORS.customization);
     const customizationSelector = within(customization).getByTestId(
-      "form-item_label-children"
+      SELECTORS.formItemChildren
     ).children[0];
-    const size = getByTestId("order-item_size");
-    const sizeInput = getByTestId("order-item_size-input");
+    const size = getByTestId(PERSONALIZATION_SELECTORS.size);
+    const sizeInput = getByTestId(PERSONALIZATION_SELECTORS.sizeInput);
 
     expect(quantity).toBeInTheDocument();
     expect(quantitySelector).toBeInTheDocument();
