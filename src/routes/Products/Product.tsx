@@ -119,7 +119,7 @@ export default function ProductDetails() {
         <TabPanels>
           <TabPanel as="section" data-testid="variant_tab-panel">
             <div className="relative flex flex-col items-center w-full">
-              <SearchBar onSearch={onSearch} placeholder="Buscar variantes" />
+              <SearchBar onSearch={onSearch} placeholder={es.variants.search} />
               <SticyLink
                 to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
                 title={es.variants.new}

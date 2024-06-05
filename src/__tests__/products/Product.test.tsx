@@ -5,7 +5,16 @@ import SnackbarProvider from "react-simple-snackbar";
 import { ROUTES } from "helpers/constants";
 import ProductDetails from "routes/Products/Product";
 import Customizations from "routes/Customizations/Customizations";
-import { PRODUCT, VARIANT, IMAGE, CUSTOMIZATION } from "helpers/test";
+import {
+  PRODUCT,
+  VARIANT,
+  IMAGE,
+  CUSTOMIZATION,
+  PRODUCT_PAGE,
+  ELEMENT_CARD,
+  SELECTORS,
+} from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("ProductDetails", () => {
   const product = {
@@ -40,24 +49,32 @@ describe("ProductDetails", () => {
       </React.StrictMode>
     );
 
-    const productPage = await waitFor(() => getByTestId("product-page"));
-    const productData = getByTestId(`product-data_${product.id}`);
-    const productTabs = getByTestId("product_tabs");
-    const variantTabHeader = getByTestId("variant_tab-header");
-    const variantTabPanel = getByTestId("variant_tab-panel");
-    const customizationTabHeader = getByTestId("customization_tab-header");
-    const customizationTabPanel = getByTestId("customization_tab-panel");
-    const customizationTabContent = queryByTestId("customizations_tab-content");
+    const productPage = await waitFor(() => getByTestId(PRODUCT_PAGE.name));
+    const productData = getByTestId(
+      PRODUCT_PAGE.productData.replace("{id}", `${product.id}`)
+    );
+    const productTabs = getByTestId(PRODUCT_PAGE.productTabs);
+    const variantTabHeader = getByTestId(PRODUCT_PAGE.variantTabHeader);
+    const variantTabPanel = getByTestId(PRODUCT_PAGE.variantTabPanel);
+    const customizationTabHeader = getByTestId(
+      PRODUCT_PAGE.customizationTabHeader
+    );
+    const customizationTabPanel = getByTestId(
+      PRODUCT_PAGE.customizationTabPanel
+    );
+    const customizationTabContent = queryByTestId(
+      PRODUCT_PAGE.customizationTabContent
+    );
 
     expect(productPage).toBeInTheDocument();
     expect(productData).toBeInTheDocument();
     expect(productTabs).toBeInTheDocument();
     expect(variantTabHeader).toBeInTheDocument();
-    expect(variantTabHeader).toHaveTextContent("Variantes");
+    expect(variantTabHeader).toHaveTextContent(es.variants.name);
     expect(variantTabPanel).toBeInTheDocument();
     expect(customizationTabHeader).toBeInTheDocument();
     expect(customizationTabHeader).toHaveTextContent(
-      "Opciones de personalización"
+      es.variants.personalizationOptions
     );
     expect(customizationTabPanel).toHaveAttribute("tabindex", "-1");
     expect(customizationTabPanel).toHaveAttribute("hidden");
@@ -86,11 +103,15 @@ describe("ProductDetails", () => {
     );
 
     const variantSearch = await waitFor(() =>
-      getByPlaceholderText("Buscar variantes")
+      getByPlaceholderText(es.variants.search)
     );
-    const newVariantButton = getByText("Nueva variante");
-    const variantList = getByTestId("variant-list");
-    const variantCard = getByTestId(`variant-link_${product.variants[0].id}`);
+    const newVariantButton = getByText(es.variants.new);
+    const variantList = getByTestId(PRODUCT_PAGE.variantList);
+    const variantCard = getByTestId(
+      ELEMENT_CARD.elementCard
+        .replace("{type}", "variant")
+        .replace("{id}", `${product.variants[0].id}`)
+    );
 
     expect(variantSearch).toBeInTheDocument();
     expect(newVariantButton).toBeInTheDocument();
@@ -147,9 +168,11 @@ describe("ProductDetails", () => {
     const customizationTabHeader = await waitFor(() =>
       getByTestId("customization_tab-header")
     );
-    const customizationTabPanel = getByTestId("customization_tab-panel");
-    const variantTabPanel = getByTestId("variant_tab-panel");
-    const variantSearch = queryByText("Buscar variantes");
+    const customizationTabPanel = getByTestId(
+      PRODUCT_PAGE.customizationTabPanel
+    );
+    const variantTabPanel = getByTestId(PRODUCT_PAGE.variantTabPanel);
+    const variantSearch = queryByText(es.variants.search);
 
     expect(variantTabPanel).toHaveAttribute("tabindex", "-1");
     expect(variantTabPanel).toHaveAttribute("hidden");
@@ -189,7 +212,7 @@ describe("ProductDetails", () => {
       </React.StrictMode>
     );
 
-    const emptyState = await waitFor(() => getByTestId("empty-state"));
+    const emptyState = await waitFor(() => getByTestId(SELECTORS.emptyState));
 
     expect(emptyState).toBeInTheDocument();
     expect(emptyState).toHaveTextContent("No hay variantes");

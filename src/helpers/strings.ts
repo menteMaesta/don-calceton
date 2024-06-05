@@ -20,6 +20,7 @@ export const es = {
   },
   variants: {
     name: "Variantes",
+    search: "Buscar variantes",
     new: "Nueva variante",
     personalizationOptions: "Opciones de personalización",
     images: "Imágenes",

@@ -19,6 +19,20 @@ export const VARIANT = {
   images: [],
 };
 
+export const VARIANT_LIST_ITEM = {
+  id: 1,
+  name: "Playera rosa",
+  productId: 1,
+  quantity: 40,
+  images: {
+    id: 1,
+    name: "image.png",
+  },
+  productName: "Playera",
+  productPrice: 150,
+  productWholesalePrice: 130,
+};
+
 export const IMAGE = {
   id: 1,
   name: "Test Image",
@@ -41,6 +55,23 @@ export const CUSTOMIZATION = {
   title: "Al frente",
   maxSize: 20,
   minSize: 0,
+};
+
+export const PERSONALIZATION = {
+  quantity: 3,
+  customizationId: 1,
+  images: [{ name: "img.jpg", size: 20 }],
+  imageSize: 0,
+};
+
+export const CART_ITEM = {
+  id: 1,
+  name: "Test Item",
+  productId: 1,
+  quantity: 20,
+  personalizations: [PERSONALIZATION],
+  images: [],
+  customizations: [],
 };
 
 export const ELEMENT_CARD = {
@@ -80,6 +111,19 @@ export const PRODUCT_DATA = {
   formTitle: "product-form-title",
 };
 
+export const PRODUCT_PAGE = {
+  name: "product-page",
+  productData: "product-data_{id}",
+  productTabs: "product_tabs",
+  variantTabHeader: "variant_tab-header",
+  variantTabPanel: "variant_tab-panel",
+  customizationTabHeader: "customization_tab-header",
+  customizationTabPanel: "customization_tab-panel",
+  customizationTabContent: "customizations_tab-content",
+  variantList: "variant-list",
+  productList: "product-list",
+};
+
 export const SELECTORS = {
   loader: "loader",
   searchBar: "search-bar",
@@ -97,6 +141,9 @@ export const VARIANT_SELECTORS = {
   nameInput: "variant-data_name-input",
   quantityInput: "variant-data_quantity-input",
   imageUploader: "variant-image-uploader",
+  variantList: "variant-item_list",
+  addProduct: "add-products_button",
+  removeProduct: "remove-products_button",
 };
 
 export const CUSTOMIZATION_SELECTORS = {
@@ -113,6 +160,7 @@ export const CUSTOMIZATION_SELECTORS = {
   tabContent: "customizations_tab-content",
   new: "new-customization",
   grid: "customizations_grid",
+  personalizationList: "personalization_list",
 };
 
 export const AUTH_SELECTORS = {
@@ -128,4 +176,13 @@ export const AUTH_SELECTORS = {
   toMailTitle: "to-mail_title",
   toMailDescription: "to-mail_description",
   toMailLink: "to-mail_link",
+};
+
+export const CART_SELECTORS = {
+  page: "cart_page",
+  totalPrice: "total-product_price",
+  list: "cart_list",
+  add: "add-to-cart",
+  remove: "remove-from-cart",
+  cartTag: "cart-total_badge",
 };

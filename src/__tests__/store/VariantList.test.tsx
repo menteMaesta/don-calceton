@@ -5,6 +5,13 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import VariantList from "routes/Store/VariantList/VariantList";
 import Store from "routes/Store/Store";
 import { ROUTES } from "helpers/constants";
+import {
+  VARIANT_LIST_ITEM,
+  PERSONALIZATION,
+  SELECTORS,
+  VARIANT_SELECTORS,
+  CART_SELECTORS,
+} from "helpers/test";
 
 describe("VariantList", () => {
   test("renders empty state when no variants are available", async () => {
@@ -26,7 +33,7 @@ describe("VariantList", () => {
         </SnackbarProvider>
       </React.StrictMode>
     );
-    const emptyState = await waitFor(() => getByTestId("empty-state"));
+    const emptyState = await waitFor(() => getByTestId(SELECTORS.emptyState));
     expect(emptyState).toBeInTheDocument();
   });
 
@@ -38,30 +45,11 @@ describe("VariantList", () => {
         loader: () => ({
           variants: [
             {
-              id: 1,
-              name: "Playera rosa",
-              productId: 1,
-              quantity: 40,
-              images: {
-                id: 1,
-                name: "sxfqazosknhlfivfpredg3af.png",
-              },
-              productName: "Playera",
-              productPrice: 150,
-              productWholesalePrice: 130,
+              ...VARIANT_LIST_ITEM,
             },
             {
+              ...VARIANT_LIST_ITEM,
               id: 2,
-              name: "Playera roja",
-              productId: 1,
-              quantity: 20,
-              images: {
-                id: 2,
-                name: "izuuuhbsxgt2n4q69humca8m.png",
-              },
-              productName: "Playera",
-              productPrice: 150,
-              productWholesalePrice: 130,
             },
           ],
           cart: [],
@@ -80,7 +68,9 @@ describe("VariantList", () => {
       </React.StrictMode>
     );
 
-    const variantList = await waitFor(() => getByTestId("variant-item_list"));
+    const variantList = await waitFor(() =>
+      getByTestId(VARIANT_SELECTORS.variantList)
+    );
     expect(variantList).toBeInTheDocument();
     expect(variantList.children).toHaveLength(2);
   });
@@ -89,18 +79,7 @@ describe("VariantList", () => {
     const cart = [
       {
         id: 1,
-        personalizations: [
-          {
-            quantity: 1,
-            type: 0,
-            images: [],
-          },
-          {
-            quantity: 1,
-            type: 0,
-            images: [],
-          },
-        ],
+        personalizations: [PERSONALIZATION, PERSONALIZATION],
       },
     ];
     const routes = [
@@ -133,10 +112,12 @@ describe("VariantList", () => {
       </React.StrictMode>
     );
 
-    const variantList = await waitFor(() => getByTestId("variant-item_list"));
-    const addButtonContainer = getByTestId("add-products_button");
-    const removeItem = getByTestId("remove-from-cart");
-    const cartTag = getByTestId("cart-total_badge");
+    const variantList = await waitFor(() =>
+      getByTestId(VARIANT_SELECTORS.variantList)
+    );
+    const addButtonContainer = getByTestId(VARIANT_SELECTORS.addProduct);
+    const removeItem = getByTestId(CART_SELECTORS.remove);
+    const cartTag = getByTestId(CART_SELECTORS.cartTag);
 
     expect(variantList).toBeInTheDocument();
     expect(addButtonContainer).toBeInTheDocument();

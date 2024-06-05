@@ -1,5 +1,6 @@
 import { render, fireEvent } from "@testing-library/react";
 import AddProductButton from "storeComponents/AddProductButton";
+import { CART_SELECTORS } from "helpers/test";
 
 describe("AddProductButton", () => {
   it("should call onAddToCart when clicked", () => {
@@ -8,11 +9,11 @@ describe("AddProductButton", () => {
       <AddProductButton onAddToCart={onAddToCart} onRemoveFromCart={vi.fn()} />
     );
 
-    const button = getByTestId("add-to-cart");
+    const button = getByTestId(CART_SELECTORS.add);
     fireEvent.click(button);
 
     expect(onAddToCart).toHaveBeenCalled();
-    expect(queryByTestId("remove-from-cart")).not.toBeInTheDocument();
+    expect(queryByTestId(CART_SELECTORS.remove)).not.toBeInTheDocument();
   });
 
   it("should call onRemoveFromCart when clicked and inCart is true", () => {
@@ -25,7 +26,7 @@ describe("AddProductButton", () => {
       />
     );
 
-    const button = getByTestId("remove-from-cart");
+    const button = getByTestId(CART_SELECTORS.remove);
     fireEvent.click(button);
 
     expect(onRemoveFromCart).toHaveBeenCalled();

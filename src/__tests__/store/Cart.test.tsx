@@ -4,42 +4,13 @@ import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 import Cart from "routes/Store/Cart/Cart";
+import { CART_ITEM, CART_SELECTORS, SELECTORS } from "helpers/test";
 
 describe("Cart component", () => {
   const mockCartItems = [
-    {
-      id: 1,
-      personalizations: [
-        {
-          quantity: 3,
-          customizationId: 0,
-          images: [{}],
-          imageSize: 0,
-        },
-      ],
-    },
-    {
-      id: 2,
-      personalizations: [
-        {
-          quantity: 2,
-          customizationId: 0,
-          images: [{}],
-          imageSize: 0,
-        },
-      ],
-    },
-    {
-      id: 3,
-      personalizations: [
-        {
-          quantity: 2,
-          customizationId: 3,
-          images: [],
-          imageSize: 15.2,
-        },
-      ],
-    },
+    { ...CART_ITEM, id: 1 },
+    { ...CART_ITEM, id: 2 },
+    { ...CART_ITEM, id: 3 },
   ];
 
   test("displays cart items", async () => {
@@ -63,9 +34,9 @@ describe("Cart component", () => {
       </React.StrictMode>
     );
 
-    const cartPage = await waitFor(() => getByTestId("cart_page"));
-    const totalPrice = getByTestId("total-product_price");
-    const cartList = getByTestId("cart_list");
+    const cartPage = await waitFor(() => getByTestId(CART_SELECTORS.page));
+    const totalPrice = getByTestId(CART_SELECTORS.totalPrice);
+    const cartList = getByTestId(CART_SELECTORS.list);
 
     expect(cartPage).toBeInTheDocument();
     expect(totalPrice).toBeInTheDocument();
@@ -97,7 +68,7 @@ describe("Cart component", () => {
       </React.StrictMode>
     );
 
-    const emptyElement = await waitFor(() => getByTestId("empty-state"));
+    const emptyElement = await waitFor(() => getByTestId(SELECTORS.emptyState));
     expect(emptyElement).toBeInTheDocument();
   });
 });

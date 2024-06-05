@@ -3,30 +3,20 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import CartItem from "src/storeComponents/CartItem";
+import {
+  CART_ITEM,
+  ELEMENT_CARD,
+  SLIDER_IMAGE_CARD,
+  CUSTOMIZATION_SELECTORS,
+} from "helpers/test";
 
 describe("CartItem", () => {
-  const item = {
-    id: 1,
-    name: "Test Item",
-    productId: 1,
-    quantity: 20,
-    personalizations: [
-      {
-        quantity: 5,
-        customizationId: 1,
-        images: [{ name: "img.jpg", size: 20 }],
-        imageSize: 0,
-      },
-    ],
-    images: [],
-    customizations: [],
-  };
   const onRemoveMock = vi.fn();
 
   const router = createMemoryRouter([
     {
       index: true,
-      element: <CartItem item={item} onRemove={onRemoveMock} />,
+      element: <CartItem item={CART_ITEM} onRemove={onRemoveMock} />,
     },
   ]);
 
@@ -41,20 +31,32 @@ describe("CartItem", () => {
   });
 
   it("renders the VariantImageSlider component", () => {
-    const variantTitle = screen.getByTestId(`variant-name_${item.id}`);
-    const imageSlider = screen.getByTestId("slider-image_default");
-    const personalizationList = screen.getByTestId("personalization_list");
+    const variantTitle = screen.getByTestId(
+      ELEMENT_CARD.cardName
+        .replace("{type}", "variant")
+        .replace("{id}", `${CART_ITEM.id}`)
+    );
+    const imageSlider = screen.getByTestId(
+      SLIDER_IMAGE_CARD.image.replace("{id}", "default")
+    );
+    const personalizationList = screen.getByTestId(
+      CUSTOMIZATION_SELECTORS.personalizationList
+    );
 
     expect(variantTitle).toBeInTheDocument();
     expect(imageSlider).toBeInTheDocument();
     expect(personalizationList).toBeInTheDocument();
     expect(personalizationList.children.length).toBeGreaterThan(
-      item.personalizations.length
+      CART_ITEM.personalizations.length
     );
   });
 
   it("calls the onRemove function when remove button is clicked", () => {
-    const removeButton = screen.getByTestId(`variant-remove_${item.id}`);
+    const removeButton = screen.getByTestId(
+      ELEMENT_CARD.remove
+        .replace("{type}", "variant")
+        .replace("{id}", `${CART_ITEM.id}`)
+    );
     fireEvent.click(removeButton);
     expect(onRemoveMock).toHaveBeenCalledTimes(1);
   });

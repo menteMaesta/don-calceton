@@ -8,33 +8,26 @@ import {
 } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
 import Products from "routes/Products/Products";
 import ProductDetails from "routes/Products/Product";
-
 import { ROUTES } from "helpers/constants";
+import {
+  PRODUCT,
+  VARIANT,
+  IMAGE,
+  SELECTORS,
+  PRODUCT_PAGE,
+  PRODUCT_DATA,
+  ELEMENT_CARD,
+} from "helpers/test";
 
 const products = [
   {
-    id: 4,
-    name: "Playera",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-    price: 100,
-    wholesalePrice: 80,
+    ...PRODUCT,
     variants: [
       {
-        id: 3,
-        name: "Playera azul",
-        productId: 4,
-        quantity: 20,
-        images: [
-          {
-            id: 3,
-            name: "znmjcbhhrote59v2jnivy7gu.png",
-            variantId: 3,
-          },
-        ],
+        ...VARIANT,
+        images: [IMAGE],
       },
     ],
   },
@@ -62,7 +55,7 @@ describe("Products", () => {
     );
 
     const searchBarElement = await waitFor(() =>
-      screen.getByTestId("search-bar")
+      screen.getByTestId(SELECTORS.searchBar)
     );
     expect(searchBarElement).toBeInTheDocument();
   });
@@ -87,7 +80,9 @@ describe("Products", () => {
       </React.StrictMode>
     );
 
-    const productList = await waitFor(() => screen.getByTestId("product-list"));
+    const productList = await waitFor(() =>
+      screen.getByTestId(PRODUCT_PAGE.productList)
+    );
     const productCards = screen.getAllByTestId(/product-link_/);
 
     expect(productList).toBeInTheDocument();
@@ -120,7 +115,7 @@ describe("Products", () => {
     );
 
     const emptyStateElement = await waitFor(() =>
-      screen.getByTestId("empty-state")
+      screen.getByTestId(SELECTORS.emptyState)
     );
 
     expect(emptyStateElement).toBeInTheDocument();
@@ -153,7 +148,11 @@ describe("Products", () => {
       </React.StrictMode>
     );
     const productCard = await waitFor(() =>
-      screen.getByTestId(`product-link_${products[0].id}`)
+      screen.getByTestId(
+        ELEMENT_CARD.elementCard
+          .replace("{type}", "product")
+          .replace("{id}", `${products[0].id}`)
+      )
     );
 
     expect(productCard).toBeInTheDocument();
@@ -162,8 +161,8 @@ describe("Products", () => {
     );
     await userEvent.click(productCard);
 
-    await waitFor(() => screen.getByTestId("product-page"));
-    expect(screen.getByTestId("product-data_name").innerHTML).toEqual(
+    await waitFor(() => screen.getByTestId(PRODUCT_PAGE.name));
+    expect(screen.getByTestId(PRODUCT_DATA.name).innerHTML).toEqual(
       products[0].name
     );
   });
