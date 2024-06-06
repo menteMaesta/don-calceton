@@ -1,13 +1,21 @@
-import { Outlet, Link, NavLink, useLoaderData } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  NavLink,
+  useLoaderData,
+  useMatch,
+} from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
 import { VariantListItem } from "helpers/customTypes";
+import BackButton from "src/components/BackButton";
 
 export default function Store() {
   const { totalItems } = useLoaderData() as {
     cart: VariantListItem[];
     totalItems: number;
   };
+  const isStore = useMatch(ROUTES.STORE);
 
   return (
     <div
@@ -29,18 +37,21 @@ export default function Store() {
           "dark:shadow-slate-950"
         }
       >
-        <Link to={ROUTES.STORE} className={"flex items-center space-x-2"}>
-          <i
-            className={
-              "fa-solid fa-socks " +
-              "text-xl text-slate-700 " +
-              "ml-2 dark:text-slate-300 "
-            }
-          />
-          <p className="font-medium text-slate-700 dark:text-slate-200">
-            {es.store} {es.donCalceton}
-          </p>
-        </Link>
+        {isStore && (
+          <Link to={ROUTES.STORE} className={"flex items-center space-x-2"}>
+            <i
+              className={
+                "fa-solid fa-socks " +
+                "text-xl text-slate-700 " +
+                "ml-2 dark:text-slate-300 "
+              }
+            />
+            <p className="font-medium text-slate-700 dark:text-slate-200">
+              {es.store} {es.donCalceton}
+            </p>
+          </Link>
+        )}
+        {!isStore && <BackButton />}
         <NavLink
           to={ROUTES.CART}
           className={({ isActive, isPending, isTransitioning }) =>
