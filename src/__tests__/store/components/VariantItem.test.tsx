@@ -5,6 +5,7 @@ import {
   ELEMENT_CARD,
   PRODUCT_CARD,
   VARIANT_SELECTORS,
+  SLIDER_IMAGE_CARD,
   CART_SELECTORS,
 } from "helpers/test";
 import { es } from "helpers/strings";
@@ -21,7 +22,13 @@ describe("VariantItem", () => {
     const title = getByTestId(
       ELEMENT_CARD.elementCard
         .replace("{type}", "variant")
-        .replace("{id}", "variant-item")
+        .replace(
+          "{id}",
+          VARIANT_SELECTORS.itemStoreCard.replace(
+            "{id}",
+            VARIANT_LIST_ITEM.id.toString()
+          )
+        )
     );
     expect(title).toBeInTheDocument();
     expect(title).toHaveTextContent(VARIANT_LIST_ITEM.name);
@@ -67,7 +74,9 @@ describe("VariantItem", () => {
         onRemoveFromCart={vi.fn()}
       />
     );
-    const image = getByTestId(VARIANT_SELECTORS.itemImage.replace("{id}", "1"));
+    const image = getByTestId(
+      SLIDER_IMAGE_CARD.image.replace("{id}", "default")
+    );
     expect(image).toBeInTheDocument();
   });
 
@@ -84,7 +93,7 @@ describe("VariantItem", () => {
       />
     );
     const image = getByTestId(
-      VARIANT_SELECTORS.itemImage.replace("{id}", "default")
+      SLIDER_IMAGE_CARD.image.replace("{id}", "default")
     );
     expect(image).toBeInTheDocument();
   });

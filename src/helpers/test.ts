@@ -156,13 +156,13 @@ export const VARIANT_SELECTORS = {
   variantList: "variant-item_list",
   addProduct: "add-products_button",
   removeProduct: "remove-products_button",
-  itemImage: "store-item_{id}",
   newName: "new-variant-name_input",
   newQuantity: "new-variant-quantity_input",
   newSubmit: "new-variant-submit_button",
   newCancel: "new-variant-cancel_button",
   page: "variant-page",
   data: "variant-data_{id}",
+  itemStoreCard: "store-{id}",
 };
 
 export const CUSTOMIZATION_SELECTORS = {
