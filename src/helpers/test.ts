@@ -139,6 +139,8 @@ export const SELECTORS = {
   labelWrapper: "label_wrapper",
   formItemTitle: "form-item_label-title",
   formItemChildren: "form-item_label-children",
+  imageList: "image-list",
+  imageCard: "image-card_{id}",
 };
 
 export const VARIANT_SELECTORS = {
@@ -155,6 +157,12 @@ export const VARIANT_SELECTORS = {
   addProduct: "add-products_button",
   removeProduct: "remove-products_button",
   itemImage: "store-item_{id}",
+  newName: "new-variant-name_input",
+  newQuantity: "new-variant-quantity_input",
+  newSubmit: "new-variant-submit_button",
+  newCancel: "new-variant-cancel_button",
+  page: "variant-page",
+  data: "variant-data_{id}",
 };
 
 export const CUSTOMIZATION_SELECTORS = {

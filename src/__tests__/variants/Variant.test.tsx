@@ -4,24 +4,13 @@ import SnackbarProvider from "react-simple-snackbar";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 import Variant from "routes/Variants/Variant";
+import { VARIANT, IMAGE, SELECTORS, VARIANT_SELECTORS } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("Variant", () => {
   const variant = {
-    id: 2,
-    name: "Playera roja",
-    productId: 4,
-    quantity: 20,
-    createdAt: "2024-03-25T21:02:00.452+00:00",
-    updatedAt: "2024-03-25T21:02:00.452+00:00",
-    images: [
-      {
-        id: 2,
-        name: "image.png",
-        variantId: 2,
-        createdAt: "2024-03-25T21:02:00.478+00:00",
-        updatedAt: "2024-03-25T21:02:00.478+00:00",
-      },
-    ],
+    ...VARIANT,
+    images: [IMAGE],
   };
 
   it("renders the component without errors", async () => {
@@ -49,11 +38,17 @@ describe("Variant", () => {
       </React.StrictMode>
     );
 
-    const variantPage = await waitFor(() => getByTestId("variant-page"));
-    const variantDetails = getByTestId(`variant-data_${variant.id}`);
-    const newImageButton = getByLabelText("Imagenes (PNG, JPG)");
-    const imageList = getByTestId("image-list");
-    const imageCard = getByTestId(`image-card_${variant.images[0].id}`);
+    const variantPage = await waitFor(() =>
+      getByTestId(VARIANT_SELECTORS.page)
+    );
+    const variantDetails = getByTestId(
+      VARIANT_SELECTORS.data.replace("{id}", `${variant.id}`)
+    );
+    const newImageButton = getByLabelText(es.imagesPngJpg);
+    const imageList = getByTestId(SELECTORS.imageList);
+    const imageCard = getByTestId(
+      SELECTORS.imageCard.replace("{id}", `${variant.images[0].id}`)
+    );
 
     expect(variantPage).toBeInTheDocument();
     expect(variantDetails).toBeInTheDocument();
@@ -93,9 +88,7 @@ describe("Variant", () => {
       </React.StrictMode>
     );
 
-    const newImageButton = await waitFor(() =>
-      getByLabelText("Imagenes (PNG, JPG)")
-    );
+    const newImageButton = await waitFor(() => getByLabelText(es.imagesPngJpg));
 
     expect(newImageButton).toBeInTheDocument();
     expect(newImageButton).toHaveAttribute("type", "file");
@@ -133,7 +126,9 @@ describe("Variant", () => {
     );
 
     const imageCard = await waitFor(() =>
-      getByTestId(`image-card_${variant.images[0].id}`)
+      getByTestId(
+        SELECTORS.imageCard.replace("{id}", `${variant.images[0].id}`)
+      )
     );
     const imageElement = getByAltText(variant.images[0].name);
 

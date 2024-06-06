@@ -4,6 +4,8 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import SnackbarProvider from "react-simple-snackbar";
 import NewVariant from "routes/Variants/NewVariant";
 import { ROUTES } from "helpers/constants";
+import { VARIANT_SELECTORS } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("NewVariant", () => {
   const routes = [
@@ -30,12 +32,12 @@ describe("NewVariant", () => {
     const newVariantComponent = await waitFor(() =>
       getByTestId("new-variant_page")
     );
-    const newVariantTitle = getByText("Nueva variante");
-    const variantNameInput = getByTestId("new-variant-name_input");
-    const variantQuantityInput = getByTestId("new-variant-quantity_input");
-    const variantImagesInput = getByTestId("variant-image-uploader");
-    const submitButton = getByTestId("new-variant-submit_button");
-    const cancelButton = getByTestId("new-variant-cancel_button");
+    const newVariantTitle = getByText(es.variants.new);
+    const variantNameInput = getByTestId(VARIANT_SELECTORS.newName);
+    const variantQuantityInput = getByTestId(VARIANT_SELECTORS.newQuantity);
+    const variantImagesInput = getByTestId(VARIANT_SELECTORS.imageUploader);
+    const submitButton = getByTestId(VARIANT_SELECTORS.newSubmit);
+    const cancelButton = getByTestId(VARIANT_SELECTORS.newCancel);
 
     expect(newVariantComponent).toBeInTheDocument();
     expect(newVariantTitle).toBeInTheDocument();
