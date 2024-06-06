@@ -22,7 +22,13 @@ export default function AddProductButton({
         <Button
           onClick={onAddToCart}
           data-testid="add-to-cart"
-          className="dark:!bg-slate-500 dark:hover:!bg-slate-600"
+          className={
+            "bg-slate-800 hover:bg-slate-700 " +
+            "active:bg-slate-700 " +
+            "dark:!bg-slate-500 " +
+            "dark:hover:!bg-slate-600 " +
+            "dark:active:!bg-slate-600"
+          }
         >
           {es.add}
         </Button>
@@ -30,7 +36,13 @@ export default function AddProductButton({
         <Button
           onClick={onRemoveFromCart}
           data-testid="remove-from-cart"
-          className="dark:!bg-slate-500 dark:hover:!bg-slate-600"
+          className={
+            "bg-slate-800 hover:bg-slate-700 " +
+            "active:bg-slate-700 " +
+            "dark:!bg-slate-500 " +
+            "dark:hover:!bg-slate-600 " +
+            "dark:active:!bg-slate-600"
+          }
         >
           Quitar
         </Button>

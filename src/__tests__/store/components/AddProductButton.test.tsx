@@ -31,4 +31,30 @@ describe("AddProductButton", () => {
 
     expect(onRemoveFromCart).toHaveBeenCalled();
   });
+
+  it("should have correct dark and light styles", () => {
+    const onRemoveFromCart = vi.fn();
+    const { getByTestId } = render(
+      <AddProductButton
+        onAddToCart={vi.fn()}
+        onRemoveFromCart={onRemoveFromCart}
+        inCart
+      />
+    );
+
+    const button = getByTestId(CART_SELECTORS.remove);
+    const lightStyles = [
+      "bg-slate-800",
+      "hover:bg-slate-700",
+      "active:bg-slate-700",
+    ];
+    const darkStyles = [
+      "dark:!bg-slate-500",
+      "dark:hover:!bg-slate-600",
+      "dark:active:!bg-slate-600",
+    ];
+
+    expect(button).toHaveClass(lightStyles.join(" "));
+    expect(button).toHaveClass(darkStyles.join(" "));
+  });
 });
