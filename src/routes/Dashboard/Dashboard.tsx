@@ -1,8 +1,10 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useMatch } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
+import BackButton from "components/BackButton";
 
 export default function Dashboard() {
+  const isDashboard = useMatch(ROUTES.DASHBOARD);
   return (
     <div
       className={
@@ -23,18 +25,21 @@ export default function Dashboard() {
           "dark:shadow-slate-950"
         }
       >
-        <Link to={ROUTES.DASHBOARD} className={"flex items-center space-x-2"}>
-          <i
-            className={
-              "fa-solid fa-socks " +
-              "text-xl text-slate-700 " +
-              "ml-2 dark:text-slate-300 "
-            }
-          />
-          <p className="font-medium text-slate-700 dark:text-slate-200">
-            {es.donCalceton}
-          </p>
-        </Link>
+        {isDashboard && (
+          <Link to={ROUTES.DASHBOARD} className={"flex items-center space-x-1"}>
+            <i
+              className={
+                "fa-solid fa-socks " +
+                "text-xl text-slate-700 " +
+                "ml-3 dark:text-slate-300 "
+              }
+            />
+            <p className="font-medium text-slate-700 dark:text-slate-200">
+              {es.donCalceton}
+            </p>
+          </Link>
+        )}
+        {!isDashboard && <BackButton />}
         <Link
           to={ROUTES.STORE}
           className={"flex items-center " + "space-x-2 pr-2 "}
