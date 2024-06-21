@@ -1,0 +1,103 @@
+.dino {
+  animation: bounce 2s ease-in infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.dino #back-leg {
+  animation: back-leg 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.dino #front-leg {
+  animation: front-leg 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.dino #back-back-leg {
+  animation: back-back-leg 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.dino #front-back-leg {
+  animation: front-back-leg 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.dino #hair {
+  animation: hair 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-15%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes back-leg {
+  0%,
+  100% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(-5deg);
+    translate: 0px -0.1px;
+  }
+}
+
+@keyframes front-leg {
+  0%,
+  100% {
+    transform: rotateZ(0deg);
+    translate: 0px 0px;
+  }
+  50% {
+    transform: rotateZ(-8deg);
+    translate: 0px -0.1px;
+  }
+}
+
+@keyframes back-back-leg {
+  0%,
+  100% {
+    transform: rotateZ(0deg);
+    translate: 0px 0px;
+  }
+  50% {
+    transform: rotateZ(8deg);
+    translate: -0.1px 0px;
+  }
+}
+
+@keyframes front-back-leg {
+  0%,
+  100% {
+    transform: rotateZ(0deg);
+    translate: 0px 0px;
+  }
+  50% {
+    transform: rotateZ(12deg);
+    translate: -0.3px -0.09px;
+  }
+}
+
+@keyframes hair {
+  0%,
+  100% {
+    transform: translateY(0deg);
+    translate: 0px 0px;
+  }
+  50% {
+    transform: translateY(10%);
+  }
+}

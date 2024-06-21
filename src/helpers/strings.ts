@@ -72,4 +72,5 @@ export const es = {
   imagesPngJpg: "Imagenes (PNG, JPG)",
   filterByProduct: "Filtrar por producto",
   add: "Agregar",
+  loading: "Cargando...",
 };
