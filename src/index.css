@@ -1,3 +1,18 @@
+@import url("components/DinoSvg/DinoSvg.css");
 @tailwind base;
 @tailwind components;
+@layer components {
+  [data-reach-accordion-button][aria-expanded="true"] .accordion {
+    transform: "rotate(180deg)";
+  }
+  [data-reach-tab][data-selected] {
+    background-color: theme("colors.white");
+    border-width: 1px;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: theme("colors.slate.600");
+      border-color: theme("colors.slate.600");
+    }
+  }
+}
 @tailwind utilities;

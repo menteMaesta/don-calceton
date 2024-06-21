@@ -1,3 +1,6 @@
+import DinoSvg from "components/DinoSvg/DinoSvg";
+import { es } from "helpers/strings";
+
 type Props = { className?: string };
 
 export default function Loader({ className }: Props) {
@@ -5,19 +8,22 @@ export default function Loader({ className }: Props) {
     <div
       className={
         "w-screen h-screen " +
-        "flex items-center " +
+        "flex items-center flex-col " +
         "justify-center overflow-hidden " +
         className
       }
       data-testid="loader"
     >
-      <i
+      <DinoSvg className="dino w-32" />
+      <p
         className={
-          "fa-solid fa-rotate-right " +
-          "text-3xl motion-safe:animate-spin " +
-          "text-slate-400"
+          "text-lg text-slate-400 " +
+          "font-light animate-pulse " +
+          "tracking-wide dark:text-slate-400 "
         }
-      />
+      >
+        {es.loading}
+      </p>
     </div>
   );
 }

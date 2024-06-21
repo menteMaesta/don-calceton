@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
 import SnackbarProvider from "react-simple-snackbar";
-import "tailwindcss/tailwind.css";
+import "src/index.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
