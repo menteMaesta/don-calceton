@@ -2,7 +2,7 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
@@ -10,21 +10,5 @@ export default {
       },
     },
   },
-  plugins: [
-    function ({ addComponents, theme }) {
-      addComponents({
-        "[data-reach-accordion-button][aria-expanded=true] .accordion": {
-          transform: "rotate(180deg)",
-        },
-        "[data-reach-tab][data-selected]": {
-          backgroundColor: theme("colors.white"),
-          borderWidth: "1px",
-          "@media (prefers-color-scheme: dark)": {
-            backgroundColor: theme("colors.slate.600"),
-            borderColor: theme("colors.slate.600"),
-          },
-        },
-      });
-    },
-  ],
+  plugins: [],
 };
