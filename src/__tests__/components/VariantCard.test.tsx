@@ -25,7 +25,9 @@ describe("VariantCard", () => {
     );
 
     const variantName = screen.getByTestId(
-      VARIANT_SELECTORS.name.replace("{id}", `${variant.id}`)
+      ELEMENT_CARD.cardName
+        .replace("{type}", "variant")
+        .replace("{id}", `${variant.id}`)
     );
     const variantQuantity = screen.getByTestId(
       VARIANT_SELECTORS.quantity.replace("{id}", `${variant.id}`)
@@ -34,13 +36,6 @@ describe("VariantCard", () => {
       SLIDER_IMAGE_CARD.image.replace("{id}", `${variant.images[0].id}`)
     );
 
-    expect(
-      screen.queryByTestId(
-        ELEMENT_CARD.cardName
-          .replace("{type}", "variant")
-          .replace("{id}", `${variant.id}`)
-      )
-    ).not.toBeInTheDocument();
     expect(variantName).toBeInTheDocument();
     expect(variantName).toHaveTextContent(variant.name);
     expect(variantQuantity).toBeInTheDocument();

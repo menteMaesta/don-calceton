@@ -20,22 +20,12 @@ export default function VariantCard({ variant, onRemove }: Props) {
         ":productId",
         productId
       )}${ROUTES.VARIANT.replace(":variantId", `${variant.id}`)}`}
+      title={variant.name}
       footer={
-        <div className="flex px-2">
-          <p
-            className="w-3/5 text-lg font-semibold"
-            data-testid={`variant-card-name_${variant.id}`}
-          >
-            {variant.name}
-          </p>
-          <p
-            className="w-2/5 pt-2 px-2 mb-2 text-right"
-            data-testid={`variant-quantity_${variant.id}`}
-          >
-            <span className="text-sm">stock: </span>
-            {variant.quantity}
-          </p>
-        </div>
+        <p data-testid={`variant-quantity_${variant.id}`}>
+          <span>stock: </span>
+          {variant.quantity}
+        </p>
       }
       images={variant.images}
     />
