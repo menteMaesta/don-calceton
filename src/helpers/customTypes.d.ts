@@ -71,6 +71,8 @@ export type PersonalizationType = {
   imageSize: number;
 };
 
+export type OrderStatus = "ACTIVE" | "IN_PROGRESS" | "DONE";
+
 export interface OrderImage {
   name: string;
   size: number;

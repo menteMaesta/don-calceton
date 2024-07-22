@@ -61,6 +61,10 @@ export const es = {
       "En tu bandeja de correo te dejamos las instrucciones para restablecer tu contraseña",
     toBegining: "Ir al inicio",
   },
+  orders: {
+    sendSuccess: "Pedido enviado correctamente",
+    emptyFields: "Algunos campos están vacíos, por favor revisa tu pedido",
+  },
   name: "Nombre",
   cancel: "Cancelar",
   save: "Guardar",
