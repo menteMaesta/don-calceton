@@ -214,6 +214,12 @@ const sendOrderImages = async (
   }
 };
 
+const deleteOrderItems = async () => {
+  const db = await openDB("don-calceton-cart");
+  const transaction = db.transaction("orderItems", "readwrite");
+  await Promise.all([transaction.store.clear(), transaction.done]);
+};
+
 const handleSubmitOrder = async () => {
   const db = await openDB("don-calceton-cart");
   const orderItems = await db.getAll("orderItems");
@@ -238,6 +244,8 @@ const handleSubmitOrder = async () => {
         }
       }
     }
+    //delete all order items
+    await deleteOrderItems();
     return { message: es.orders.sendSuccess };
   }
   return {
