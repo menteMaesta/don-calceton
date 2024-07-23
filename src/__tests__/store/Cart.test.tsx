@@ -5,6 +5,7 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "helpers/constants";
 import Cart from "routes/Store/Cart/Cart";
 import { CART_ITEM, CART_SELECTORS, SELECTORS } from "helpers/test";
+import { es } from "helpers/strings";
 
 describe("Cart component", () => {
   const mockCartItems = [
@@ -37,14 +38,16 @@ describe("Cart component", () => {
     const cartPage = await waitFor(() => getByTestId(CART_SELECTORS.page));
     const totalPrice = getByTestId(CART_SELECTORS.totalPrice);
     const cartList = getByTestId(CART_SELECTORS.list);
+    const bottomBar = getByTestId(CART_SELECTORS.bottomBar);
 
     expect(cartPage).toBeInTheDocument();
     expect(totalPrice).toBeInTheDocument();
     expect(totalPrice.textContent).toBe(
-      `Precio total $${loaderData.totalPrice}`
+      `${es.orders.totalPrice}${loaderData.totalPrice}`
     );
     expect(cartList).toBeInTheDocument();
     expect(cartList.children.length).toBe(mockCartItems.length);
+    expect(bottomBar).toBeInTheDocument();
   });
 
   test("displays empty view", async () => {

@@ -64,6 +64,8 @@ export const es = {
   orders: {
     sendSuccess: "Pedido enviado correctamente",
     emptyFields: "Algunos campos están vacíos, por favor revisa tu pedido",
+    buy: "Comprar",
+    totalPrice: "Precio total $",
   },
   name: "Nombre",
   cancel: "Cancelar",

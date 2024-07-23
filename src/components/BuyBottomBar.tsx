@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 import Button from "components/Button";
+import { es } from "helpers/strings";
 
 export default function BuyBottomBar({
   totalPrice,
@@ -19,6 +20,7 @@ export default function BuyBottomBar({
         " px-4 z-[1]" +
         " dark:bg-slate-900 dark:border-slate-950"
       }
+      data-testid="bottom-bar-container"
     >
       <p
         className=" font-bold dark:text-slate-200"
@@ -31,9 +33,10 @@ export default function BuyBottomBar({
             "mr-2 dark:text-slate-300"
           }
         />
-        Precio total $<span>{totalPrice}</span>
+        {es.orders.totalPrice}
+        {totalPrice}
       </p>
-      <Button onClick={onSubmitOrder}>Comprar</Button>
+      <Button onClick={onSubmitOrder}>{es.orders.buy}</Button>
     </div>
   );
 }
