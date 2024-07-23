@@ -15,7 +15,7 @@ export default function Select<
           "dark:!shadow-none dark:hover:!border-slate-500 " +
           "dark:focus-within:!border-slate-500",
         menu: () =>
-          "dark:!bg-slate-800 " +
+          "dark:!bg-slate-800 !z-50 " +
           "dark:!border " +
           "dark:!border-slate-500 " +
           "dark:!text-slate-300",

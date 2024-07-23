@@ -1,15 +1,26 @@
-import { MouseEvent } from "react";
-import { useLoaderData, useSubmit } from "react-router-dom";
-import { CartItemType } from "helpers/customTypes";
+import { MouseEvent, useEffect } from "react";
+import { useLoaderData, useSubmit, useActionData } from "react-router-dom";
+import { useSnackbar } from "react-simple-snackbar";
+import { CartItemType, ErrorType } from "helpers/customTypes";
 import CartItem from "storeComponents/CartItem";
 import EmptyState from "components/EmptyState";
+import BuyBottomBar from "src/components/BuyBottomBar";
 
 export default function Cart() {
+  const actionData = useActionData() as ErrorType;
   const { cart, totalPrice } = useLoaderData() as {
     cart: CartItemType[];
     totalPrice: number;
   };
   const submit = useSubmit();
+  const [openSnackbar] = useSnackbar();
+
+  useEffect(() => {
+    if (actionData?.message) {
+      openSnackbar(actionData?.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData]);
 
   const onRemoveFromCart = (
     event: MouseEvent<HTMLElement>,
@@ -22,21 +33,18 @@ export default function Cart() {
     submit(formData, { method: "post" });
   };
 
+  const onSubmitOrder = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("store", "submitOrder");
+    submit(formData, { method: "post" });
+  };
+
   return (
-    <div className="mt-11 flex flex-col w-full px-4" data-testid="cart_page">
-      <p
-        className="mt-4 font-bold dark:text-slate-200"
-        data-testid="total-product_price"
-      >
-        <i
-          className={
-            "fa-solid fa-cart-shopping " +
-            "text-xl " +
-            "mr-2 dark:text-slate-300"
-          }
-        />
-        Precio total $<span>{totalPrice}</span>
-      </p>
+    <div
+      className="mt-11 flex flex-col w-full px-4 pb-10"
+      data-testid="cart_page"
+    >
       {cart.length > 0 ? (
         <div
           data-testid="cart_list"
@@ -54,6 +62,7 @@ export default function Cart() {
       ) : (
         <EmptyState name="productos" />
       )}
+      <BuyBottomBar totalPrice={totalPrice} onSubmitOrder={onSubmitOrder} />
     </div>
   );
 }

@@ -200,6 +200,7 @@ export const AUTH_SELECTORS = {
 export const CART_SELECTORS = {
   page: "cart_page",
   totalPrice: "total-product_price",
+  bottomBar: "bottom-bar-container",
   list: "cart_list",
   add: "add-to-cart",
   remove: "remove-from-cart",

@@ -51,7 +51,7 @@ export default function CartItem({ item, onRemove }: Props) {
               "sm:absolute -top-9 " +
               "right-0 text-white " +
               "flex items-center " +
-              "sm:text-sm " +
+              "sm:text-sm bg-slate-800 " +
               "dark:!bg-slate-500 dark:hover:!bg-slate-600"
             }
             onClick={onAddPersonalization}
