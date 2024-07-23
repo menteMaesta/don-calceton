@@ -62,7 +62,7 @@ openDatabase()
         loader: hasToken,
         children: [
           {
-            index: true,
+            path: ROUTES.DASHBOARD,
             element: (
               <SuspenseWrapper>
                 <Products />
@@ -70,6 +70,12 @@ openDatabase()
             ),
             loader: getProducts,
             action: productsActions,
+            children: [
+              {
+                path: `${ROUTES.DASHBOARD}${ROUTES.ORDERS}`,
+                element: <div>Orders</div>,
+              },
+            ],
           },
           {
             path: ROUTES.NEW_PRODUCT,

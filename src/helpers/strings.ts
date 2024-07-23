@@ -66,6 +66,8 @@ export const es = {
     emptyFields: "Algunos campos están vacíos, por favor revisa tu pedido",
     buy: "Comprar",
     totalPrice: "Precio total $",
+    products: "Productos",
+    name: "Pedidos",
   },
   name: "Nombre",
   cancel: "Cancelar",
