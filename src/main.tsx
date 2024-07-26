@@ -21,6 +21,7 @@ import {
   getAllCartItems,
 } from "routes/Store/VariantList/loader";
 import { storeActions } from "routes/Store/VariantList/actions";
+import { fetchAllOrders } from "routes/Orders/loader";
 import SuspenseWrapper from "components/SuspenseWapper";
 
 openDatabase()
@@ -35,6 +36,7 @@ openDatabase()
     const EditProduct = lazy(() => import("routes/Products/EditProduct"));
     const NewVariant = lazy(() => import("routes/Variants/NewVariant"));
     const Varaint = lazy(() => import("routes/Variants/Variant"));
+    const Orders = lazy(() => import("routes/Orders/Orders"));
 
     const MainGuest = lazy(() => import("routes/Login/MainGuest"));
     const Login = lazy(() => import("routes/Login/Login"));
@@ -73,7 +75,12 @@ openDatabase()
             children: [
               {
                 path: `${ROUTES.DASHBOARD}${ROUTES.ORDERS}`,
-                element: <div>Orders</div>,
+                element: (
+                  <SuspenseWrapper>
+                    <Orders />
+                  </SuspenseWrapper>
+                ),
+                loader: fetchAllOrders,
               },
             ],
           },
