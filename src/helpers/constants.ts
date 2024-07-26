@@ -38,3 +38,9 @@ export const EMPTY_CUSTOMIZATION = {
   maxSize: 0,
   minSize: 0,
 };
+
+export const STATUS = {
+  IN_PROCESS: "IN_PROCESS",
+  DELIVERED: "DELIVERED",
+  CANCELED: "CANCELED",
+} as const;

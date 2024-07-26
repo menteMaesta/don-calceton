@@ -6,7 +6,7 @@ import {
   OrderImage,
   CartItemType,
 } from "helpers/customTypes";
-import { EMPTY_ORDER_ITEM } from "helpers/constants";
+import { EMPTY_ORDER_ITEM, STATUS } from "helpers/constants";
 import { es } from "helpers/strings";
 
 export const storeActions = async ({ request }: ActionFunctionArgs) => {
@@ -235,7 +235,7 @@ const handleSubmitOrder = async () => {
           quantity: personalization.quantity,
           customizationId: personalization.customizationId,
           imageSize: personalization.imageSize,
-          status: "ACTIVE",
+          status: STATUS.IN_PROCESS,
         });
         if (status !== 200) {
           return data.errors ? data.errors[0] : data;
