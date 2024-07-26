@@ -10,10 +10,10 @@ type ElementCardWrapperProps = {
 };
 export type Props = {
   elementId: string;
-  title?: string;
+  title?: string | ReactNode;
   children: ReactNode;
   footer: ReactNode;
-  type: "product" | "variant";
+  type: "product" | "variant" | "order";
   onRemove?: (event: MouseEvent<HTMLElement>, productId: string) => void;
   route?: string;
   className?: string;
@@ -24,6 +24,27 @@ function ElementCardWrapper({ route, ...props }: ElementCardWrapperProps) {
     return <Link to={route} {...props} />;
   } else {
     return <div {...props} />;
+  }
+}
+
+function Title({
+  title,
+  ...other
+}: {
+  title: string | ReactNode;
+  "data-testid"?: string;
+}) {
+  if (title && typeof title === "string") {
+    return (
+      <p
+        className="w-full font-semibold text-center dark:text-slate-100"
+        {...other}
+      >
+        {title}
+      </p>
+    );
+  } else {
+    return title;
   }
 }
 
@@ -58,12 +79,7 @@ export default function ElementCard({
         />
       )}
       {title && (
-        <p
-          className="w-full font-semibold text-center dark:text-slate-100"
-          data-testid={`${type}-name_${elementId}`}
-        >
-          {title}
-        </p>
+        <Title title={title} data-testid={`${type}-name_${elementId}`} />
       )}
       <div
         className={"relative h-64 " + "flex items-center " + "justify-center "}
