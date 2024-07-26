@@ -16,3 +16,14 @@ export async function getOrders(status?: OrderStatus) {
   const data = await response.json();
   return { data, status: response.status };
 }
+
+export async function getOrderImage(name: string) {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/${name}`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const file = await response.blob();
+  return { file, status: response.status };
+}
