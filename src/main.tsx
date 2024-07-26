@@ -22,6 +22,7 @@ import {
 } from "routes/Store/VariantList/loader";
 import { storeActions } from "routes/Store/VariantList/actions";
 import { fetchAllOrders } from "routes/Orders/loader";
+import { orderActions } from "routes/Orders/actions";
 import SuspenseWrapper from "components/SuspenseWapper";
 
 openDatabase()
@@ -81,6 +82,7 @@ openDatabase()
                   </SuspenseWrapper>
                 ),
                 loader: fetchAllOrders,
+                action: orderActions,
               },
             ],
           },

@@ -86,3 +86,15 @@ export interface Customization {
   updatedAt?: string;
   createdAt?: string;
 }
+
+export type OrderType = {
+  id: number;
+  customizationId: number;
+  customization: Customization;
+  variantId: number;
+  quantity: number;
+  imageSize: number;
+  status: OrderStatus;
+  images: (Omit<Image, "variantId"> & { orderId: number })[];
+  variant: Variant;
+};
