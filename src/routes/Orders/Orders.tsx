@@ -43,7 +43,7 @@ export default function Orders() {
     <Fragment>
       {/* //TODO: Add a search bar */}
       <div
-        className="grid sm:grid-cols-3 grid-cols-1 gap-3 mt-4 mx-4"
+        className="grid sm:grid-cols-3 grid-cols-1 gap-3 mt-14 mx-4"
         data-testid="orders_grid"
       >
         {orders.length > 0 &&
