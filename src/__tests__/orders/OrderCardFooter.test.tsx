@@ -1,44 +1,18 @@
 import { render, fireEvent } from "@testing-library/react";
 import OrderCardFooter from "routes/Orders/OrderCardFooter";
 import { OrderType } from "helpers/customTypes";
-import { ORDER_SELECTORS } from "helpers/test";
+import { ORDER_SELECTORS, ORDER } from "helpers/test";
 import { es } from "helpers/strings";
 
 describe("OrderCardFooter", () => {
-  const order = {
-    id: 1,
-    customizationId: 1,
-    variantId: 1,
-    imageSize: 52,
-    status: "IN_PROCESS",
-    quantity: 1,
-    images: [
-      {
-        id: 1,
-        name: "image.jpg",
-        orderId: 1,
-      },
-    ],
-    customization: {
-      title: "centro",
-    },
-    variant: {
-      name: "Playera rosa",
-      images: [
-        {
-          id: 1,
-          name: "image2.jpg",
-          variantId: 1,
-        },
-      ],
-    },
-  } as OrderType;
-
   const onDownloadImages = vi.fn();
 
   it("should render the component correctly", () => {
     const { getByText, getByTestId } = render(
-      <OrderCardFooter order={order} onDownloadImages={onDownloadImages} />
+      <OrderCardFooter
+        order={ORDER as OrderType}
+        onDownloadImages={onDownloadImages}
+      />
     );
 
     const position = getByTestId(ORDER_SELECTORS.position);
@@ -56,14 +30,19 @@ describe("OrderCardFooter", () => {
     expect(download).toBeInTheDocument();
     expect(download).toHaveTextContent(es.orders.downloadImages);
 
-    expect(getByText(order.customization.title)).toBeInTheDocument();
-    expect(getByText(`${order.imageSize} cm`)).toBeInTheDocument();
-    expect(getByText(es.orders.status[order.status])).toBeInTheDocument();
+    expect(getByText(ORDER.customization.title)).toBeInTheDocument();
+    expect(getByText(`${ORDER.imageSize} cm`)).toBeInTheDocument();
+    expect(
+      getByText(es.orders.status[ORDER.status as OrderType["status"]])
+    ).toBeInTheDocument();
   });
 
   it("should call onDownloadImages when the button is clicked", () => {
     const { getByTestId } = render(
-      <OrderCardFooter order={order} onDownloadImages={onDownloadImages} />
+      <OrderCardFooter
+        order={ORDER as OrderType}
+        onDownloadImages={onDownloadImages}
+      />
     );
 
     const download = getByTestId(ORDER_SELECTORS.download);
@@ -72,6 +51,6 @@ describe("OrderCardFooter", () => {
     fireEvent.click(download);
 
     // Assert that onDownloadImages is called with the correct arguments
-    expect(onDownloadImages).toHaveBeenCalledWith(order.images, order.id);
+    expect(onDownloadImages).toHaveBeenCalledWith(ORDER.images, ORDER.id);
   });
 });
