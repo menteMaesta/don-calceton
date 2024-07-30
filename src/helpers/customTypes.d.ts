@@ -71,7 +71,7 @@ export type PersonalizationType = {
   imageSize: number;
 };
 
-export type OrderStatus = "ACTIVE" | "IN_PROGRESS" | "DONE";
+export type OrderStatus = "IN_PROCESS" | "DELIVERED" | "CANCELED";
 
 export interface OrderImage {
   name: string;
@@ -86,3 +86,15 @@ export interface Customization {
   updatedAt?: string;
   createdAt?: string;
 }
+
+export type OrderType = {
+  id: number;
+  customizationId: number;
+  customization: Pick<Customization, "title">;
+  variantId: number;
+  quantity: number;
+  imageSize: number;
+  status: OrderStatus;
+  images: (Omit<Image, "variantId"> & { orderId: number })[];
+  variant: Pick<Variant, "name" | "images">;
+};

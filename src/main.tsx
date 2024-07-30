@@ -21,6 +21,8 @@ import {
   getAllCartItems,
 } from "routes/Store/VariantList/loader";
 import { storeActions } from "routes/Store/VariantList/actions";
+import { fetchAllOrders } from "routes/Orders/loader";
+import { orderActions } from "routes/Orders/actions";
 import SuspenseWrapper from "components/SuspenseWapper";
 
 openDatabase()
@@ -35,6 +37,7 @@ openDatabase()
     const EditProduct = lazy(() => import("routes/Products/EditProduct"));
     const NewVariant = lazy(() => import("routes/Variants/NewVariant"));
     const Varaint = lazy(() => import("routes/Variants/Variant"));
+    const Orders = lazy(() => import("routes/Orders/Orders"));
 
     const MainGuest = lazy(() => import("routes/Login/MainGuest"));
     const Login = lazy(() => import("routes/Login/Login"));
@@ -62,7 +65,7 @@ openDatabase()
         loader: hasToken,
         children: [
           {
-            index: true,
+            path: ROUTES.DASHBOARD,
             element: (
               <SuspenseWrapper>
                 <Products />
@@ -70,6 +73,18 @@ openDatabase()
             ),
             loader: getProducts,
             action: productsActions,
+            children: [
+              {
+                path: `${ROUTES.DASHBOARD}${ROUTES.ORDERS}`,
+                element: (
+                  <SuspenseWrapper>
+                    <Orders />
+                  </SuspenseWrapper>
+                ),
+                loader: fetchAllOrders,
+                action: orderActions,
+              },
+            ],
           },
           {
             path: ROUTES.NEW_PRODUCT,

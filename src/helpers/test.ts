@@ -221,3 +221,40 @@ export const PERSONALIZATION_SELECTORS = {
   imageUploader: "variant-image-uploader",
   customization: "order-item_customization",
 };
+
+export const ORDER = {
+  id: 1,
+  customizationId: 1,
+  variantId: 1,
+  imageSize: 52,
+  status: "IN_PROCESS",
+  quantity: 1,
+  images: [
+    {
+      id: 1,
+      name: "image.jpg",
+      orderId: 1,
+    },
+  ],
+  customization: {
+    title: "centro",
+  },
+  variant: {
+    name: "Playera rosa",
+    images: [
+      {
+        id: 1,
+        name: "image2.jpg",
+        variantId: 1,
+      },
+    ],
+  },
+};
+
+export const ORDER_SELECTORS = {
+  position: "order-position",
+  status: "order-status",
+  download: "order-download",
+  imageSize: "order-image-size",
+  orderGrid: "orders_grid",
+};

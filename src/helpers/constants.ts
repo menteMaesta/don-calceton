@@ -7,6 +7,7 @@ export const ROUTES = {
   PRODUCT: "/admin/products/:productId",
   EDIT_PRODUCT: "/admin/products/:productId/edit",
   NEW_VARIANT: "/admin/products/:productId/variant/new",
+  ORDERS: "/orders",
   VARIANT: "/variant/:variantId",
   CUSTOMIZATIONS: "/customizations",
   FORGOT_PASSWORD: "/forgot_password",
@@ -37,3 +38,9 @@ export const EMPTY_CUSTOMIZATION = {
   maxSize: 0,
   minSize: 0,
 };
+
+export const STATUS = {
+  IN_PROCESS: "IN_PROCESS",
+  DELIVERED: "DELIVERED",
+  CANCELED: "CANCELED",
+} as const;
