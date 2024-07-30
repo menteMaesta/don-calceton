@@ -90,11 +90,11 @@ export interface Customization {
 export type OrderType = {
   id: number;
   customizationId: number;
-  customization: Customization;
+  customization: Pick<Customization, "title">;
   variantId: number;
   quantity: number;
   imageSize: number;
   status: OrderStatus;
   images: (Omit<Image, "variantId"> & { orderId: number })[];
-  variant: Variant;
+  variant: Pick<Variant, "name" | "images">;
 };

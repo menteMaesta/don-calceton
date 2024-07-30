@@ -221,3 +221,10 @@ export const PERSONALIZATION_SELECTORS = {
   imageUploader: "variant-image-uploader",
   customization: "order-item_customization",
 };
+
+export const ORDER_SELECTORS = {
+  position: "order-position",
+  status: "order-status",
+  download: "order-download",
+  imageSize: "order-image-size",
+};
