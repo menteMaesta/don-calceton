@@ -73,18 +73,6 @@ openDatabase()
             ),
             loader: getProducts,
             action: productsActions,
-            children: [
-              {
-                path: `${ROUTES.DASHBOARD}${ROUTES.ORDERS}`,
-                element: (
-                  <SuspenseWrapper>
-                    <Orders />
-                  </SuspenseWrapper>
-                ),
-                loader: fetchAllOrders,
-                action: orderActions,
-              },
-            ],
           },
           {
             path: ROUTES.NEW_PRODUCT,
@@ -145,6 +133,16 @@ openDatabase()
             ),
             loader: fetchVariant,
             action: variantActions,
+          },
+          {
+            path: `${ROUTES.DASHBOARD}${ROUTES.ORDERS}`,
+            element: (
+              <SuspenseWrapper>
+                <Orders />
+              </SuspenseWrapper>
+            ),
+            loader: fetchAllOrders,
+            action: orderActions,
           },
         ],
       },
