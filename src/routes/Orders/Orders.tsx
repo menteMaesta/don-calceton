@@ -5,7 +5,8 @@ import { es } from "helpers/strings";
 import { STATUS } from "helpers/constants";
 import { OrderType, ErrorType } from "helpers/customTypes";
 import SliderImageCard from "components/SliderImageCard";
-import Button from "components/Button";
+import OrderCardFooter from "routes/Orders/OrderCardFooter";
+import EmptyState from "src/components/EmptyState";
 
 export default function Orders() {
   const submit = useSubmit();
@@ -65,27 +66,20 @@ export default function Orders() {
                       "fa-solid fa-circle mr-2 " + statusStyle[order.status]
                     }
                   />
-                  {es.orders.order} {order.id}
+                  #{order.id}
+                  {order.variant.name}
                 </p>
               }
               footer={
-                <Fragment>
-                  <p className="font-bold">{es.orders.position}</p>
-                  <p>{order.customization.title}</p>
-                  <p className="font-bold">{es.orders.imageSize}</p>
-                  <p>{order.imageSize} cm</p>
-                  <p className="font-bold">{es.orders.statusLabel}</p>
-                  <p>{es.orders.status[order.status]}</p>
-                  <Button
-                    onClick={() => handleDownloadImages(order.images, order.id)}
-                  >
-                    {es.orders.downloadImages}
-                  </Button>
-                </Fragment>
+                <OrderCardFooter
+                  order={order}
+                  onDownloadImages={handleDownloadImages}
+                />
               }
               images={order.variant.images}
             />
           ))}
+        {orders.length === 0 && <EmptyState name={es.orders.name} />}
       </div>
     </Fragment>
   );
