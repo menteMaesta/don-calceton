@@ -29,7 +29,8 @@ openDatabase()
   .then(() => {
     const Dashboard = lazy(() => import("routes/Dashboard/Dashboard"));
     const Products = lazy(() => import("routes/Products/Products"));
-    const NewProduct = lazy(() => import("routes/Products/NewProduct"));
+    // const NewProduct = lazy(() => import("routes/Products/NewProduct"));
+    const NewNewProduct = lazy(() => import("routes/Products/NewProductView"));
     const ProductDetails = lazy(() => import("routes/Products/Product"));
     const Customizations = lazy(
       () => import("routes/Customizations/Customizations")
@@ -78,7 +79,7 @@ openDatabase()
             path: ROUTES.NEW_PRODUCT,
             element: (
               <SuspenseWrapper>
-                <NewProduct />
+                <NewNewProduct />
               </SuspenseWrapper>
             ),
             action: productsActions,
