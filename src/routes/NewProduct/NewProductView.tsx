@@ -100,7 +100,6 @@ export default function ProductDetails() {
           </TabPanel>
           <TabPanel as="section" data-testid="customization_tab-panel">
             <EmptyState name={es.customizations.name} />
-            {/* <Outlet /> */}
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -30,7 +30,9 @@ openDatabase()
     const Dashboard = lazy(() => import("routes/Dashboard/Dashboard"));
     const Products = lazy(() => import("routes/Products/Products"));
     // const NewProduct = lazy(() => import("routes/Products/NewProduct"));
-    const NewNewProduct = lazy(() => import("routes/Products/NewProductView"));
+    const NewNewProduct = lazy(
+      () => import("routes/NewProduct/NewProductView")
+    );
     const ProductDetails = lazy(() => import("routes/Products/Product"));
     const Customizations = lazy(
       () => import("routes/Customizations/Customizations")
