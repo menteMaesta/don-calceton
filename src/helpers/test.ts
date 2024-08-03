@@ -131,6 +131,13 @@ export const PRODUCT_PAGE = {
   productList: "product-list",
 };
 
+export const NEW_PRODUCT_PAGE = {
+  nameInput: "name_input",
+  priceInput: "price_input",
+  wholesalePriceInput: "wholesale-price_input",
+  descriptionInput: "description_input",
+};
+
 export const SELECTORS = {
   loader: "loader",
   searchBar: "search-bar",

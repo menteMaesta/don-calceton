@@ -23,6 +23,7 @@ export default function NewProductData({ data, onChange }: Props) {
       }
     >
       <TitleInput
+        data-testid="name_input"
         name="name"
         placeholder={es.products.namePlaceholder}
         value={data.name}
@@ -31,6 +32,7 @@ export default function NewProductData({ data, onChange }: Props) {
       />
       <div className="flex items-center space-x-2 w-full">
         <Input
+          data-testid="price_input"
           label={es.products.basePrice}
           type="number"
           name="price"
@@ -41,6 +43,7 @@ export default function NewProductData({ data, onChange }: Props) {
           labelClassName="font-semibold"
         />
         <Input
+          data-testid="wholesale-price_input"
           label={es.products.wholesalePriceLabel}
           type="number"
           name="wholesalePrice"
@@ -55,6 +58,7 @@ export default function NewProductData({ data, onChange }: Props) {
       <label className="w-full pt-2 dark:text-slate-200">
         <p className="font-semibold">{es.products.description}</p>
         <textarea
+          data-testid="description_input"
           name="description"
           placeholder={es.products.descriptionPlaceholder}
           value={data.description}
