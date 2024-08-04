@@ -1,9 +1,14 @@
 import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react";
 import classnames from "classnames";
-import { useActionData, useMatch } from "react-router-dom";
+import {
+  useActionData,
+  useMatch,
+  useSubmit,
+  useNavigate,
+} from "react-router-dom";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
-import { ErrorType, ProductBase } from "helpers/customTypes";
+import { ErrorType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
 import EmptyState from "components/EmptyState";
@@ -12,17 +17,19 @@ import Button from "components/Button";
 import BottomBar from "components/BottomBar";
 
 export default function ProductDetails() {
+  const submit = useSubmit();
   const actionData = useActionData() as ErrorType & { id: string };
+  const navigate = useNavigate();
   const variantsTab = useMatch(ROUTES.NEW_PRODUCT);
   const customizationTab = useMatch(
     `${ROUTES.PRODUCT}${ROUTES.CUSTOMIZATIONS}`
   );
   const [openSnackbar] = useSnackbar();
   const [tabIndex, setTabIndex] = useState(0);
-  const [newProduct, setNewProduct] = useState<ProductBase>({
+  const [newProduct, setNewProduct] = useState({
     name: "",
-    price: 0,
-    wholesalePrice: 0,
+    price: "",
+    wholesalePrice: "",
     description: "",
   });
 
@@ -41,22 +48,6 @@ export default function ProductDetails() {
     }
   }, [customizationTab, variantsTab]);
 
-  const handleTabChange = (index: number) => {
-    setTabIndex(index);
-    // switch (index) {
-    //   case 0:
-    //     navigate(ROUTES.PRODUCT.replace(":productId", `${product.id}`));
-    //     break;
-    //   case 1:
-    //     navigate(
-    //       `${ROUTES.PRODUCT.replace(":productId", `${product.id}`)}${
-    //         ROUTES.CUSTOMIZATIONS
-    //       }`
-    //     );
-    //     break;
-    // }
-  };
-
   const handleNewProductChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -65,6 +56,16 @@ export default function ProductDetails() {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const handleSave = async () => {
+    const formData = new FormData();
+    formData.append("action", "createProduct");
+    formData.append("name", newProduct.name);
+    formData.append("price", newProduct.price);
+    formData.append("wholesalePrice", newProduct.wholesalePrice);
+    formData.append("description", newProduct.description);
+    submit(formData, { method: "post" });
   };
 
   return (
@@ -77,7 +78,7 @@ export default function ProductDetails() {
       <Tabs
         className="w-full pt-4"
         index={tabIndex}
-        onChange={handleTabChange}
+        onChange={(index) => setTabIndex(index)}
         data-testid="new-product_tabs"
       >
         <TabList className="flex w-full border-b dark:border-slate-600">
@@ -114,11 +115,20 @@ export default function ProductDetails() {
             "active:bg-slate-300 " +
             "text-slate-800"
           }
-          onClick={() => {}}
+          onClick={() => navigate(ROUTES.DASHBOARD, { replace: true })}
         >
           {es.cancel}
         </Button>
-        <Button data-testid="new-product-save" onClick={() => {}}>
+        <Button
+          data-testid="new-product-save"
+          onClick={handleSave}
+          disabled={
+            !newProduct.name ||
+            newProduct.price === "" ||
+            newProduct.wholesalePrice === "" ||
+            !newProduct.description
+          }
+        >
           {es.save}
         </Button>
       </BottomBar>

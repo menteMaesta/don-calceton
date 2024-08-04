@@ -1,11 +1,15 @@
 import { ChangeEvent } from "react";
 import { es } from "helpers/strings";
-import { ProductBase } from "helpers/customTypes";
 import TitleInput from "components/TitleInput";
 import Input from "components/Input";
 
 type Props = {
-  data: ProductBase;
+  data: {
+    name: string;
+    price: string;
+    wholesalePrice: string;
+    description: string;
+  };
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
