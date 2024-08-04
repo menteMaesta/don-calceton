@@ -23,6 +23,7 @@ import {
 import { storeActions } from "routes/Store/VariantList/actions";
 import { fetchAllOrders } from "routes/Orders/loader";
 import { orderActions } from "routes/Orders/actions";
+import { newProductActions } from "routes/NewProduct/actions";
 import SuspenseWrapper from "components/SuspenseWapper";
 
 openDatabase()
@@ -84,7 +85,7 @@ openDatabase()
                 <NewNewProduct />
               </SuspenseWrapper>
             ),
-            action: productsActions,
+            action: newProductActions,
           },
           {
             path: ROUTES.PRODUCT,
