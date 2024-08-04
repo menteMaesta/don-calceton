@@ -68,14 +68,17 @@ export default function ProductDetails() {
   };
 
   return (
-    <div className={classnames("w-full mt-14 px-4")}>
+    <div
+      data-testid="new-product-view"
+      className={classnames("w-full mt-14 px-4")}
+    >
       <NewProductData data={newProduct} onChange={handleNewProductChange} />
 
       <Tabs
         className="w-full pt-4"
         index={tabIndex}
         onChange={handleTabChange}
-        data-testid="product_tabs"
+        data-testid="new-product_tabs"
       >
         <TabList className="flex w-full border-b dark:border-slate-600">
           <Tab
@@ -105,6 +108,7 @@ export default function ProductDetails() {
       </Tabs>
       <BottomBar>
         <Button
+          data-testid="new-product-cancel"
           className={
             "bg-slate-200 hover:bg-slate-300 " +
             "active:bg-slate-300 " +
@@ -114,7 +118,9 @@ export default function ProductDetails() {
         >
           {es.cancel}
         </Button>
-        <Button onClick={() => {}}>{es.save}</Button>
+        <Button data-testid="new-product-save" onClick={() => {}}>
+          {es.save}
+        </Button>
       </BottomBar>
     </div>
   );

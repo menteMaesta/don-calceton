@@ -13,6 +13,7 @@ type Props = {
 export default function NewProductData({ data, onChange }: Props) {
   return (
     <main
+      data-testid="new-product_data"
       className={
         "flex flex-wrap flex-col " +
         "justify-between " +

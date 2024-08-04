@@ -132,10 +132,15 @@ export const PRODUCT_PAGE = {
 };
 
 export const NEW_PRODUCT_PAGE = {
+  newProductData: "new-product_data",
   nameInput: "name_input",
   priceInput: "price_input",
   wholesalePriceInput: "wholesale-price_input",
   descriptionInput: "description_input",
+  newProduct: "new-product-view",
+  tabs: "new-product_tabs",
+  cancel: "new-product-cancel",
+  save: "new-product-save",
 };
 
 export const SELECTORS = {
