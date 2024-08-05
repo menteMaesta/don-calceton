@@ -12,7 +12,7 @@ import {
 describe("VariantCard", () => {
   const variant = {
     ...VARIANT,
-    images: [IMAGE],
+    images: [{ ...IMAGE, src: "" }],
   };
 
   const onRemoveMock = vi.fn();
