@@ -15,6 +15,7 @@ import EmptyState from "components/EmptyState";
 import NewProductData from "components/NewProductData";
 import Button from "components/Button";
 import BottomBar from "components/BottomBar";
+import NewVariantCard from "components/NewVariantCard";
 
 export default function ProductDetails() {
   const submit = useSubmit();
@@ -99,6 +100,24 @@ export default function ProductDetails() {
         <TabPanels>
           <TabPanel as="section" data-testid="variant_tab-panel">
             <div className="relative flex flex-col items-center w-full">
+              <Button
+                data-testid="new-customization"
+                className="!p-2 bg-slate-700 mt-4"
+                onClick={() => {}}
+              >
+                {es.variants.new}
+              </Button>
+              <div
+                className={
+                  "grid grid-cols-1 gap-4 " +
+                  "sm:grid-cols-2 md:grid-cols-3 " +
+                  "lg:grid-cols-4 w-full " +
+                  "mt-7 px-4"
+                }
+              >
+                <NewVariantCard />
+              </div>
+
               <EmptyState name={es.variants.name} />
             </div>
           </TabPanel>
