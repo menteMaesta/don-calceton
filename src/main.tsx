@@ -23,13 +23,17 @@ import {
 import { storeActions } from "routes/Store/VariantList/actions";
 import { fetchAllOrders } from "routes/Orders/loader";
 import { orderActions } from "routes/Orders/actions";
+import { newProductActions } from "routes/NewProduct/actions";
 import SuspenseWrapper from "components/SuspenseWapper";
 
 openDatabase()
   .then(() => {
     const Dashboard = lazy(() => import("routes/Dashboard/Dashboard"));
     const Products = lazy(() => import("routes/Products/Products"));
-    const NewProduct = lazy(() => import("routes/Products/NewProduct"));
+    // const NewProduct = lazy(() => import("routes/Products/NewProduct"));
+    const NewNewProduct = lazy(
+      () => import("routes/NewProduct/NewProductView")
+    );
     const ProductDetails = lazy(() => import("routes/Products/Product"));
     const Customizations = lazy(
       () => import("routes/Customizations/Customizations")
@@ -78,10 +82,10 @@ openDatabase()
             path: ROUTES.NEW_PRODUCT,
             element: (
               <SuspenseWrapper>
-                <NewProduct />
+                <NewNewProduct />
               </SuspenseWrapper>
             ),
-            action: productsActions,
+            action: newProductActions,
           },
           {
             path: ROUTES.PRODUCT,

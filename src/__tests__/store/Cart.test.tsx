@@ -74,4 +74,36 @@ describe("Cart component", () => {
     const emptyElement = await waitFor(() => getByTestId(SELECTORS.emptyState));
     expect(emptyElement).toBeInTheDocument();
   });
+
+  test("displays buy bottom bar", async () => {
+    const loaderData = { cart: mockCartItems, totalPrice: 5 };
+    const routes = [
+      {
+        path: ROUTES.CART,
+        element: <Cart />,
+        loader: () => loaderData,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.CART],
+    });
+
+    const { getByTestId } = render(
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
+    );
+
+    const bottomBar = await waitFor(() =>
+      getByTestId(CART_SELECTORS.bottomBar)
+    );
+    const totalPriceText = getByTestId(CART_SELECTORS.totalPrice);
+    expect(bottomBar).toBeInTheDocument();
+    expect(totalPriceText).toBeInTheDocument();
+    expect(totalPriceText).toHaveTextContent(
+      es.orders.totalPrice + loaderData.totalPrice
+    );
+  });
 });

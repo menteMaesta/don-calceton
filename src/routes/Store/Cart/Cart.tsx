@@ -2,9 +2,11 @@ import { MouseEvent, useEffect } from "react";
 import { useLoaderData, useSubmit, useActionData } from "react-router-dom";
 import { useSnackbar } from "react-simple-snackbar";
 import { CartItemType, ErrorType } from "helpers/customTypes";
+import { es } from "helpers/strings";
 import CartItem from "storeComponents/CartItem";
 import EmptyState from "components/EmptyState";
-import BuyBottomBar from "src/components/BuyBottomBar";
+import Button from "components/Button";
+import BottomBar from "src/components/BottomBar";
 
 export default function Cart() {
   const actionData = useActionData() as ErrorType;
@@ -62,7 +64,23 @@ export default function Cart() {
       ) : (
         <EmptyState name="productos" />
       )}
-      <BuyBottomBar totalPrice={totalPrice} onSubmitOrder={onSubmitOrder} />
+      <BottomBar>
+        <p
+          className="font-bold dark:text-slate-200"
+          data-testid="total-product_price"
+        >
+          <i
+            className={
+              "fa-solid fa-cart-shopping " +
+              "text-xl " +
+              "mr-2 dark:text-slate-300"
+            }
+          />
+          {es.orders.totalPrice}
+          {totalPrice}
+        </p>
+        <Button onClick={onSubmitOrder}>{es.orders.buy}</Button>
+      </BottomBar>
     </div>
   );
 }
