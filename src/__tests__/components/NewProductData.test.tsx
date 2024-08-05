@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from "react";
 import { render, fireEvent } from "@testing-library/react";
-import { ProductBase } from "helpers/customTypes";
 import { NEW_PRODUCT_PAGE } from "helpers/test";
 import { es } from "helpers/strings";
 import NewProductData from "components/NewProductData";
@@ -14,10 +13,10 @@ describe("NewProductData", () => {
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => void;
     }) => {
-      const [newProduct, setNewProduct] = useState<ProductBase>({
+      const [newProduct, setNewProduct] = useState({
         name: "",
-        price: 0,
-        wholesalePrice: 0,
+        price: "",
+        wholesalePrice: "",
         description: "",
       });
 
@@ -75,10 +74,10 @@ describe("NewProductData", () => {
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => void;
     }) => {
-      const [newProduct, setNewProduct] = useState<ProductBase>({
+      const [newProduct, setNewProduct] = useState({
         name: "",
-        price: 0,
-        wholesalePrice: 0,
+        price: "",
+        wholesalePrice: "",
         description: "",
       });
 
