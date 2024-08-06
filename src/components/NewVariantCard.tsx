@@ -1,6 +1,7 @@
 import { DragEvent, ChangeEvent, MouseEvent, Fragment } from "react";
 import { es } from "helpers/strings";
 import { NewVariantType } from "helpers/customTypes";
+import { VARIANT_SELECTORS } from "helpers/test";
 import ElementCard from "components/ElementCard";
 import TitleInput from "components/TitleInput";
 import Input from "components/Input";
@@ -84,6 +85,7 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
       elementId={`${index}`}
       title={
         <TitleInput
+          data-testid={VARIANT_SELECTORS.newName}
           name="name"
           placeholder={es.variants.namePlaceholder}
           value={variant.name}
@@ -102,11 +104,12 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
             />
           )}
           <Input
+            data-testid={VARIANT_SELECTORS.newQuantity}
             label={es.variants.stock}
             type="number"
             name="quantity"
             placeholder={es.variants.stockPlaceholder}
-            className={"rounded-b rounded-t " + "pr-1 pl-1 " + "pt-0 pb-0"}
+            className="!rounded !px-1 !py-0"
             value={variant.quantity}
             onChange={handleOnChange}
             labelClassName="font-semibold"
