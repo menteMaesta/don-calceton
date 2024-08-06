@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { es } from "helpers/strings";
 
 type props = {
+  title?: string;
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
   labelProps?: LabelHTMLAttributes<HTMLParagraphElement>;
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -11,6 +12,7 @@ type props = {
 };
 
 export default function VariantImageUploader({
+  title = es.imagesPngJpg,
   onFileSelect,
   labelProps,
   inputProps,
@@ -44,7 +46,7 @@ export default function VariantImageUploader({
         {isLoading && (
           <i className={"fa-solid fa-spinner " + "animate-spin mr-2 "} />
         )}
-        <span>{es.imagesPngJpg}</span>
+        <span>{title}</span>
       </p>
       <input
         className={classnames(
