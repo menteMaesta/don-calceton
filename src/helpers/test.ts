@@ -181,6 +181,7 @@ export const VARIANT_SELECTORS = {
   page: "variant-page",
   data: "variant-data_{id}",
   itemStoreCard: "store-{id}",
+  newVariant: "new-variant",
 };
 
 export const CUSTOMIZATION_SELECTORS = {
