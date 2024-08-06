@@ -270,3 +270,8 @@ export const ORDER_SELECTORS = {
   imageSize: "order-image-size",
   orderGrid: "orders_grid",
 };
+
+export const DRAG_DROP_SELECTORS = {
+  dropZone: "drop-zone",
+  browseImages: "browse-images",
+};

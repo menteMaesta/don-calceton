@@ -25,9 +25,10 @@ export default function DragDropImageUploader({
         "text-gray-500 dark:text-gray-400 " +
         "rounded-md"
       }
+      data-testid="drop-zone"
     >
       <i className="fa-solid fa-download text-xl" />
-      <label className="font-bold">
+      <label className="font-bold" data-testid="browse-images">
         {es.variants.browseImages}
         <input
           className="opacity-0 w-0 h-0 absolute -top-1"
