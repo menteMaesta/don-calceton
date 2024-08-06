@@ -28,6 +28,9 @@ export const es = {
     stock: "Stock",
     stockPlaceholder: "50",
     onlyIntegers: "Solo se pueden guardar valores enteros",
+    changeImages: "Cambiar imagenes",
+    browseImages: "Elige tus imágenes",
+    dragImages: "o arrastralas aquí",
   },
   customizations: {
     new: "Nueva personalización",

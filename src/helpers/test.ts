@@ -47,8 +47,8 @@ export const IMAGES = [
   { name: "image3.jpg", id: 3 },
 ];
 
-export const FILE = new File(["dummy content"], "test.png", {
-  type: "image/png",
+export const FILE = new File(["dummy content"], "test.jpg", {
+  type: "image/jpg",
 });
 
 export const CUSTOMIZATION = {
@@ -79,6 +79,12 @@ export const CART_ITEM = {
   personalizations: [PERSONALIZATION],
   images: [],
   customizations: [],
+};
+
+export const NEW_VARIANT_CARD_ITEM = {
+  name: "Test Variant",
+  quantity: "20",
+  images: [{ ...IMAGE, file: FILE }],
 };
 
 export const ELEMENT_CARD = {
@@ -175,6 +181,7 @@ export const VARIANT_SELECTORS = {
   page: "variant-page",
   data: "variant-data_{id}",
   itemStoreCard: "store-{id}",
+  newVariant: "new-variant",
 };
 
 export const CUSTOMIZATION_SELECTORS = {
@@ -269,4 +276,9 @@ export const ORDER_SELECTORS = {
   download: "order-download",
   imageSize: "order-image-size",
   orderGrid: "orders_grid",
+};
+
+export const DRAG_DROP_SELECTORS = {
+  dropZone: "drop-zone",
+  browseImages: "browse-images",
 };

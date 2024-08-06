@@ -8,13 +8,14 @@ import {
 } from "react-router-dom";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
-import { ErrorType } from "helpers/customTypes";
+import { ErrorType, NewVariantType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
 import EmptyState from "components/EmptyState";
 import NewProductData from "components/NewProductData";
 import Button from "components/Button";
 import BottomBar from "components/BottomBar";
+import NewVariantsTab from "./NewVariantsTab";
 
 export default function ProductDetails() {
   const submit = useSubmit();
@@ -32,6 +33,7 @@ export default function ProductDetails() {
     wholesalePrice: "",
     description: "",
   });
+  const [variants, setVariants] = useState<NewVariantType[]>([]);
 
   useEffect(() => {
     if (actionData?.message) {
@@ -76,7 +78,7 @@ export default function ProductDetails() {
       <NewProductData data={newProduct} onChange={handleNewProductChange} />
 
       <Tabs
-        className="w-full pt-4"
+        className="w-full pt-4 pb-10"
         index={tabIndex}
         onChange={(index) => setTabIndex(index)}
         data-testid="new-product_tabs"
@@ -97,11 +99,8 @@ export default function ProductDetails() {
         </TabList>
 
         <TabPanels>
-          <TabPanel as="section" data-testid="variant_tab-panel">
-            <div className="relative flex flex-col items-center w-full">
-              <EmptyState name={es.variants.name} />
-            </div>
-          </TabPanel>
+          <NewVariantsTab variants={variants} setVariants={setVariants} />
+
           <TabPanel as="section" data-testid="customization_tab-panel">
             <EmptyState name={es.customizations.name} />
           </TabPanel>
