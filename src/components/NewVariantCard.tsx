@@ -5,7 +5,8 @@ import ElementCard from "components/ElementCard";
 import TitleInput from "components/TitleInput";
 import Input from "components/Input";
 import SliderImage from "components/SliderImage";
-import DefaultPic from "assets/default-pic.png";
+import VariantImageUploader from "components/VariantImageUploader";
+import DragDropImageUploader from "components/DragDropImageUploader";
 
 export default function NewVariantCard() {
   const [blobs, setBlobs] = useState<(Blob & { id: number })[]>([]);
@@ -50,10 +51,6 @@ export default function NewVariantCard() {
     setBlobs(previews);
   };
 
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
   return (
     <ElementCard
       elementId={"1"} // TODO: Add a unique id
@@ -63,29 +60,18 @@ export default function NewVariantCard() {
           placeholder={es.variants.namePlaceholder}
           value={""}
           onChange={() => {}}
-          className="w-11/12 rounded-lg text-2xl mr-5 mb-2"
+          className="!w-11/12 rounded-lg text-2xl mb-2"
         />
       }
       footer={
         <Fragment>
           {blobs.length > 0 && (
-            <label
-              className={
-                "bg-slate-700 text-center " +
-                "w-full p-2 " +
-                "rounded text-white"
-              }
-            >
-              {es.variants.changeImages}
-              <input
-                className="opacity-0 w-0 h-0 absolute -top-1"
-                type="file"
-                name="images"
-                accept=".jpg, .jpeg, .png"
-                multiple
-                onChange={handleFileSelect}
-              />
-            </label>
+            <VariantImageUploader
+              title={es.variants.changeImages}
+              className="w-full text-center text-white"
+              labelProps={{ className: "w-full dark:bg-slate-800 my-2" }}
+              onFileSelect={handleFileSelect}
+            />
           )}
           <Input
             label={es.variants.stock}
@@ -103,31 +89,10 @@ export default function NewVariantCard() {
       onRemove={() => {}}
     >
       {blobs.length === 0 && (
-        <div
-          onDrop={handleDropFile}
-          onDragOver={handleDragOver}
-          className={
-            "w-full flex flex-col " +
-            "items-center justify-center " +
-            "relative"
-          }
-        >
-          <img className={"max-h-60"} alt={"default image"} src={DefaultPic} />
-          <div className="absolute text-center">
-            <label className="text-gray-500 font-bold">
-              {es.variants.browseImages}
-              <input
-                className="opacity-0 w-0 h-0 absolute -top-1"
-                type="file"
-                name="images"
-                accept=".jpg, .jpeg, .png"
-                multiple
-                onChange={handleFileSelect}
-              />
-            </label>
-            <p className="text-gray-500">{es.variants.dragImages}</p>
-          </div>
-        </div>
+        <DragDropImageUploader
+          onFileSelect={handleFileSelect}
+          onDropFile={handleDropFile}
+        />
       )}
       {blobs.length > 0 && <SliderImage images={blobs} type="variant" />}
     </ElementCard>
