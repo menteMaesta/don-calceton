@@ -1,4 +1,4 @@
-import { DragEvent, ChangeEvent, Fragment } from "react";
+import { DragEvent, ChangeEvent, MouseEvent, Fragment } from "react";
 import { es } from "helpers/strings";
 import { NewVariantType } from "helpers/customTypes";
 import ElementCard from "components/ElementCard";
@@ -71,6 +71,14 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
     );
   };
 
+  const handleOnRemove = (
+    event: MouseEvent<HTMLElement>,
+    variantId: string
+  ) => {
+    event.preventDefault();
+    setVariants((prev) => prev.filter((_, i) => `${i}` !== variantId));
+  };
+
   return (
     <ElementCard
       elementId={`${index}`}
@@ -106,7 +114,7 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
         </Fragment>
       }
       type={"variant"}
-      onRemove={() => {}}
+      onRemove={handleOnRemove}
     >
       {variant.images.length === 0 && (
         <DragDropImageUploader
