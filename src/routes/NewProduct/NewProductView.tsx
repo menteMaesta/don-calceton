@@ -8,14 +8,14 @@ import {
 } from "react-router-dom";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
-import { ErrorType } from "helpers/customTypes";
+import { ErrorType, NewVariantType } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
 import EmptyState from "components/EmptyState";
 import NewProductData from "components/NewProductData";
 import Button from "components/Button";
 import BottomBar from "components/BottomBar";
-import NewVariantCard from "components/NewVariantCard";
+import NewVariantsTab from "./NewVariantsTab";
 
 export default function ProductDetails() {
   const submit = useSubmit();
@@ -33,6 +33,7 @@ export default function ProductDetails() {
     wholesalePrice: "",
     description: "",
   });
+  const [variants, setVariants] = useState<NewVariantType[]>([]);
 
   useEffect(() => {
     if (actionData?.message) {
@@ -77,7 +78,7 @@ export default function ProductDetails() {
       <NewProductData data={newProduct} onChange={handleNewProductChange} />
 
       <Tabs
-        className="w-full pt-4"
+        className="w-full pt-4 pb-10"
         index={tabIndex}
         onChange={(index) => setTabIndex(index)}
         data-testid="new-product_tabs"
@@ -98,29 +99,8 @@ export default function ProductDetails() {
         </TabList>
 
         <TabPanels>
-          <TabPanel as="section" data-testid="variant_tab-panel">
-            <div className="relative flex flex-col items-center w-full">
-              <Button
-                data-testid="new-customization"
-                className="!p-2 bg-slate-700 mt-4"
-                onClick={() => {}}
-              >
-                {es.variants.new}
-              </Button>
-              <div
-                className={
-                  "grid grid-cols-1 gap-4 " +
-                  "sm:grid-cols-2 md:grid-cols-3 " +
-                  "lg:grid-cols-4 w-full " +
-                  "mt-7 px-4"
-                }
-              >
-                <NewVariantCard />
-              </div>
+          <NewVariantsTab variants={variants} setVariants={setVariants} />
 
-              <EmptyState name={es.variants.name} />
-            </div>
-          </TabPanel>
           <TabPanel as="section" data-testid="customization_tab-panel">
             <EmptyState name={es.customizations.name} />
           </TabPanel>
