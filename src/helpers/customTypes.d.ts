@@ -98,3 +98,9 @@ export type OrderType = {
   images: (Omit<Image, "variantId"> & { orderId: number })[];
   variant: Pick<Variant, "name" | "images">;
 };
+
+export type NewVariantType = {
+  name: string;
+  quantity: string;
+  images: (Blob & { id: number })[];
+};

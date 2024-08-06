@@ -1,6 +1,6 @@
-import { DragEvent, ChangeEvent, Fragment, useState } from "react";
+import { DragEvent, ChangeEvent, Fragment } from "react";
 import { es } from "helpers/strings";
-import { Blob } from "helpers/customTypes";
+import { NewVariantType } from "helpers/customTypes";
 import ElementCard from "components/ElementCard";
 import TitleInput from "components/TitleInput";
 import Input from "components/Input";
@@ -8,12 +8,16 @@ import SliderImage from "components/SliderImage";
 import VariantImageUploader from "components/VariantImageUploader";
 import DragDropImageUploader from "components/DragDropImageUploader";
 
-export default function NewVariantCard() {
-  const [blobs, setBlobs] = useState<(Blob & { id: number })[]>([]);
+type Props = {
+  variant: NewVariantType;
+  index: number;
+  setVariants: (value: React.SetStateAction<NewVariantType[]>) => void;
+};
 
+export default function NewVariantCard({ variant, index, setVariants }: Props) {
   const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const previews = [];
+    const previews: NewVariantType["images"] = [];
     const files = event.target.files;
 
     if (files) {
@@ -26,12 +30,16 @@ export default function NewVariantCard() {
         });
       }
     }
-    setBlobs(previews);
+    setVariants((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, images: previews } : item
+      )
+    );
   };
 
   const handleDropFile = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    const previews = [];
+    const previews: NewVariantType["images"] = [];
     const items = event.dataTransfer.items;
 
     for (let i = 0; i < items.length; i++) {
@@ -48,24 +56,36 @@ export default function NewVariantCard() {
         }
       }
     }
-    setBlobs(previews);
+    setVariants((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, images: previews } : item
+      )
+    );
+  };
+
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setVariants((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, [name]: value } : item))
+    );
   };
 
   return (
     <ElementCard
-      elementId={"1"} // TODO: Add a unique id
+      elementId={`${index}`}
       title={
         <TitleInput
           name="name"
           placeholder={es.variants.namePlaceholder}
-          value={""}
-          onChange={() => {}}
+          value={variant.name}
+          onChange={handleOnChange}
           className="!w-11/12 rounded-lg text-2xl mb-2"
         />
       }
       footer={
         <Fragment>
-          {blobs.length > 0 && (
+          {variant.images.length > 0 && (
             <VariantImageUploader
               title={es.variants.changeImages}
               className="w-full text-center text-white"
@@ -76,11 +96,11 @@ export default function NewVariantCard() {
           <Input
             label={es.variants.stock}
             type="number"
-            name="price"
+            name="quantity"
             placeholder={es.variants.stockPlaceholder}
             className={"rounded-b rounded-t " + "pr-1 pl-1 " + "pt-0 pb-0"}
-            value={""}
-            onChange={() => {}}
+            value={variant.quantity}
+            onChange={handleOnChange}
             labelClassName="font-semibold"
           />
         </Fragment>
@@ -88,13 +108,15 @@ export default function NewVariantCard() {
       type={"variant"}
       onRemove={() => {}}
     >
-      {blobs.length === 0 && (
+      {variant.images.length === 0 && (
         <DragDropImageUploader
           onFileSelect={handleFileSelect}
           onDropFile={handleDropFile}
         />
       )}
-      {blobs.length > 0 && <SliderImage images={blobs} type="variant" />}
+      {variant.images.length > 0 && (
+        <SliderImage images={variant.images} type="variant" />
+      )}
     </ElementCard>
   );
 }
