@@ -1,4 +1,10 @@
-import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  ChangeEvent,
+  useMemo,
+} from "react";
 import classnames from "classnames";
 import {
   useActionData,
@@ -34,6 +40,25 @@ export default function ProductDetails() {
     description: "",
   });
   const [variants, setVariants] = useState<NewVariantType[]>([]);
+  const disableSave = useMemo(() => {
+    const hasEmptyVariants = variants.some((variant) => {
+      if (
+        !variant.name ||
+        !variant.quantity ||
+        variant.quantity.includes(".") ||
+        !variant.images.length
+      ) {
+        return true;
+      }
+    });
+    return (
+      !newProduct.name ||
+      newProduct.price === "" ||
+      newProduct.wholesalePrice === "" ||
+      !newProduct.description ||
+      hasEmptyVariants
+    );
+  }, [newProduct, variants]);
 
   useEffect(() => {
     if (actionData?.message) {
@@ -121,12 +146,7 @@ export default function ProductDetails() {
         <Button
           data-testid="new-product-save"
           onClick={handleSave}
-          disabled={
-            !newProduct.name ||
-            newProduct.price === "" ||
-            newProduct.wholesalePrice === "" ||
-            !newProduct.description
-          }
+          disabled={disableSave}
         >
           {es.save}
         </Button>

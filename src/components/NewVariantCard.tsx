@@ -113,6 +113,13 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
             value={variant.quantity}
             onChange={handleOnChange}
             labelClassName="font-semibold"
+            otherElements={
+              variant.quantity.includes(".") ? (
+                <p className={"text-red-900 " + "text-sm pl-2"}>
+                  {es.variants.onlyIntegers}
+                </p>
+              ) : undefined
+            }
           />
         </Fragment>
       }
