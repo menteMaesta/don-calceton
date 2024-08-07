@@ -113,4 +113,16 @@ describe("NewVariantCard", () => {
 
     expect(mockSetVariants).toHaveBeenCalled();
   });
+
+  it("shows only integers legend when quantity input is a fraction", async () => {
+    const { getByText } = render(
+      <NewVariantCard
+        variant={{ ...NEW_VARIANT_CARD_ITEM, quantity: "10.5" }}
+        index={0}
+        setVariants={mockSetVariants}
+      />
+    );
+
+    expect(getByText(es.variants.onlyIntegers)).toBeInTheDocument();
+  });
 });
