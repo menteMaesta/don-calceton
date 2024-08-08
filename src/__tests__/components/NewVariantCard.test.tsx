@@ -1,4 +1,7 @@
+import React from "react";
 import { render, fireEvent } from "@testing-library/react";
+import SnackbarProvider from "react-simple-snackbar";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import {
   NEW_VARIANT_CARD_ITEM,
   VARIANT_SELECTORS,
@@ -7,18 +10,36 @@ import {
   SLIDER_IMAGE_CARD,
 } from "helpers/test";
 import { es } from "helpers/strings";
+import { ROUTES } from "helpers/constants";
 import NewVariantCard from "components/NewVariantCard";
 
 describe("NewVariantCard", () => {
   const mockSetVariants = vi.fn();
 
   it("renders initial components", () => {
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <NewVariantCard
+            variant={{ ...NEW_VARIANT_CARD_ITEM, images: [] }}
+            index={0}
+            setVariants={mockSetVariants}
+          />
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
+
     const { getByTestId } = render(
-      <NewVariantCard
-        variant={{ ...NEW_VARIANT_CARD_ITEM, images: [] }}
-        index={0}
-        setVariants={mockSetVariants}
-      />
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
     );
 
     const titleInput = getByTestId(VARIANT_SELECTORS.newName);
@@ -49,12 +70,28 @@ describe("NewVariantCard", () => {
   });
 
   it("shows correct elements when it has images", () => {
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <NewVariantCard
+            variant={NEW_VARIANT_CARD_ITEM}
+            index={0}
+            setVariants={mockSetVariants}
+          />
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
     const { getByTestId, queryByTestId } = render(
-      <NewVariantCard
-        variant={NEW_VARIANT_CARD_ITEM}
-        index={0}
-        setVariants={mockSetVariants}
-      />
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
     );
 
     const titleInput = getByTestId(VARIANT_SELECTORS.newName);
@@ -81,12 +118,29 @@ describe("NewVariantCard", () => {
   });
 
   it("updates the variant title when input value changes", () => {
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <NewVariantCard
+            variant={NEW_VARIANT_CARD_ITEM}
+            index={0}
+            setVariants={mockSetVariants}
+          />
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
+
     const { getByTestId } = render(
-      <NewVariantCard
-        variant={NEW_VARIANT_CARD_ITEM}
-        index={0}
-        setVariants={mockSetVariants}
-      />
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
     );
 
     const titleInput = getByTestId(VARIANT_SELECTORS.newName);
@@ -98,12 +152,29 @@ describe("NewVariantCard", () => {
   });
 
   it("updates the variant quantity when input value changes", () => {
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <NewVariantCard
+            variant={NEW_VARIANT_CARD_ITEM}
+            index={0}
+            setVariants={mockSetVariants}
+          />
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
+
     const { getByTestId } = render(
-      <NewVariantCard
-        variant={NEW_VARIANT_CARD_ITEM}
-        index={0}
-        setVariants={mockSetVariants}
-      />
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
     );
 
     const quantityInput = getByTestId(VARIANT_SELECTORS.newQuantity);
@@ -112,5 +183,34 @@ describe("NewVariantCard", () => {
     });
 
     expect(mockSetVariants).toHaveBeenCalled();
+  });
+
+  it("shows only integers legend when quantity input is a fraction", async () => {
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <NewVariantCard
+            variant={{ ...NEW_VARIANT_CARD_ITEM, quantity: "10.5" }}
+            index={0}
+            setVariants={mockSetVariants}
+          />
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
+
+    const { getByText } = render(
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
+    );
+
+    expect(getByText(es.variants.onlyIntegers)).toBeInTheDocument();
   });
 });

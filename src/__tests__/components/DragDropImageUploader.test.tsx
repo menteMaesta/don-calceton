@@ -66,4 +66,16 @@ describe("DragDropImageUploader", () => {
       })
     );
   });
+
+  it('should show loading state when "isLoading" is true', () => {
+    const { queryByTestId } = render(
+      <DragDropImageUploader
+        onFileSelect={vi.fn()}
+        onDropFile={vi.fn()}
+        isLoading
+      />
+    );
+
+    expect(queryByTestId(DRAG_DROP_SELECTORS.loading)).toBeInTheDocument();
+  });
 });

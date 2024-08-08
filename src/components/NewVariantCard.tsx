@@ -1,4 +1,6 @@
-import { DragEvent, ChangeEvent, MouseEvent, Fragment } from "react";
+import { DragEvent, ChangeEvent, MouseEvent, Fragment, useState } from "react";
+import imageCompression from "browser-image-compression";
+import { useSnackbar } from "react-simple-snackbar";
 import { es } from "helpers/strings";
 import { NewVariantType } from "helpers/customTypes";
 import { VARIANT_SELECTORS } from "helpers/test";
@@ -16,44 +18,33 @@ type Props = {
 };
 
 export default function NewVariantCard({ variant, index, setVariants }: Props) {
-  const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+  const [openSnackbar] = useSnackbar();
+  const [loading, setLoading] = useState(false);
+
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+  };
+
+  const handleFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const previews: NewVariantType["images"] = [];
     const files = event.target.files;
+    setLoading(true);
 
     if (files) {
       for (let i = 0; i < files.length; i++) {
-        previews.push({
-          id: i,
-          src: URL.createObjectURL(files[i]),
-          name: files[i].name,
-          file: files[i],
-        });
-      }
-    }
-    setVariants((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, images: previews } : item
-      )
-    );
-  };
-
-  const handleDropFile = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const previews: NewVariantType["images"] = [];
-    const items = event.dataTransfer.items;
-
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (item.kind === "file") {
-        const file = item.getAsFile();
-        if (file) {
+        try {
+          const compressedFile = await imageCompression(files[i], options);
           previews.push({
             id: i,
-            src: URL.createObjectURL(file),
-            name: file.name,
-            file,
+            src: URL.createObjectURL(files[i]),
+            name: files[i].name,
+            file: compressedFile,
           });
+        } catch (error) {
+          openSnackbar(error);
         }
       }
     }
@@ -62,6 +53,37 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
         i === index ? { ...item, images: previews } : item
       )
     );
+    setLoading(false);
+  };
+
+  const handleDropFile = async (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const previews: NewVariantType["images"] = [];
+    const items = event.dataTransfer.files;
+    setLoading(true);
+
+    for (let i = 0; i < items.length; i++) {
+      const file = items[i];
+      if (file) {
+        try {
+          const compressedFile = await imageCompression(file, options);
+          previews.push({
+            id: i,
+            src: URL.createObjectURL(file),
+            name: file.name,
+            file: compressedFile,
+          });
+        } catch (error) {
+          openSnackbar(error);
+        }
+      }
+    }
+    setVariants((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, images: previews } : item
+      )
+    );
+    setLoading(false);
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +123,7 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
               className="w-full text-center text-white"
               labelProps={{ className: "w-full dark:bg-slate-800 my-2" }}
               onFileSelect={handleFileSelect}
+              isLoading={loading}
             />
           )}
           <Input
@@ -113,6 +136,13 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
             value={variant.quantity}
             onChange={handleOnChange}
             labelClassName="font-semibold"
+            otherElements={
+              variant.quantity.includes(".") ? (
+                <p className={"text-red-900 " + "text-sm pl-2"}>
+                  {es.variants.onlyIntegers}
+                </p>
+              ) : undefined
+            }
           />
         </Fragment>
       }
@@ -123,6 +153,7 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
         <DragDropImageUploader
           onFileSelect={handleFileSelect}
           onDropFile={handleDropFile}
+          isLoading={loading}
         />
       )}
       {variant.images.length > 0 && (

@@ -1,4 +1,10 @@
-import { useEffect, useLayoutEffect, useState, ChangeEvent } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  ChangeEvent,
+  useMemo,
+} from "react";
 import classnames from "classnames";
 import {
   useActionData,
@@ -34,6 +40,25 @@ export default function ProductDetails() {
     description: "",
   });
   const [variants, setVariants] = useState<NewVariantType[]>([]);
+  const disableSave = useMemo(() => {
+    const hasEmptyVariants = variants.some((variant) => {
+      if (
+        !variant.name ||
+        !variant.quantity ||
+        variant.quantity.includes(".") ||
+        !variant.images.length
+      ) {
+        return true;
+      }
+    });
+    return (
+      !newProduct.name ||
+      newProduct.price === "" ||
+      newProduct.wholesalePrice === "" ||
+      !newProduct.description ||
+      hasEmptyVariants
+    );
+  }, [newProduct, variants]);
 
   useEffect(() => {
     if (actionData?.message) {
@@ -67,7 +92,13 @@ export default function ProductDetails() {
     formData.append("price", newProduct.price);
     formData.append("wholesalePrice", newProduct.wholesalePrice);
     formData.append("description", newProduct.description);
-    submit(formData, { method: "post" });
+    formData.append("variants", JSON.stringify(variants)); // TODO: Separate images
+    for (let i = 0; i < variants.length; i++) {
+      for (const image of variants[i].images) {
+        formData.append(`images${i}[]`, image.file, image.name);
+      }
+    }
+    submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
   return (
@@ -121,12 +152,7 @@ export default function ProductDetails() {
         <Button
           data-testid="new-product-save"
           onClick={handleSave}
-          disabled={
-            !newProduct.name ||
-            newProduct.price === "" ||
-            newProduct.wholesalePrice === "" ||
-            !newProduct.description
-          }
+          disabled={disableSave}
         >
           {es.save}
         </Button>

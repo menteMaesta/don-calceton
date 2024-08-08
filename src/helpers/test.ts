@@ -281,4 +281,5 @@ export const ORDER_SELECTORS = {
 export const DRAG_DROP_SELECTORS = {
   dropZone: "drop-zone",
   browseImages: "browse-images",
+  loading: "loading-spinner",
 };
