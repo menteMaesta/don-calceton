@@ -92,7 +92,13 @@ export default function ProductDetails() {
     formData.append("price", newProduct.price);
     formData.append("wholesalePrice", newProduct.wholesalePrice);
     formData.append("description", newProduct.description);
-    submit(formData, { method: "post" });
+    formData.append("variants", JSON.stringify(variants)); // TODO: Separate images
+    for (let i = 0; i < variants.length; i++) {
+      for (const image of variants[i].images) {
+        formData.append(`images${i}[]`, image.file, image.name);
+      }
+    }
+    submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
   return (
