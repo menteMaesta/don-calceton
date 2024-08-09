@@ -79,10 +79,10 @@ export interface OrderImage {
 }
 
 export interface Customization {
-  id: number;
+  id?: number;
   title: string;
-  maxSize: number;
-  minSize: number;
+  maxSize: number | string;
+  minSize: number | string;
   updatedAt?: string;
   createdAt?: string;
 }
