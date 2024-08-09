@@ -1,5 +1,8 @@
+import React from "react";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import SnackbarProvider from "react-simple-snackbar";
 import { Tabs, TabList, Tab, TabPanels } from "@reach/tabs";
 import {
   SELECTORS,
@@ -7,6 +10,7 @@ import {
   PRODUCT_PAGE,
   VARIANT_SELECTORS,
 } from "helpers/test";
+import { ROUTES } from "helpers/constants";
 import NewVariantsTab from "routes/NewProduct/NewVariantsTab";
 
 describe("NewVariantsTab", () => {
@@ -35,17 +39,33 @@ describe("NewVariantsTab", () => {
 
   test("renders variant cards when variants are provided", () => {
     const variants = [NEW_VARIANT_CARD_ITEM, NEW_VARIANT_CARD_ITEM];
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <Tabs>
+            <TabList>
+              <Tab>es.variants.name</Tab>
+            </TabList>
+
+            <TabPanels>
+              <NewVariantsTab variants={variants} setVariants={vi.fn()} />
+            </TabPanels>
+          </Tabs>
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
 
     const { getByTestId } = render(
-      <Tabs>
-        <TabList>
-          <Tab>es.variants.name</Tab>
-        </TabList>
-
-        <TabPanels>
-          <NewVariantsTab variants={variants} setVariants={vi.fn()} />
-        </TabPanels>
-      </Tabs>
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
     );
 
     const variantTab = getByTestId(PRODUCT_PAGE.variantTabPanel);
@@ -61,17 +81,33 @@ describe("NewVariantsTab", () => {
   test("calls setVariants when new variant button is clicked", async () => {
     const variants = [NEW_VARIANT_CARD_ITEM, NEW_VARIANT_CARD_ITEM];
     const setVariants = vi.fn();
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <Tabs>
+            <TabList>
+              <Tab>es.variants.name</Tab>
+            </TabList>
+
+            <TabPanels>
+              <NewVariantsTab variants={variants} setVariants={setVariants} />
+            </TabPanels>
+          </Tabs>
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
 
     const { getByTestId } = render(
-      <Tabs>
-        <TabList>
-          <Tab>es.variants.name</Tab>
-        </TabList>
-
-        <TabPanels>
-          <NewVariantsTab variants={variants} setVariants={setVariants} />
-        </TabPanels>
-      </Tabs>
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
     );
 
     const newVariantButton = getByTestId(VARIANT_SELECTORS.newVariant);
