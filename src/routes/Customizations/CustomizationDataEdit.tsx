@@ -7,7 +7,7 @@ import SaveButton from "components/SaveButton";
 import TitleInput from "components/TitleInput";
 
 type Props = {
-  onSave: (event: MouseEvent<HTMLElement>) => void;
+  onSave?: (event: MouseEvent<HTMLElement>) => void;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   data: Customization;
   customization: Customization;
@@ -25,12 +25,14 @@ export default function CustomizationDataEdit({
 }: Props) {
   return (
     <Fragment>
-      <SaveButton
-        onClick={onSave}
-        disabled={!valid || data.title.length === 0}
-        data-testid={`save-customization_${customization.id || ""}`}
-        className={classnames({ "!right-2": !isNew, "!right-9": isNew })}
-      />
+      {onSave && (
+        <SaveButton
+          onClick={onSave}
+          disabled={!valid || data.title.length === 0}
+          data-testid={`save-customization_${customization.id || ""}`}
+          className={classnames({ "!right-2": !isNew, "!right-9": isNew })}
+        />
+      )}
       <TitleInput
         data-testid={`title-edit_${customization.id || ""}`}
         name="title"
@@ -50,7 +52,9 @@ export default function CustomizationDataEdit({
           "pt-0 pb-0"
         }
         value={data.minSize}
-        placeholder={`${customization.minSize}`}
+        placeholder={
+          `${customization.minSize}` || es.customizations.minSizePlaceholder
+        }
         onChange={onChange}
         labelClassName="flex flex-col sm:flex-row"
       />
@@ -66,7 +70,9 @@ export default function CustomizationDataEdit({
           "pt-0 pb-0"
         }
         value={data.maxSize}
-        placeholder={`${customization.maxSize}`}
+        placeholder={
+          `${customization.maxSize}` || es.customizations.maxSizePlaceholder
+        }
         onChange={onChange}
         labelClassName="flex flex-col sm:flex-row"
       />

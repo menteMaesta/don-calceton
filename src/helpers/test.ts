@@ -58,6 +58,12 @@ export const CUSTOMIZATION = {
   minSize: 0,
 };
 
+export const NEW_CUSTOMIZATION = {
+  title: "",
+  maxSize: "20",
+  minSize: "0",
+};
+
 export const CUSTOMIZATIONS = [
   { id: 1, title: "Option 1", maxSize: 10, minSize: 5 },
   { id: 2, title: "Option 2", maxSize: 20, minSize: 15 },

@@ -39,6 +39,8 @@ export const es = {
     imageMax: "Imagen max:",
     cm: "cm",
     titlePlaceholder: "Esquina superior izquierda",
+    minSizePlaceholder: "0",
+    maxSizePlaceholder: "20",
   },
   login: {
     email: "Correo",
