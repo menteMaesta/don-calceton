@@ -12,16 +12,16 @@ import {
   useSubmit,
   useNavigate,
 } from "react-router-dom";
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
+import { Tabs, TabList, Tab, TabPanels } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
-import { ErrorType, NewVariantType } from "helpers/customTypes";
+import { ErrorType, NewVariantType, Customization } from "helpers/customTypes";
 import { ROUTES } from "helpers/constants";
 import { es } from "helpers/strings";
-import EmptyState from "components/EmptyState";
 import NewProductData from "components/NewProductData";
 import Button from "components/Button";
 import BottomBar from "components/BottomBar";
-import NewVariantsTab from "./NewVariantsTab";
+import NewVariantsTab from "routes/NewProduct/NewVariantsTab";
+import NewCustomizationsTab from "routes/NewProduct/NewCustomizationsTab";
 
 export default function ProductDetails() {
   const submit = useSubmit();
@@ -40,25 +40,28 @@ export default function ProductDetails() {
     description: "",
   });
   const [variants, setVariants] = useState<NewVariantType[]>([]);
+  const [customizations, setCustomizations] = useState<Customization[]>([]);
   const disableSave = useMemo(() => {
-    const hasEmptyVariants = variants.some((variant) => {
-      if (
+    const hasEmptyVariants = variants.some(
+      (variant) =>
         !variant.name ||
         !variant.quantity ||
         variant.quantity.includes(".") ||
         !variant.images.length
-      ) {
-        return true;
-      }
-    });
+    );
+    const hasEmptyCustomizations = customizations.some(
+      (customization) =>
+        !customization.title || !customization.minSize || !customization.maxSize
+    );
     return (
       !newProduct.name ||
       newProduct.price === "" ||
       newProduct.wholesalePrice === "" ||
       !newProduct.description ||
-      hasEmptyVariants
+      hasEmptyVariants ||
+      hasEmptyCustomizations
     );
-  }, [newProduct, variants]);
+  }, [newProduct, variants, customizations]);
 
   useEffect(() => {
     if (actionData?.message) {
@@ -92,12 +95,13 @@ export default function ProductDetails() {
     formData.append("price", newProduct.price);
     formData.append("wholesalePrice", newProduct.wholesalePrice);
     formData.append("description", newProduct.description);
-    formData.append("variants", JSON.stringify(variants)); // TODO: Separate images
+    formData.append("variants", JSON.stringify(variants));
     for (let i = 0; i < variants.length; i++) {
       for (const image of variants[i].images) {
         formData.append(`images${i}[]`, image.file, image.name);
       }
     }
+    formData.append("customizations", JSON.stringify(customizations));
     submit(formData, { method: "post", encType: "multipart/form-data" });
   };
 
@@ -131,12 +135,13 @@ export default function ProductDetails() {
 
         <TabPanels>
           <NewVariantsTab variants={variants} setVariants={setVariants} />
-
-          <TabPanel as="section" data-testid="customization_tab-panel">
-            <EmptyState name={es.customizations.name} />
-          </TabPanel>
+          <NewCustomizationsTab
+            customizations={customizations}
+            setCustomizations={setCustomizations}
+          />
         </TabPanels>
       </Tabs>
+
       <BottomBar>
         <Button
           data-testid="new-product-cancel"
