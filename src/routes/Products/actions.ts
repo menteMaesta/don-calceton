@@ -1,7 +1,12 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { postProduct, deleteProduct, putProduct } from "routes/Products/api";
 import { removeVariant } from "routes/Variants/api";
+import {
+  handleCreateVariantImages,
+  handleCreateVariant,
+} from "routes/NewProduct/actions";
 import { ROUTES } from "helpers/constants";
+import { VariantBase } from "helpers/customTypes";
 
 export const productsActions = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -13,6 +18,8 @@ export const productsActions = async ({ request }: ActionFunctionArgs) => {
       return handleEditProduct(formData);
     case "deleteProduct":
       return handleDeleteProduct(formData);
+    case "createVariant":
+      return handleNewVariant(formData);
     case "deleteVariant":
       return handleDeleteVariant(formData);
     default:
@@ -72,6 +79,33 @@ export const handleDeleteProduct = async (form: FormData) => {
   }
 };
 
+export const handleNewVariant = async (form: FormData) => {
+  const formData = Object.fromEntries(form);
+  const newVariantData = JSON.parse(formData.data as string) as VariantBase;
+  const images = form.getAll("images[]");
+
+  const { error: variantError, id: variantId } = await handleCreateVariant(
+    {
+      ...newVariantData,
+      quantity: Number(newVariantData.quantity),
+    },
+    formData.productId as string
+  );
+  if (variantError) {
+    return variantError;
+  } else {
+    const imagesError = await handleCreateVariantImages(
+      variantId,
+      images as File[]
+    );
+    if (imagesError) {
+      return imagesError;
+    }
+  }
+
+  return { statusText: "200", id: variantId };
+};
+
 export const handleDeleteVariant = async (form: FormData) => {
   const formData = Object.fromEntries(form);
 
@@ -83,6 +117,11 @@ export const handleDeleteVariant = async (form: FormData) => {
   if (status !== 200) {
     return response.errors ? response.errors[0] : response;
   } else {
-    return { ...response, statusText: "200", id: formData.variantId };
+    return {
+      ...response,
+      statusText: "200",
+      id: formData.variantId,
+      action: "delete",
+    };
   }
 };

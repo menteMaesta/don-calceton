@@ -115,10 +115,6 @@ describe("ProductDetails", () => {
 
     expect(variantSearch).toBeInTheDocument();
     expect(newVariantButton).toBeInTheDocument();
-    expect(newVariantButton).toHaveAttribute(
-      "href",
-      ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)
-    );
     expect(variantList).toBeInTheDocument();
     expect(variantList).toHaveClass(
       "grid grid-cols-1 gap-4",
