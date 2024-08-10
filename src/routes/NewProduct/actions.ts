@@ -35,7 +35,7 @@ const handleCreateProduct = async (form: FormData) => {
   } else {
     for (let i = 0; i < variants.length; i++) {
       const images = form.getAll(`images${i}[]`);
-      const { error: variantError, id: variantId } = await handleCreateVariants(
+      const { error: variantError, id: variantId } = await handleCreateVariant(
         variants[i],
         response.id
       );
@@ -62,7 +62,7 @@ const handleCreateProduct = async (form: FormData) => {
   }
 };
 
-const handleCreateVariants = async (
+export const handleCreateVariant = async (
   variant: VariantBase,
   productId: string
 ) => {
@@ -78,7 +78,10 @@ const handleCreateVariants = async (
   return response;
 };
 
-const handleCreateVariantImages = async (variantId: string, images: File[]) => {
+export const handleCreateVariantImages = async (
+  variantId: string,
+  images: File[]
+) => {
   const formData = new FormData();
 
   for (const image of images) {

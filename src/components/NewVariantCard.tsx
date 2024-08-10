@@ -1,4 +1,5 @@
 import { DragEvent, ChangeEvent, MouseEvent, Fragment, useState } from "react";
+import classnames from "classnames";
 import imageCompression from "browser-image-compression";
 import { useSnackbar } from "react-simple-snackbar";
 import { es } from "helpers/strings";
@@ -10,14 +11,21 @@ import Input from "components/Input";
 import SliderImage from "components/SliderImage";
 import VariantImageUploader from "components/VariantImageUploader";
 import DragDropImageUploader from "components/DragDropImageUploader";
+import SaveButton from "components/SaveButton";
 
 type Props = {
   variant: NewVariantType;
   index: number;
   setVariants: (value: React.SetStateAction<NewVariantType[]>) => void;
+  onSave?: (event: MouseEvent<HTMLElement>) => void;
 };
 
-export default function NewVariantCard({ variant, index, setVariants }: Props) {
+export default function NewVariantCard({
+  variant,
+  index,
+  setVariants,
+  onSave,
+}: Props) {
   const [openSnackbar] = useSnackbar();
   const [loading, setLoading] = useState(false);
 
@@ -106,14 +114,32 @@ export default function NewVariantCard({ variant, index, setVariants }: Props) {
     <ElementCard
       elementId={`${index}`}
       title={
-        <TitleInput
-          data-testid={VARIANT_SELECTORS.newName}
-          name="name"
-          placeholder={es.variants.namePlaceholder}
-          value={variant.name}
-          onChange={handleOnChange}
-          className="!w-11/12 rounded-lg text-2xl mb-2"
-        />
+        <>
+          <TitleInput
+            data-testid={VARIANT_SELECTORS.newName}
+            name="name"
+            placeholder={es.variants.namePlaceholder}
+            value={variant.name}
+            onChange={handleOnChange}
+            className={classnames("rounded-lg text-2xl mb-2", {
+              "!w-10/12 sm:!w-9/12": onSave,
+              "!w-11/12": !onSave,
+            })}
+          />
+          {onSave && (
+            <SaveButton
+              onClick={onSave}
+              disabled={
+                variant.name.length === 0 ||
+                variant.quantity.length === 0 ||
+                variant.quantity.includes(".") ||
+                variant.images.length === 0
+              }
+              className={"!right-9"}
+              data-testid={VARIANT_SELECTORS.newSubmit}
+            />
+          )}
+        </>
       }
       footer={
         <Fragment>

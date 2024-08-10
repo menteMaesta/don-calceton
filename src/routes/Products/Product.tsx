@@ -10,14 +10,16 @@ import {
 } from "react-router-dom";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
-import { Product, ErrorType } from "helpers/customTypes";
-import { ROUTES } from "helpers/constants";
+import { Product, ErrorType, NewVariantType } from "helpers/customTypes";
+import { ROUTES, EMPTY_VARIANT } from "helpers/constants";
 import { es } from "helpers/strings";
+import { PRODUCT_PAGE, VARIANT_SELECTORS } from "helpers/test";
 import VariantCard from "components/VariantCard";
 import SearchBar from "components/SearchBar";
-import SticyLink from "components/StickyLink";
 import ProductData from "components/ProductData";
 import EmptyState from "components/EmptyState";
+import Button from "components/Button";
+import NewVariantCard from "src/components/NewVariantCard";
 
 export default function ProductDetails() {
   const product = useLoaderData() as Product;
@@ -31,6 +33,7 @@ export default function ProductDetails() {
   const [openSnackbar] = useSnackbar();
   const [variants, setVariants] = useState(product?.variants);
   const [tabIndex, setTabIndex] = useState(0);
+  const [newVariant, setNewVariant] = useState<NewVariantType[]>([]);
 
   const onSearch = (search: string) => {
     if (search) {
@@ -52,6 +55,20 @@ export default function ProductDetails() {
     submit(formData, { method: "post" });
   };
 
+  const onSaveVariant = async (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+
+    formData.append("products", "createVariant");
+    formData.append("productId", `${product.id}`);
+    formData.append("data", JSON.stringify(newVariant[0]));
+    for (const image of newVariant[0].images) {
+      formData.append("images[]", image.file, image.name);
+    }
+    submit(formData, { method: "post", encType: "multipart/form-data" });
+    setNewVariant([]);
+  };
+
   const handleTabChange = (index: number) => {
     setTabIndex(index);
     switch (index) {
@@ -68,6 +85,10 @@ export default function ProductDetails() {
     }
   };
 
+  const onNewVariant = () => {
+    setNewVariant([EMPTY_VARIANT]);
+  };
+
   useEffect(() => {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
@@ -77,11 +98,15 @@ export default function ProductDetails() {
 
   useEffect(() => {
     if (actionData?.statusText === "200") {
-      setVariants((prev) =>
-        prev.filter((variant) => `${variant.id}` !== actionData.id || "")
-      );
+      if (actionData?.action === "delete") {
+        setVariants((prev) =>
+          prev.filter((variant) => `${variant.id}` !== actionData.id || "")
+        );
+      } else if (product?.variants !== undefined) {
+        setVariants([...product.variants]);
+      }
     }
-  }, [actionData]);
+  }, [actionData, product.variants]);
 
   useLayoutEffect(() => {
     if (variantsTab) {
@@ -92,39 +117,47 @@ export default function ProductDetails() {
   }, [customizationTab, variantsTab]);
 
   return (
-    <div className={classnames("w-full mt-14 px-4")} data-testid="product-page">
+    <div
+      className={classnames("w-full mt-14 px-4")}
+      data-testid={PRODUCT_PAGE.name}
+    >
       <ProductData product={product} />
 
       <Tabs
         className="w-full pt-4"
         index={tabIndex}
         onChange={handleTabChange}
-        data-testid="product_tabs"
+        data-testid={PRODUCT_PAGE.productTabs}
       >
         <TabList className="flex w-full border-b dark:border-slate-600">
           <Tab
             className="px-2 py-1 rounded-t dark:text-slate-200"
-            data-testid="variant_tab-header"
+            data-testid={PRODUCT_PAGE.variantTabHeader}
           >
             {es.variants.name}
           </Tab>
           <Tab
             className="px-2 py-1 rounded-t dark:text-slate-200"
-            data-testid="customization_tab-header"
+            data-testid={PRODUCT_PAGE.customizationTabHeader}
           >
             {es.variants.personalizationOptions}
           </Tab>
         </TabList>
 
         <TabPanels>
-          <TabPanel as="section" data-testid="variant_tab-panel">
+          <TabPanel as="section" data-testid={PRODUCT_PAGE.variantTabPanel}>
             <div className="relative flex flex-col items-center w-full">
               <SearchBar onSearch={onSearch} placeholder={es.variants.search} />
-              <SticyLink
-                to={ROUTES.NEW_VARIANT.replace(":productId", `${product.id}`)}
-                title={es.variants.new}
-              />
-              {variants && (
+              <Button
+                data-testid={VARIANT_SELECTORS.newVariant}
+                className={"!p-2 mt-4 " + "sticky top-12 z-10 "}
+                onClick={onNewVariant}
+                disabled={newVariant.length > 0}
+              >
+                {es.variants.new}
+              </Button>
+
+              {(variants.length > 0 || newVariant !== undefined) && (
                 <div
                   className={classnames(
                     "grid grid-cols-1 gap-4",
@@ -132,7 +165,7 @@ export default function ProductDetails() {
                     "lg:grid-cols-5 w-full",
                     "mt-7 px-4"
                   )}
-                  data-testid="variant-list"
+                  data-testid={PRODUCT_PAGE.variantList}
                 >
                   {variants.map((variant) => (
                     <VariantCard
@@ -141,12 +174,23 @@ export default function ProductDetails() {
                       onRemove={handleRemove}
                     />
                   ))}
+                  {newVariant.length > 0 && (
+                    <NewVariantCard
+                      index={0}
+                      variant={newVariant[0]}
+                      setVariants={setNewVariant}
+                      onSave={onSaveVariant}
+                    />
+                  )}
                 </div>
               )}
               {variants.length === 0 && <EmptyState name={es.variants.name} />}
             </div>
           </TabPanel>
-          <TabPanel as="section" data-testid="customization_tab-panel">
+          <TabPanel
+            as="section"
+            data-testid={PRODUCT_PAGE.customizationTabPanel}
+          >
             <Outlet />
           </TabPanel>
         </TabPanels>

@@ -2,6 +2,7 @@ import { TabPanel } from "@reach/tabs";
 import { es } from "helpers/strings";
 import { NewVariantType } from "helpers/customTypes";
 import { PRODUCT_PAGE, VARIANT_SELECTORS } from "helpers/test";
+import { EMPTY_VARIANT } from "helpers/constants";
 import EmptyState from "components/EmptyState";
 import Button from "components/Button";
 import NewVariantCard from "components/NewVariantCard";
@@ -18,12 +19,7 @@ export default function NewVariantsTab({ variants, setVariants }: Props) {
         <Button
           data-testid={VARIANT_SELECTORS.newVariant}
           className={"!p-2 bg-slate-700 mt-4 " + "sticky top-12 z-10 "}
-          onClick={() =>
-            setVariants((prev) => [
-              ...prev,
-              { name: "", quantity: "", images: [] },
-            ])
-          }
+          onClick={() => setVariants((prev) => [...prev, EMPTY_VARIANT])}
         >
           {es.variants.new}
         </Button>

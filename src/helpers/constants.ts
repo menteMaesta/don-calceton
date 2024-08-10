@@ -35,8 +35,8 @@ export const KB = 1024;
 
 export const EMPTY_CUSTOMIZATION = {
   title: "",
-  maxSize: 0,
-  minSize: 0,
+  maxSize: "",
+  minSize: "",
 };
 
 export const STATUS = {
@@ -44,3 +44,5 @@ export const STATUS = {
   DELIVERED: "DELIVERED",
   CANCELED: "CANCELED",
 } as const;
+
+export const EMPTY_VARIANT = { name: "", quantity: "", images: [] };

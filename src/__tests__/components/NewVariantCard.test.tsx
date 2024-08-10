@@ -34,7 +34,7 @@ describe("NewVariantCard", () => {
       initialEntries: [ROUTES.NEW_PRODUCT],
     });
 
-    const { getByTestId } = render(
+    const { getByTestId, queryByTestId } = render(
       <React.StrictMode>
         <SnackbarProvider>
           <RouterProvider router={router} />
@@ -67,6 +67,7 @@ describe("NewVariantCard", () => {
 
     expect(dropZone).toBeInTheDocument();
     expect(removeButton).toBeInTheDocument();
+    expect(queryByTestId(VARIANT_SELECTORS.newSubmit)).not.toBeInTheDocument();
   });
 
   it("shows correct elements when it has images", () => {
@@ -212,5 +213,35 @@ describe("NewVariantCard", () => {
     );
 
     expect(getByText(es.variants.onlyIntegers)).toBeInTheDocument();
+  });
+
+  it("shows save button when onSave is defined", async () => {
+    const routes = [
+      {
+        path: ROUTES.NEW_PRODUCT,
+        element: (
+          <NewVariantCard
+            variant={NEW_VARIANT_CARD_ITEM}
+            index={0}
+            setVariants={mockSetVariants}
+            onSave={() => true}
+          />
+        ),
+        action: () => true,
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: [ROUTES.NEW_PRODUCT],
+    });
+
+    const { getByTestId } = render(
+      <React.StrictMode>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </React.StrictMode>
+    );
+
+    expect(getByTestId(VARIANT_SELECTORS.newSubmit)).toBeInTheDocument();
   });
 });

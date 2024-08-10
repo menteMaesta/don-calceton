@@ -2,6 +2,7 @@ import { TabPanel } from "@reach/tabs";
 import { es } from "helpers/strings";
 import { Customization } from "helpers/customTypes";
 import { PRODUCT_PAGE, CUSTOMIZATION_SELECTORS } from "helpers/test";
+import { EMPTY_CUSTOMIZATION } from "helpers/constants";
 import EmptyState from "components/EmptyState";
 import Button from "components/Button";
 import NewCustomizationCard from "components/NewCustomizationCard";
@@ -22,10 +23,7 @@ export default function NewCustomizationsTab({
           data-testid={CUSTOMIZATION_SELECTORS.new}
           className={"!p-2 bg-slate-700 mt-4 " + "sticky top-12 z-10 "}
           onClick={() =>
-            setCustomizations((prev) => [
-              ...prev,
-              { title: "", maxSize: "", minSize: "" },
-            ])
+            setCustomizations((prev) => [...prev, EMPTY_CUSTOMIZATION])
           }
         >
           {es.customizations.new}

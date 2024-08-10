@@ -54,7 +54,11 @@ export interface Image {
   createdAt?: string;
 }
 export type Blob = { src: string; name: string; file: File };
-export type ErrorType = { statusText: string; message: string };
+export type ErrorType = {
+  statusText: string;
+  message: string;
+  action?: string;
+};
 export type SliderImage = { id: number; name: string };
 export type Option = { value: number; label: string };
 export type CartItemType = {
