@@ -289,3 +289,9 @@ export const DRAG_DROP_SELECTORS = {
   browseImages: "browse-images",
   loading: "loading-spinner",
 };
+
+export const UNSAVED_CHANGES_MODAL_SELECTORS = {
+  dialog: "unsaved-changes-dialog",
+  accept: "unsaved-changes-accept",
+  cancel: "unsaved-changes-cancel",
+};

@@ -14,5 +14,22 @@
       border-color: theme("colors.slate.600");
     }
   }
+
+  [data-reach-alert-dialog-overlay] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: theme("colors.slate.800/80%");
+    z-index: 1000;
+  }
+
+  [data-reach-dialog-content] {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 @tailwind utilities;
