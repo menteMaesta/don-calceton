@@ -1,21 +1,27 @@
-import { ReactNode, ButtonHTMLAttributes } from "react";
+import { ReactNode, ButtonHTMLAttributes, forwardRef } from "react";
 import classnames from "classnames";
+
+type Ref = HTMLButtonElement;
 
 type Props = {
   disabled?: boolean;
   children: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function Button({ disabled, children, ...props }: Props) {
+export default forwardRef<Ref, Props>(function Button(
+  { disabled, children, ...props },
+  ref
+) {
   const { className = "", ...rest } = props || { className: "" };
   return (
     <button
+      ref={ref}
       disabled={disabled}
       className={classnames(
         "rounded py-1 px-4",
-        "active:bg-slate-800",
         {
-          "bg-slate-800": !className.includes("bg"),
+          "bg-slate-700": !className.includes("bg"),
+          "active:bg-slate-800 focus:bg-slate-800": !className.includes("bg"),
           "text-white": !className.includes("text"),
           "font-medium": !className.includes("font-"),
         },
@@ -30,4 +36,4 @@ export default function Button({ disabled, children, ...props }: Props) {
       {children}
     </button>
   );
-}
+});
