@@ -84,6 +84,12 @@ export const es = {
     },
     downloadImages: "Descargar imágenes",
   },
+  unsavedChangesModal: {
+    title: "Cambios sin guardar",
+    description: "Si sales ahora, se perderán todos los cambios",
+    return: "Regresar",
+    continue: "Continuar",
+  },
   name: "Nombre",
   cancel: "Cancelar",
   save: "Guardar",
