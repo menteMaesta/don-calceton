@@ -4,6 +4,7 @@ import {
   useState,
   ChangeEvent,
   useMemo,
+  Fragment,
 } from "react";
 import classnames from "classnames";
 import {
@@ -11,6 +12,8 @@ import {
   useMatch,
   useSubmit,
   useNavigate,
+  useBlocker,
+  useBeforeUnload,
 } from "react-router-dom";
 import { Tabs, TabList, Tab, TabPanels } from "@reach/tabs";
 import { useSnackbar } from "react-simple-snackbar";
@@ -22,6 +25,7 @@ import Button from "components/Button";
 import BottomBar from "components/BottomBar";
 import NewVariantsTab from "routes/NewProduct/NewVariantsTab";
 import NewCustomizationsTab from "routes/NewProduct/NewCustomizationsTab";
+import UnsavedChangesModal from "src/components/UnsavedChangesModal";
 
 export default function ProductDetails() {
   const submit = useSubmit();
@@ -41,6 +45,10 @@ export default function ProductDetails() {
   });
   const [variants, setVariants] = useState<NewVariantType[]>([]);
   const [customizations, setCustomizations] = useState<Customization[]>([]);
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    return currentLocation.pathname !== nextLocation.pathname && hasChanges;
+  });
+
   const disableSave = useMemo(() => {
     const hasEmptyVariants = variants.some(
       (variant) =>
@@ -63,12 +71,29 @@ export default function ProductDetails() {
     );
   }, [newProduct, variants, customizations]);
 
+  const hasChanges = useMemo(
+    () =>
+      newProduct.name.length > 0 ||
+      newProduct.price.length > 0 ||
+      newProduct.wholesalePrice.length > 0 ||
+      newProduct.description.length > 0 ||
+      variants.length > 0 ||
+      customizations.length > 0,
+    [newProduct, variants, customizations]
+  );
+
   useEffect(() => {
     if (actionData?.message) {
       openSnackbar(actionData?.message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData]);
+
+  useBeforeUnload((event) => {
+    if (hasChanges) {
+      event.preventDefault();
+    }
+  });
 
   useLayoutEffect(() => {
     if (variantsTab) {
@@ -106,62 +131,76 @@ export default function ProductDetails() {
   };
 
   return (
-    <div
-      data-testid="new-product-view"
-      className={classnames("w-full mt-14 px-4")}
-    >
-      <NewProductData data={newProduct} onChange={handleNewProductChange} />
-
-      <Tabs
-        className="w-full pt-4 pb-10"
-        index={tabIndex}
-        onChange={(index) => setTabIndex(index)}
-        data-testid="new-product_tabs"
-      >
-        <TabList className="flex w-full border-b dark:border-slate-600">
-          <Tab
-            className="px-2 py-1 rounded-t dark:text-slate-200"
-            data-testid="variant_tab-header"
-          >
-            {es.variants.name}
-          </Tab>
-          <Tab
-            className="px-2 py-1 rounded-t dark:text-slate-200"
-            data-testid="customization_tab-header"
-          >
-            {es.variants.personalizationOptions}
-          </Tab>
-        </TabList>
-
-        <TabPanels>
-          <NewVariantsTab variants={variants} setVariants={setVariants} />
-          <NewCustomizationsTab
-            customizations={customizations}
-            setCustomizations={setCustomizations}
-          />
-        </TabPanels>
-      </Tabs>
-
-      <BottomBar>
-        <Button
-          data-testid="new-product-cancel"
-          className={
-            "bg-slate-200 hover:bg-slate-300 " +
-            "active:bg-slate-300 " +
-            "text-slate-800"
+    <Fragment>
+      <UnsavedChangesModal
+        isOpen={blocker.state === "blocked"}
+        onAccept={() => {
+          if (blocker.state === "blocked") {
+            blocker.proceed();
           }
-          onClick={() => navigate(ROUTES.DASHBOARD, { replace: true })}
+        }}
+        onCancel={() => {
+          if (blocker.state === "blocked") {
+            blocker.reset();
+          }
+        }}
+      />
+      <div
+        data-testid="new-product-view"
+        className={classnames("w-full mt-14 px-4")}
+      >
+        <NewProductData data={newProduct} onChange={handleNewProductChange} />
+        <Tabs
+          className="w-full pt-4 pb-10"
+          index={tabIndex}
+          onChange={(index) => setTabIndex(index)}
+          data-testid="new-product_tabs"
         >
-          {es.cancel}
-        </Button>
-        <Button
-          data-testid="new-product-save"
-          onClick={handleSave}
-          disabled={disableSave}
-        >
-          {es.save}
-        </Button>
-      </BottomBar>
-    </div>
+          <TabList className="flex w-full border-b dark:border-slate-600">
+            <Tab
+              className="px-2 py-1 rounded-t dark:text-slate-200"
+              data-testid="variant_tab-header"
+            >
+              {es.variants.name}
+            </Tab>
+            <Tab
+              className="px-2 py-1 rounded-t dark:text-slate-200"
+              data-testid="customization_tab-header"
+            >
+              {es.variants.personalizationOptions}
+            </Tab>
+          </TabList>
+
+          <TabPanels>
+            <NewVariantsTab variants={variants} setVariants={setVariants} />
+            <NewCustomizationsTab
+              customizations={customizations}
+              setCustomizations={setCustomizations}
+            />
+          </TabPanels>
+        </Tabs>
+
+        <BottomBar>
+          <Button
+            data-testid="new-product-cancel"
+            className={
+              "bg-slate-200 hover:bg-slate-300 " +
+              "active:bg-slate-300 " +
+              "text-slate-800"
+            }
+            onClick={() => navigate(ROUTES.DASHBOARD, { replace: true })}
+          >
+            {es.cancel}
+          </Button>
+          <Button
+            data-testid="new-product-save"
+            onClick={handleSave}
+            disabled={disableSave}
+          >
+            {es.save}
+          </Button>
+        </BottomBar>
+      </div>
+    </Fragment>
   );
 }
