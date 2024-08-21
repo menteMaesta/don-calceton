@@ -90,6 +90,9 @@ export const es = {
     return: "Regresar",
     continue: "Continuar",
   },
+  paypal: {
+    softDescriptor: "calceton",
+  },
   name: "Nombre",
   cancel: "Cancelar",
   save: "Guardar",

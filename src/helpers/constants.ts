@@ -46,3 +46,15 @@ export const STATUS = {
 } as const;
 
 export const EMPTY_VARIANT = { name: "", quantity: "", images: [] };
+
+export const PAYPAL_OPTIONS = {
+  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+  merchantId: import.meta.env.VITE_PAYPAL_MERCHANT_ID,
+  currency: "MXN",
+  locale: "es_MX",
+  components: "buttons",
+};
+
+export const PHYSICAL_GOODS = "PHYSICAL_GOODS";
+
+export const WHOLESALE_THRESHOLD = 12;

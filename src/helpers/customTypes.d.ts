@@ -108,3 +108,13 @@ export type NewVariantType = {
   quantity: string;
   images: (Blob & { id: number })[];
 };
+
+export type PaypalItem = {
+  name: string;
+  quantity: string;
+  category?: string;
+  unit_amount: {
+    currency_code: string;
+    value: string;
+  };
+};
