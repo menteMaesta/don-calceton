@@ -1,13 +1,8 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import { openDB } from "idb";
-import { postOrder, postOrderImage } from "routes/Store/Cart/api";
-import {
-  PersonalizationType,
-  OrderImage,
-  CartItemType,
-} from "helpers/customTypes";
-import { EMPTY_ORDER_ITEM, STATUS } from "helpers/constants";
-import { es } from "helpers/strings";
+import { postOrderImage } from "routes/Store/Cart/api";
+import { PersonalizationType, OrderImage } from "helpers/customTypes";
+import { EMPTY_ORDER_ITEM } from "helpers/constants";
 
 export const storeActions = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -27,8 +22,6 @@ export const storeActions = async ({ request }: ActionFunctionArgs) => {
       return handleRemoveVariantItemImage(formData);
     case "removeVariant":
       return handleRemoveFromCart(formData);
-    case "submitOrder":
-      return handleSubmitOrder();
     default:
       break;
   }
@@ -181,20 +174,7 @@ export const handleRemoveVariantItemImage = async (form: FormData) => {
   return true;
 };
 
-const checkForEmpty = (orderItems: CartItemType[]) => {
-  return orderItems.findIndex((item) => {
-    const personalizations = item.personalizations || [];
-    return personalizations.find(
-      (personalization: PersonalizationType) =>
-        personalization.quantity === 0 ||
-        personalization.customizationId === 0 ||
-        personalization.images?.length === 0 ||
-        personalization.imageSize === 0
-    );
-  });
-};
-
-const sendOrderImages = async (
+export const sendOrderImages = async (
   personalization: PersonalizationType,
   orderId: number
 ) => {
@@ -214,41 +194,8 @@ const sendOrderImages = async (
   }
 };
 
-const deleteOrderItems = async () => {
+export const deleteOrderItems = async () => {
   const db = await openDB("don-calceton-cart");
   const transaction = db.transaction("orderItems", "readwrite");
   await Promise.all([transaction.store.clear(), transaction.done]);
-};
-
-const handleSubmitOrder = async () => {
-  const db = await openDB("don-calceton-cart");
-  const orderItems = await db.getAll("orderItems");
-  const hasEmptyValues = checkForEmpty(orderItems);
-
-  if (hasEmptyValues === -1) {
-    // send order to server
-    for (const item of orderItems) {
-      const personalizations = item.personalizations || [];
-      for (const personalization of personalizations) {
-        const { data, status } = await postOrder({
-          variantId: item.id,
-          quantity: personalization.quantity,
-          customizationId: personalization.customizationId,
-          imageSize: personalization.imageSize,
-          status: STATUS.IN_PROCESS,
-        });
-        if (status !== 200) {
-          return data.errors ? data.errors[0] : data;
-        } else {
-          await sendOrderImages(personalization, data.id);
-        }
-      }
-    }
-    //delete all order items
-    await deleteOrderItems();
-    return { message: es.orders.sendSuccess };
-  }
-  return {
-    message: es.orders.emptyFields,
-  };
 };
