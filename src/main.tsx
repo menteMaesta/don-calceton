@@ -3,7 +3,8 @@ import SnackbarProvider from "react-simple-snackbar";
 import "src/index.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ROUTES } from "helpers/constants";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { ROUTES, PAYPAL_OPTIONS } from "helpers/constants";
 import { openDatabase } from "helpers/db";
 
 import { loginActions } from "routes/Login/actions";
@@ -256,9 +257,11 @@ openDatabase()
 
     ReactDOM.createRoot(document.getElementById("root")!).render(
       <React.StrictMode>
-        <SnackbarProvider>
-          <RouterProvider router={router} />
-        </SnackbarProvider>
+        <PayPalScriptProvider options={PAYPAL_OPTIONS}>
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
+        </PayPalScriptProvider>
       </React.StrictMode>
     );
   })

@@ -1,8 +1,9 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import SnackbarProvider from "react-simple-snackbar";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import { ROUTES } from "helpers/constants";
+import { ROUTES, PAYPAL_OPTIONS } from "helpers/constants";
 import Cart from "routes/Store/Cart/Cart";
 import { CART_ITEM, CART_SELECTORS, SELECTORS } from "helpers/test";
 import { es } from "helpers/strings";
@@ -29,9 +30,11 @@ describe("Cart component", () => {
 
     const { getByTestId } = render(
       <React.StrictMode>
-        <SnackbarProvider>
-          <RouterProvider router={router} />
-        </SnackbarProvider>
+        <PayPalScriptProvider options={PAYPAL_OPTIONS}>
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
+        </PayPalScriptProvider>
       </React.StrictMode>
     );
 
@@ -65,9 +68,11 @@ describe("Cart component", () => {
 
     const { getByTestId } = render(
       <React.StrictMode>
-        <SnackbarProvider>
-          <RouterProvider router={router} />
-        </SnackbarProvider>
+        <PayPalScriptProvider options={PAYPAL_OPTIONS}>
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
+        </PayPalScriptProvider>
       </React.StrictMode>
     );
 
@@ -90,9 +95,11 @@ describe("Cart component", () => {
 
     const { getByTestId } = render(
       <React.StrictMode>
-        <SnackbarProvider>
-          <RouterProvider router={router} />
-        </SnackbarProvider>
+        <PayPalScriptProvider options={PAYPAL_OPTIONS}>
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
+        </PayPalScriptProvider>
       </React.StrictMode>
     );
 
