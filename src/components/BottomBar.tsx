@@ -2,8 +2,9 @@ import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
+  className?: string;
 };
-export default function BottomBar({ children }: Props) {
+export default function BottomBar({ children, className }: Props) {
   return (
     <div
       className={
@@ -13,7 +14,8 @@ export default function BottomBar({ children }: Props) {
         " bottom-0 left-0" +
         " flex justify-between items-center" +
         " px-4 z-[1]" +
-        " dark:bg-slate-900 dark:border-slate-950"
+        " dark:bg-slate-900 dark:border-slate-950 " +
+        className
       }
       data-testid="bottom-bar-container"
     >
