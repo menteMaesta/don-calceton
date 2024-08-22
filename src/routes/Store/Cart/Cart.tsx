@@ -27,6 +27,7 @@ import {
   createPaypalOrder,
   verifyOrderStock,
   capturePaypalOrder,
+  updatePaypalOrder,
 } from "routes/Store/Cart/api";
 import CartItem from "storeComponents/CartItem";
 import EmptyState from "components/EmptyState";
@@ -49,6 +50,9 @@ export default function Cart() {
   }, [actionData]);
 
   const canSendOrders = useMemo(() => {
+    if (cart.length === 0) {
+      return false;
+    }
     const hasEmptyValues = cart.findIndex((item) => {
       const personalizations = item.personalizations || [];
       return personalizations.find(
@@ -165,15 +169,18 @@ export default function Cart() {
         );
 
         // send orders to server
-        for (const item of cart) {
+        for await (const item of cart) {
           const personalizations = item.personalizations || [];
           for (const personalization of personalizations) {
+            //TODO: save shipping information
             const { data, status } = await postOrder({
               variantId: item.id,
               quantity: personalization.quantity,
               customizationId: personalization.customizationId,
               imageSize: personalization.imageSize,
               status: STATUS.IN_PROCESS,
+              invoiceId: transaction.invoice_id,
+              customId: transaction.custom_id,
             });
             if (status !== 200) {
               const error: ErrorType = data.errors ? data.errors[0] : data;
@@ -189,7 +196,6 @@ export default function Cart() {
             }
           }
         }
-
         // delete cart
         await deleteOrderItems();
       }
@@ -197,6 +203,69 @@ export default function Cart() {
       openSnackbar(error);
     }
   };
+
+  const onShippingOptionsChange: PayPalButtonsComponentProps["onShippingOptionsChange"] =
+    async (data, _) => {
+      try {
+        // update shipping price
+        // TODO: make sure you don't need to update shipping address here
+        if (data.orderID && data.selectedShippingOption) {
+          const shippingAmount = Number(
+            data.selectedShippingOption.amount.value
+          );
+          const updateOrderStatus = await updatePaypalOrder(data.orderID, [
+            {
+              op: "replace",
+              path: "/purchase_units/@reference_id=='default'/purchase_units[].amount",
+              value: {
+                currency_code: PAYPAL_OPTIONS.currency,
+                value: totalPrice + shippingAmount,
+              },
+            },
+            {
+              op: "replace",
+              path: "/purchase_units/@reference_id=='default'/purchase_units[].shipping.type",
+              value: data.selectedShippingOption.type,
+            },
+          ]);
+          if (updateOrderStatus !== 204) {
+            throw es.errors.updateOrder;
+          }
+        }
+      } catch (error) {
+        openSnackbar(error);
+      }
+    };
+  const onShippingAddressChange: PayPalButtonsComponentProps["onShippingAddressChange"] =
+    async (data, _) => {
+      console.log("Shipping address change", data);
+      //patch order to update address
+      try {
+        if (
+          data.shippingAddress.countryCode !== "MX" ||
+          data.shippingAddress.postalCode !== "29160" ||
+          data.shippingAddress.state !== "Chiapas" ||
+          (data.shippingAddress.city !== "Chiapa de corzo" &&
+            data.shippingAddress.city !== "Tuxtla gutierrez")
+        ) {
+          throw data.errors?.COUNTRY_ERROR; //check this
+        }
+        if (data.orderID && data.shippingAddress) {
+          const updateOrderStatus = await updatePaypalOrder(data.orderID, [
+            {
+              op: "replace",
+              path: "/purchase_units/@reference_id=='default'/purchase_units[].address",
+              value: data.shippingAddress, //TODO: review this
+            },
+          ]);
+          if (updateOrderStatus !== 204) {
+            throw es.errors.updateOrder;
+          }
+        }
+      } catch (error) {
+        openSnackbar(error);
+      }
+    };
 
   return (
     <div
@@ -249,6 +318,8 @@ export default function Cart() {
             disabled={!canSendOrders}
             createOrder={createOrder}
             onApprove={onApprove}
+            onShippingOptionsChange={onShippingOptionsChange}
+            onShippingAddressChange={onShippingAddressChange}
             onError={(error) => openSnackbar(error.message)}
           />
         </div>

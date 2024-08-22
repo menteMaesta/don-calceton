@@ -85,6 +85,10 @@ export const es = {
     downloadImages: "Descargar imágenes",
     transaction:
       "Transacción {status}:{transactionId}. Checa la consola para mas detalles",
+    shipping: {
+      toAddress: "Envio a domicilio",
+      fromPerson: "Recoger en persona",
+    },
   },
   unsavedChangesModal: {
     title: "Cambios sin guardar",
@@ -95,7 +99,10 @@ export const es = {
   paypal: {
     softDescriptor: "calceton",
   },
-  errors: { stock: "No hay suficiente stock" },
+  errors: {
+    stock: "No hay suficiente stock",
+    updateOrder: "Hubo un error al intentar guardar el nuevo metodo de envio",
+  },
   name: "Nombre",
   cancel: "Cancelar",
   save: "Guardar",

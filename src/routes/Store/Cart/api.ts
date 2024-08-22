@@ -3,8 +3,9 @@ import {
   PersonalizationType,
   OrderStatus,
   PaypalItem,
+  PatchPaypalOrder,
 } from "helpers/customTypes";
-import { PAYPAL_OPTIONS } from "helpers/constants";
+import { PAYPAL_OPTIONS, SHIPPING_COST } from "helpers/constants";
 import { es } from "helpers/strings";
 
 export async function postOrder({
@@ -13,12 +14,16 @@ export async function postOrder({
   customizationId,
   imageSize,
   status,
+  invoiceId,
+  customId,
 }: {
   variantId: number;
   quantity: PersonalizationType["quantity"];
   customizationId: PersonalizationType["customizationId"];
   imageSize: PersonalizationType["imageSize"];
   status: OrderStatus;
+  invoiceId?: PersonalizationType["invoiceId"];
+  customId?: PersonalizationType["customId"];
 }) {
   const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/orders`, {
     method: "POST",
@@ -31,6 +36,8 @@ export async function postOrder({
       customizationId,
       imageSize,
       status,
+      invoiceId,
+      customId,
     }),
   });
   const data = await response.json();
@@ -166,6 +173,30 @@ export async function createPaypalOrder(
               email_address: import.meta.env.VITE_PAYPAL_EMAIL,
               merchant_id: import.meta.env.VITE_PAYPAL_MERCHANT_ID,
             },
+            shipping: {
+              options: [
+                {
+                  id: "001",
+                  label: es.orders.shipping.toAddress,
+                  type: "SHIPPING",
+                  amount: {
+                    currency_code: PAYPAL_OPTIONS.currency,
+                    value: SHIPPING_COST,
+                  },
+                  selected: true,
+                },
+                {
+                  id: "002",
+                  label: es.orders.shipping.fromPerson,
+                  type: "PICKUP",
+                  amount: {
+                    currency_code: PAYPAL_OPTIONS.currency,
+                    value: "0",
+                  },
+                  selected: false,
+                },
+              ],
+            },
           },
         ],
       }),
@@ -201,6 +232,30 @@ export async function capturePaypalOrder(orderId: string) {
   try {
     const data = await response.json();
     return { data, status: response.status };
+  } catch (_) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+}
+
+export async function updatePaypalOrder(
+  orderId: string,
+  updates: PatchPaypalOrder[]
+) {
+  await validateAccessToken();
+  const response = await fetch(
+    `${import.meta.env.VITE_PAYPAL_BASE_URL}/v2/checkout/orders/${orderId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("paypalAccessToken")}`,
+      },
+      body: JSON.stringify(updates),
+    }
+  );
+  try {
+    return response.status;
   } catch (_) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);

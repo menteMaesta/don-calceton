@@ -58,3 +58,4 @@ export const PAYPAL_OPTIONS = {
 export const PHYSICAL_GOODS = "PHYSICAL_GOODS";
 
 export const WHOLESALE_THRESHOLD = 12;
+export const SHIPPING_COST = 50;

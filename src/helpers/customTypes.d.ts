@@ -73,6 +73,8 @@ export type PersonalizationType = {
   customizationId?: number;
   images?: OrderImage[];
   imageSize: number;
+  invoiceId?: string;
+  customId?: string;
 };
 
 export type OrderStatus = "IN_PROCESS" | "DELIVERED" | "CANCELED";
@@ -117,4 +119,10 @@ export type PaypalItem = {
     currency_code: string;
     value: string;
   };
+};
+
+export type PatchPaypalOrder = {
+  op: "replace" | "add";
+  path: string;
+  value: unknown;
 };
