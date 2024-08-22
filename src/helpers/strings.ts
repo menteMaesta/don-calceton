@@ -83,6 +83,8 @@ export const es = {
       CANCELED: "Cancelado",
     },
     downloadImages: "Descargar imágenes",
+    transaction:
+      "Transacción {status}:{transactionId}. Checa la consola para mas detalles",
   },
   unsavedChangesModal: {
     title: "Cambios sin guardar",
@@ -93,6 +95,7 @@ export const es = {
   paypal: {
     softDescriptor: "calceton",
   },
+  errors: { stock: "No hay suficiente stock" },
   name: "Nombre",
   cancel: "Cancelar",
   save: "Guardar",

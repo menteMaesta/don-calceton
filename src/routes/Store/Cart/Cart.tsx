@@ -22,7 +22,12 @@ import {
   sendOrderImages,
   deleteOrderItems,
 } from "routes/Store/VariantList/actions";
-import { postOrder, createPaypalOrder } from "routes/Store/Cart/api";
+import {
+  postOrder,
+  createPaypalOrder,
+  verifyOrderStock,
+  capturePaypalOrder,
+} from "routes/Store/Cart/api";
 import CartItem from "storeComponents/CartItem";
 import EmptyState from "components/EmptyState";
 import BottomBar from "src/components/BottomBar";
@@ -73,63 +78,123 @@ export default function Cart() {
   };
 
   const createOrder: PayPalButtonsComponentProps["createOrder"] = async () => {
-    const savedOrderItems: (PaypalItem & { id: number })[] = [];
+    const orderItems: PaypalItem[] = [];
+    const itemsConfirmStock = [];
 
-    // send order to server
+    for (const item of cart) {
+      const personalizations = item.personalizations || [];
+      for (const personalization of personalizations) {
+        orderItems.push({
+          name: item.name || "",
+          quantity: `${personalization.quantity}`,
+          category: PHYSICAL_GOODS,
+          unit_amount: {
+            currency_code: PAYPAL_OPTIONS.currency,
+            value:
+              personalization.quantity >= WHOLESALE_THRESHOLD
+                ? `${item.productWholesalePrice}`
+                : `${item.productPrice}`,
+          },
+        });
+      }
+
+      itemsConfirmStock.push({
+        variantId: item.id,
+        quantity:
+          personalizations.reduce(
+            (total: number, element: PersonalizationType) => {
+              total += element.quantity || 0;
+              return total;
+            },
+            0
+          ) || 0,
+      });
+    }
+
     try {
-      for (const item of cart) {
-        const personalizations = item.personalizations || [];
-        for (const personalization of personalizations) {
-          const { data, status } = await postOrder({
-            variantId: item.id,
-            quantity: personalization.quantity,
-            customizationId: personalization.customizationId,
-            imageSize: personalization.imageSize,
-            status: STATUS.IN_PROCESS,
-          });
-          if (status !== 200) {
-            const error: ErrorType = data.errors ? data.errors[0] : data;
-            throw new Error(error.message);
-          } else {
-            const error: ErrorType = await sendOrderImages(
-              personalization,
-              data.id
-            );
-            if (error) {
-              throw new Error(error.message);
-            }
-            savedOrderItems.push({
-              id: data.id,
-              name: item.name || "",
-              quantity: `${personalization.quantity}`,
-              category: PHYSICAL_GOODS,
-              unit_amount: {
-                currency_code: PAYPAL_OPTIONS.currency,
-                value:
-                  personalization.quantity >= WHOLESALE_THRESHOLD
-                    ? `${item.productWholesalePrice}`
-                    : `${item.productPrice}`,
-              },
-            });
-          }
+      // Verify stock
+      const verifyOrderStatus = await verifyOrderStock({
+        orders: itemsConfirmStock,
+      });
+      if (verifyOrderStatus !== 200) {
+        throw es.errors.stock;
+      } else {
+        // create order in paypal
+        const { data: orderData } = await createPaypalOrder(
+          totalPrice,
+          orderItems
+        );
+        if (orderData.id) {
+          return orderData.id;
+        } else {
+          const errorDetail = orderData?.details?.[0];
+          const errorMessage = errorDetail
+            ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+            : JSON.stringify(orderData);
+          throw errorMessage;
         }
       }
-      const orderData = await createPaypalOrder(totalPrice, savedOrderItems);
-      if (orderData.id) {
-        await deleteOrderItems();
-        return orderData.id;
-      } else {
-        const errorDetail = orderData?.details?.[0];
-        const errorMessage = errorDetail
-          ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-          : JSON.stringify(orderData);
-
-        throw new Error(errorMessage);
-      }
     } catch (error) {
-      console.log(error);
       openSnackbar(error);
       return "";
+    }
+  };
+
+  const onApprove: PayPalButtonsComponentProps["onApprove"] = async (
+    data,
+    actions
+  ) => {
+    try {
+      const { data: orderData } = await capturePaypalOrder(data.orderID);
+      const errorDetail = orderData?.details?.[0];
+      if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+        return actions.restart();
+      } else if (errorDetail) {
+        throw `${errorDetail.description} (${orderData.debug_id})`;
+      } else {
+        const transaction = orderData.purchase_units[0].payments.captures[0];
+        openSnackbar(
+          es.orders.transaction
+            .replace("{status}", transaction.status)
+            .replace("{transactionId}", transaction.id)
+        );
+        console.log(
+          "Capture result:",
+          orderData,
+          JSON.stringify(orderData, null, 2)
+        );
+
+        // send orders to server
+        for (const item of cart) {
+          const personalizations = item.personalizations || [];
+          for (const personalization of personalizations) {
+            const { data, status } = await postOrder({
+              variantId: item.id,
+              quantity: personalization.quantity,
+              customizationId: personalization.customizationId,
+              imageSize: personalization.imageSize,
+              status: STATUS.IN_PROCESS,
+            });
+            if (status !== 200) {
+              const error: ErrorType = data.errors ? data.errors[0] : data;
+              throw error.message;
+            } else {
+              const error: ErrorType = await sendOrderImages(
+                personalization,
+                data.id
+              );
+              if (error) {
+                throw error.message;
+              }
+            }
+          }
+        }
+
+        // delete cart
+        await deleteOrderItems();
+      }
+    } catch (error) {
+      openSnackbar(error);
     }
   };
 
@@ -183,6 +248,8 @@ export default function Cart() {
             }}
             disabled={!canSendOrders}
             createOrder={createOrder}
+            onApprove={onApprove}
+            onError={(error) => openSnackbar(error.message)}
           />
         </div>
       </BottomBar>
