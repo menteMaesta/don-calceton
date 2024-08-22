@@ -55,6 +55,22 @@ export async function postOrderImage({
   return { data, status: response.status };
 }
 
+export async function verifyOrderStock({
+  orders,
+}: {
+  orders: { variantId: number; quantity: number }[];
+}) {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/orders/verify_quantity`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ orders }),
+    }
+  );
+  return response.status;
+}
+
 export async function generatePaypalAccessToken() {
   const BASE64_ENCODED_CLIENT_ID_AND_SECRET = btoa(
     `${import.meta.env.VITE_PAYPAL_CLIENT_ID}:${
@@ -155,6 +171,38 @@ export async function createPaypalOrder(
       }),
     }
   );
-  const data = await response.json();
-  return { ...data, invoiceId, customId };
+
+  try {
+    const data = await response.json();
+    return {
+      data: { ...data, invoiceId, customId },
+      status: response.status,
+    };
+  } catch (_) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+}
+
+export async function capturePaypalOrder(orderId: string) {
+  await validateAccessToken();
+  const response = await fetch(
+    `${
+      import.meta.env.VITE_PAYPAL_BASE_URL
+    }/v2/checkout/orders/${orderId}/capture`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("paypalAccessToken")}`,
+      },
+    }
+  );
+  try {
+    const data = await response.json();
+    return { data, status: response.status };
+  } catch (_) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
 }
