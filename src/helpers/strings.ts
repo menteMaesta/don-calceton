@@ -87,7 +87,6 @@ export const es = {
       "Transacción {status}:{transactionId}. Checa la consola para mas detalles",
     shipping: {
       toAddress: "Envio a domicilio",
-      fromPerson: "Recoger en persona",
     },
   },
   unsavedChangesModal: {
@@ -102,6 +101,9 @@ export const es = {
   errors: {
     stock: "No hay suficiente stock",
     updateOrder: "Hubo un error al intentar guardar el nuevo metodo de envio",
+    address:
+      "Lamentablemente no contamos con envios a tu dirección, por favor elige una dirección diferente",
+    generic: "Hubo un error, por favor intenta de nuevo",
   },
   name: "Nombre",
   cancel: "Cancelar",

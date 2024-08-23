@@ -59,3 +59,9 @@ export const PHYSICAL_GOODS = "PHYSICAL_GOODS";
 
 export const WHOLESALE_THRESHOLD = 12;
 export const SHIPPING_COST = 50;
+export const SHIPPING_ZONE = {
+  COUNTRY: "MX",
+  POSTAL_CODE: "29160",
+  STATE: "CHIS",
+  CITIES: ["tuxtla gutierrez", "chiapa de corzo"],
+};

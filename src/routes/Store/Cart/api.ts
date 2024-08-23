@@ -185,17 +185,11 @@ export async function createPaypalOrder(
                   },
                   selected: true,
                 },
-                {
-                  id: "002",
-                  label: es.orders.shipping.fromPerson,
-                  type: "PICKUP",
-                  amount: {
-                    currency_code: PAYPAL_OPTIONS.currency,
-                    value: "0",
-                  },
-                  selected: false,
-                },
               ],
+            },
+            application_context: {
+              brand_name: es.donCalceton,
+              locale: PAYPAL_OPTIONS.locale,
             },
           },
         ],
@@ -232,30 +226,6 @@ export async function capturePaypalOrder(orderId: string) {
   try {
     const data = await response.json();
     return { data, status: response.status };
-  } catch (_) {
-    const errorMessage = await response.text();
-    throw new Error(errorMessage);
-  }
-}
-
-export async function updatePaypalOrder(
-  orderId: string,
-  updates: PatchPaypalOrder[]
-) {
-  await validateAccessToken();
-  const response = await fetch(
-    `${import.meta.env.VITE_PAYPAL_BASE_URL}/v2/checkout/orders/${orderId}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("paypalAccessToken")}`,
-      },
-      body: JSON.stringify(updates),
-    }
-  );
-  try {
-    return response.status;
   } catch (_) {
     const errorMessage = await response.text();
     throw new Error(errorMessage);

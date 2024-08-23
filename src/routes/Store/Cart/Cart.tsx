@@ -16,6 +16,7 @@ import {
   PAYPAL_OPTIONS,
   WHOLESALE_THRESHOLD,
   PHYSICAL_GOODS,
+  SHIPPING_ZONE,
 } from "helpers/constants";
 import { es } from "helpers/strings";
 import {
@@ -27,7 +28,6 @@ import {
   createPaypalOrder,
   verifyOrderStock,
   capturePaypalOrder,
-  updatePaypalOrder,
 } from "routes/Store/Cart/api";
 import CartItem from "storeComponents/CartItem";
 import EmptyState from "components/EmptyState";
@@ -204,66 +204,20 @@ export default function Cart() {
     }
   };
 
-  const onShippingOptionsChange: PayPalButtonsComponentProps["onShippingOptionsChange"] =
-    async (data, _) => {
-      try {
-        // update shipping price
-        // TODO: make sure you don't need to update shipping address here
-        if (data.orderID && data.selectedShippingOption) {
-          const shippingAmount = Number(
-            data.selectedShippingOption.amount.value
-          );
-          const updateOrderStatus = await updatePaypalOrder(data.orderID, [
-            {
-              op: "replace",
-              path: "/purchase_units/@reference_id=='default'/purchase_units[].amount",
-              value: {
-                currency_code: PAYPAL_OPTIONS.currency,
-                value: totalPrice + shippingAmount,
-              },
-            },
-            {
-              op: "replace",
-              path: "/purchase_units/@reference_id=='default'/purchase_units[].shipping.type",
-              value: data.selectedShippingOption.type,
-            },
-          ]);
-          if (updateOrderStatus !== 204) {
-            throw es.errors.updateOrder;
-          }
-        }
-      } catch (error) {
-        openSnackbar(error);
-      }
-    };
   const onShippingAddressChange: PayPalButtonsComponentProps["onShippingAddressChange"] =
-    async (data, _) => {
-      console.log("Shipping address change", data);
-      //patch order to update address
-      try {
-        if (
-          data.shippingAddress.countryCode !== "MX" ||
-          data.shippingAddress.postalCode !== "29160" ||
-          data.shippingAddress.state !== "Chiapas" ||
-          (data.shippingAddress.city !== "Chiapa de corzo" &&
-            data.shippingAddress.city !== "Tuxtla gutierrez")
-        ) {
-          throw data.errors?.COUNTRY_ERROR; //check this
-        }
-        if (data.orderID && data.shippingAddress) {
-          const updateOrderStatus = await updatePaypalOrder(data.orderID, [
-            {
-              op: "replace",
-              path: "/purchase_units/@reference_id=='default'/purchase_units[].address",
-              value: data.shippingAddress, //TODO: review this
-            },
-          ]);
-          if (updateOrderStatus !== 204) {
-            throw es.errors.updateOrder;
-          }
-        }
-      } catch (error) {
-        openSnackbar(error);
+    async (data, actions) => {
+      // Syntaxis errors only because this does work
+      const clientCity = data.shippingAddress.city.toLocaleLowerCase();
+      if (data.shippingAddress.countryCode !== SHIPPING_ZONE.COUNTRY) {
+        return actions.reject(data.errors?.COUNTRY_ERROR);
+      } else if (data.shippingAddress.state !== SHIPPING_ZONE.STATE) {
+        return actions.reject(data.errors?.STATE_ERROR);
+      } else if (
+        data.shippingAddress.postalCode !== SHIPPING_ZONE.POSTAL_CODE
+      ) {
+        return actions.reject(data.errors?.ZIP_ERROR);
+      } else if (!SHIPPING_ZONE.CITIES.includes(clientCity)) {
+        return actions.reject(data.errors?.ADDRESS_ERROR);
       }
     };
 
@@ -318,7 +272,6 @@ export default function Cart() {
             disabled={!canSendOrders}
             createOrder={createOrder}
             onApprove={onApprove}
-            onShippingOptionsChange={onShippingOptionsChange}
             onShippingAddressChange={onShippingAddressChange}
             onError={(error) => openSnackbar(error.message)}
           />
